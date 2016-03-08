@@ -9,5 +9,5 @@ Eventually you will start automating some things by building your first factorie
 From there, you will expand your operations and create a magnificant factory!
 
 #Contribution
-Code is written by powerkiddd
-Graphics are designed by menleader
+Code is written by powerkiddd  
+Graphics are designed by menleader  
