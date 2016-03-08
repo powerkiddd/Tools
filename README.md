@@ -11,3 +11,4 @@ From there, you will expand your operations and create a magnificant factory!
 #Contribution
 Code is written by powerkiddd  
 Graphics are designed by Menleader  
+Game is tested thorougly by Menleader  
