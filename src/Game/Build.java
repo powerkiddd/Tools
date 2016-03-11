@@ -1,5 +1,6 @@
 package Game;
 
+import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,7 +32,15 @@ public class Build {
 			}
 			String pos = "";
 			if (Input.snap) {
-				pos = "" + (short) (CurrentMousePos.x + World2.camera_x - World2.final_x) + "," + "" + CurrentMousePos.y;
+				if (World2.camera_x/25==Math.floor(World2.camera_x/25)) {
+					pos = "" + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - World2.f.getLocationOnScreen().x + World2.camera_x)) + "," + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - World2.f.getLocationOnScreen().y);
+				}
+				else {
+					byte temp_x = (byte)Math.round((World2.camera_x/25));
+					World2.final_x = (byte)(World2.camera_x-(25*temp_x));
+					pos = "" + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25)-(int) World2.final_x) - World2.f.getLocationOnScreen().x + World2.camera_x) + "," + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - World2.f.getLocationOnScreen().y);
+				}
+				//pos = "" + (short) (CurrentMousePos.x + World2.camera_x - World2.final_x) + "," + "" + CurrentMousePos.y;
 			}
 			else {
 				pos = "" + (short) (CurrentMousePos.x + World2.camera_x) + "," + "" + CurrentMousePos.y;
@@ -46,7 +55,7 @@ public class Build {
 		}
 	}
 	
-	public static void Place (String type, Rectangle location) {
+	public static void Place (String type, Rectangle location, boolean background) {
 		String pos = "";
 		if (Input.snap) {
 			pos = "" + (short) (location.x) + "," + "" + location.y;
@@ -54,7 +63,12 @@ public class Build {
 		else {
 			pos = "" + (short) (location.x) + "," + "" + location.y;
 		}
-		UpdateBlocks(type, pos, location);
+		if (background == false) {
+			UpdateBlocks(type, pos, location);
+		}
+		else {
+			UpdateBackgroundBlocks(type, pos, location);
+		}
 	}
 	
 	public static void Mine (int number, boolean giveplayerblock) {
@@ -119,6 +133,45 @@ public class Build {
 			for (int j = 0; j < World2.allblocks.length; j++) {
 				if (type.equalsIgnoreCase(World2.blockidentifiers[j])) {
 					World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y,World2.allblocks[j].getWidth(),World2.allblocks[j].getHeight());
+					found = true;
+					break;
+				}
+			}
+			if (found == false) {
+				Crash.cause = "A block was trying to load his image wich couldn't be found.\nIt might be missing in your images directory or read protected.\nOr the developer fucked up.\nBlock name: " + type;
+			}
+		}
+	}
+	
+	public static void UpdateBackgroundBlocks (String type, String pos, Rectangle MousePos) {
+		//Clone current data
+		String[] backgroundblocks_ = World2.backgroundblocks.clone();
+		String[] backgroundblockposses_ = World2.backgroundblockposses.clone();
+		Rectangle[] backgroundblockcollisions_ = World2.backgroundblockcollisions.clone();
+		//Reassign block types & put in new one
+		//Reassign block positions & put in new one
+		//Reassign block collisions & put in new one
+		World2.backgroundblocks = new String[World2.backgroundblocks.length+1];
+		World2.backgroundblockposses = new String[World2.backgroundblockposses.length+1];
+		World2.backgroundblockcollisions = new Rectangle[World2.backgroundblockcollisions.length+1];
+		for (int i=0; i < backgroundblocks_.length; i++) {
+			World2.backgroundblocks[i] = backgroundblocks_[i];
+			World2.backgroundblockposses[i] = backgroundblockposses_[i];
+			World2.backgroundblockcollisions[i] = backgroundblockcollisions_[i];
+		}
+		World2.backgroundblocks[World2.backgroundblocks.length-1] = type;
+		World2.backgroundblockposses[World2.backgroundblockposses.length-1] = pos;
+		if (selected != 0 && Inventory.slots[selected-1] != null) {
+			//Get index from inventory
+			World2.backgroundblockcollisions[World2.backgroundblockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y,Inventory.slots[selected-1].getWidth(),Inventory.slots[selected-1].getHeight());
+		}
+		else {
+			//Get index from world block collection
+			boolean found = false;
+			for (int j = 0; j < World2.allblocks.length; j++) {
+				if (type.equalsIgnoreCase(World2.blockidentifiers[j])) {
+					World2.backgroundblockcollisions[World2.backgroundblockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y,World2.allblocks[j].getWidth(),World2.allblocks[j].getHeight());
+					System.out.println("Setting backgroundblockcollisions[" + (World2.backgroundblockcollisions.length-1) + "] TO: " + World2.backgroundblockcollisions[World2.backgroundblockcollisions.length-1]);
 					found = true;
 					break;
 				}

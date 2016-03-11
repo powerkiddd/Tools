@@ -7,16 +7,19 @@ import Game.World2;
 
 public class Collision {
 	
+	static boolean acol = false;
+	
 	//Returns nothing, tests player collision with blocks
 	public static void testplayercol (int i) {
+		
 		Rectangle temprect = new Rectangle();
 		temprect = (Rectangle) World2.blockcollisions[i].clone();
 		temprect.x -= (int) World2.camera_x;
 		
 		//System.out.println(World2.blocks[i]);
-		
 		if (World2.blocks[i].equals("Water")) {
 			if (Player2.playerrect.intersects(temprect)) {
+				acol = true;
 				//System.out.println(World2.blocks[i]);
 				Player2.overridespeed = true;
 				Player2.playerspeed = 1;
@@ -27,6 +30,7 @@ public class Collision {
 			}
 		}
 		else if (Player2.playerrect.intersects(temprect)) {
+			acol = true;
 			Player2.collisionpos = temprect;
 			//System.out.println("YPOS: " + temprect.getMaxY() + "|" + Player2.playerrect.getMaxY());
 			if (Player2.playerrect.x < temprect.getCenterX() && Player2.playerrect.getMaxY()-70 <= temprect.getMaxY() && Player2.playerrect.getMaxY() >= temprect.getMinY()+5) {
@@ -48,6 +52,15 @@ public class Collision {
 				Player2.i = 102;
 				Player2.momentum = 0.1f;
 			}
+		}
+		else if (World2.blocks.length-1 == i && Player2.isFalling == false && Player2.isJumping == false && acol == false) {
+			Player2.collisiondown = false;
+			Player2.isFalling = true;
+			Player2.i = 102;
+			Player2.momentum = 0.1f;
+		}
+		else if (World2.blocks.length-1 == i && acol == true) {
+			acol = false;
 		}
 	}
 	

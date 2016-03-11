@@ -18,11 +18,11 @@ public class Player2 {
 	public static float player_x = 0;
 	public static float player_y = 0;
 	//private static float staticplayer_y = 0;
-	public static short i = 0;
+	public static short i = 102;
 	public static float momentum = 0;
 	public static Byte playerspeed = 0;
 	public static boolean atborder = false;
-	public static boolean isFalling = false;
+	public static boolean isFalling = true;
 	public static boolean isJumping = false;
 	public static boolean isInWater = false;
 	public static Timer jumptimer = new Timer();
@@ -80,7 +80,7 @@ public class Player2 {
 							player_y++;
 						}
 					}*/
-					else if (player_y < World2.f.getSize().height - World2.f.getSize().height/4 - playerrect.height && collisiondown == false) {
+					else if (collisiondown == false) {
 						if (isInWater == false) {
 							for (float j = 0; j < 10; j++) {
 								player_y += momentum/10;
