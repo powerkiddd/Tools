@@ -88,6 +88,11 @@ public class Player2 {
 							isFalling = true;
 							isJumping = false;
 							momentum += 0.01;
+							if (player_y > World2.f.getHeight()) {
+								player_y = World2.f.getSize().height-(World2.f.getSize().height/4)-67;
+								player_x = 0;
+								momentum = 0;
+							}
 						}
 						else {
 							player_y -= 0.1;
