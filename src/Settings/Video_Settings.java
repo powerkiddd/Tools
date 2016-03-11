@@ -9,8 +9,8 @@ import Main.WriteToFile;
 
 public class Video_Settings {
 	
-	public static int window_size_x = 640;
-	public static int window_size_y = 400;
+	public static int window_size_x = 1280;
+	public static int window_size_y = 720;
 	public static int mapsize = 2400;
 	public static GraphicsDevice gs;
 	public static GraphicsEnvironment ge;
