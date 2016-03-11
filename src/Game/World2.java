@@ -34,8 +34,8 @@ public class World2 extends JPanel {
 	
 	private static BufferedImage image;
 	private static BufferedImage background_land;
-	public static int backgroundx = 1280;
-	public static int backgroundy = 720;
+	public static int backgroundx = 640;
+	public static int backgroundy = 400;
 	private static BufferedImage playerimage;
 	public static BufferedImage[] allblocks;
 	public static String[] blockidentifiers; //Names of blocks must align to pictures
