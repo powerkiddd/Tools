@@ -28,6 +28,15 @@ public class Collision {
 				//System.out.println(Player2.playerspeed);
 				return;
 			}
+			else if (World2.blocks.length-1 == i && Player2.isFalling == false && Player2.isJumping == false && acol == false) {
+				Player2.collisiondown = false;
+				Player2.isFalling = true;
+				Player2.i = 102;
+				Player2.momentum = 0.1f;
+			}
+			else if (World2.blocks.length-1 == i && acol == true) {
+				acol = false;
+			}
 		}
 		else if (Player2.playerrect.intersects(temprect)) {
 			acol = true;

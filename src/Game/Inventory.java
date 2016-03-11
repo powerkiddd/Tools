@@ -52,7 +52,7 @@ public class Inventory {
 		
 		AddBlock("Dirt", (byte) 127);
 		AddBlock("Grass", (byte) 127);
-		AddBlock("Water", (byte) 20);
+		AddBlock("Water", (byte) 127);
 		AddBlock("Stone", (byte) 127);
 	}
 	
