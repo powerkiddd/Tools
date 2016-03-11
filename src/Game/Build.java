@@ -171,7 +171,6 @@ public class Build {
 			for (int j = 0; j < World2.allblocks.length; j++) {
 				if (type.equalsIgnoreCase(World2.blockidentifiers[j])) {
 					World2.backgroundblockcollisions[World2.backgroundblockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y,World2.allblocks[j].getWidth(),World2.allblocks[j].getHeight());
-					System.out.println("Setting backgroundblockcollisions[" + (World2.backgroundblockcollisions.length-1) + "] TO: " + World2.backgroundblockcollisions[World2.backgroundblockcollisions.length-1]);
 					found = true;
 					break;
 				}
