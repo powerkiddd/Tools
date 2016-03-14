@@ -92,8 +92,8 @@ public class World2 extends JPanel {
 			Inventory.main(null);
 			//pausemenu.main(null);
 			Mouse.main(null);
+			//Server.main(null);
 			//Client.Connect("127.0.0.1", 8888);
-			//Server.StartServer(8888);
 		} catch (IOException e) {
 			e.printStackTrace();
 			Crash.cause = "Could not start one of the main classes. Have you tempered with the jar file?";

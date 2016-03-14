@@ -11,7 +11,7 @@ public class Server {
 	public static Socket socket;
 	public static DataOutputStream out;
 	public static DataInputStream in;
-	public static int port;
+	public static int port = 8888;
 	public static Players[] player = new Players[10];
 	
 	public static void main(String[] args) {

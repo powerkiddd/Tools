@@ -26,6 +26,7 @@ public class Client {
 				out.writeUTF(sendMessage);
 			}
 		} catch (IOException e) {
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}
