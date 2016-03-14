@@ -214,7 +214,7 @@ public class MainMenu extends JPanel{
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setResizable(false);
 		try {
-			File file = new File("images\\mainmenu2.png");
+			File file = new File("images\\mainmenu.png");
 			bgr = ImageIO.read(file);
 			ImageIcon dimg = new ImageIcon(bgr.getScaledInstance(Video_Settings.window_size_x, Video_Settings.window_size_y, BufferedImage.SCALE_SMOOTH));
 			derp = new JLabel();
