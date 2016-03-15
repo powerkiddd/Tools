@@ -20,11 +20,11 @@ public class Client {
 			ClientInput input = new ClientInput(in);
 			Thread thread = new Thread(input);
 			thread.start();
-			Scanner sc = new Scanner(System.in);
-			while (true) {
-				String sendMessage = sc.nextLine();
-				out.writeUTF(sendMessage);
-			}
+			//Scanner sc = new Scanner(System.in);
+			/*while (true) {
+				//String sendMessage = sc.nextLine();
+				//out.writeUTF(sendMessage);
+			}*/
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();

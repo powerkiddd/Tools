@@ -8,11 +8,13 @@ public class Players implements Runnable {
 
 	DataOutputStream out;
 	DataInputStream in;
-	Players[] player = new Players[10];
+	public static Players[] player = new Players[10];
+	public static int playersinserver;
+	
 	public Players(DataOutputStream out, DataInputStream in, Players[] player) {
 		this.in = in;
 		this.out = out;
-		this.player = player;
+		Players.player = player;
 	}
 	public void run() {
 		while(true) {

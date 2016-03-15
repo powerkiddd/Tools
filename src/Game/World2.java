@@ -489,10 +489,8 @@ public class World2 extends JPanel {
 			}
 			//Draw Player
 			g.drawImage(playerimage, (int) (Player2.player_x), (int) Player2.player_y, null);
-			for (int i = 0; i < Players.player.length; i++) {
-				if (Players.player[i] != null) {
-					g.drawImage(playerimage, 0, 0, null);
-				}
+			for (int i = 1; i < Players.playersinserver; i++) {
+				g.drawImage(playerimage, 0, 0, null);
 			}
 			//Draw Chi
 			if (Settings.chi == true) {
