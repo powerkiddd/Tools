@@ -24,6 +24,7 @@ import Main.Crash;
 import Main.Directory;
 import Main.Input;
 import Main.Mouse;
+import Main.Players;
 import Main.Server;
 import Main.Version;
 import Mobs.Chi;
@@ -285,6 +286,26 @@ public class World2 extends JPanel {
 			for (int i = 0; i < world_x+f.getSize().width; i += 640) {
 				g.drawImage(background_land, (int) ((int)i-camera_x), f.getSize().height-f.getSize().height/4-380, 640, 400,null);
 			}
+			//Draw blocks in background
+			for (int i = 0; i < backgroundblocks.length; i++) {
+				Rectangle temprect = new Rectangle();
+				//System.out.println(backgroundblockcollisions);
+				temprect = (Rectangle) backgroundblockcollisions[i].clone();
+				String pos = backgroundblockposses[i];
+				String[] xy = pos.split(",");
+				int x = Math.round(Float.parseFloat(xy[0]));
+				int y = Integer.parseInt(xy[1]);
+				for (int j = 0; j < allblocks.length; j++) {
+					if (blockidentifiers[j].equalsIgnoreCase(backgroundblocks[i])) {
+						g.drawImage(allblocks[j], (int) ((int) x-camera_x), y, backgroundblockcollisions[i].width, backgroundblockcollisions[i].height, null);
+						break;
+					}
+				}
+				temprect.x -= camera_x;
+				if (debug == true) {
+					g.drawImage(collider3, temprect.x, temprect.y, temprect.width, temprect.height, null);
+				}
+			}
 			//Draw world
 			//g.drawImage(grassblock, 0,f.getSize().height-f.getSize().height/4, f.getSize().width , 25, null);
 			//g.drawImage(dirtblock, 0,f.getSize().height-f.getSize().height/4+25, f.getSize().width , f.getSize().height/4-25, null);
@@ -466,28 +487,13 @@ public class World2 extends JPanel {
 					//BlockInfo.RemoveAllInfo(i);
 				}
 			}
-			//Draw blocks in background
-			for (int i = 0; i < backgroundblocks.length; i++) {
-				Rectangle temprect = new Rectangle();
-				//System.out.println(backgroundblockcollisions);
-				temprect = (Rectangle) backgroundblockcollisions[i].clone();
-				String pos = backgroundblockposses[i];
-				String[] xy = pos.split(",");
-				int x = Math.round(Float.parseFloat(xy[0]));
-				int y = Integer.parseInt(xy[1]);
-				for (int j = 0; j < allblocks.length; j++) {
-					if (blockidentifiers[j].equalsIgnoreCase(backgroundblocks[i])) {
-						g.drawImage(allblocks[j], (int) ((int) x-camera_x), y, backgroundblockcollisions[i].width, backgroundblockcollisions[i].height, null);
-						break;
-					}
-				}
-				temprect.x -= camera_x;
-				if (debug == true) {
-					g.drawImage(collider3, temprect.x, temprect.y, temprect.width, temprect.height, null);
-				}
-			}
 			//Draw Player
 			g.drawImage(playerimage, (int) (Player2.player_x), (int) Player2.player_y, null);
+			for (int i = 0; i < Players.player.length; i++) {
+				if (Players.player[i] != null) {
+					g.drawImage(playerimage, 0, 0, null);
+				}
+			}
 			//Draw Chi
 			if (Settings.chi == true) {
 				g.drawImage(Chi.image, (int) Chi.chix, (int) Chi.chiy,28,67, null);
