@@ -51,6 +51,7 @@ public class World2 extends JPanel {
 	private static BufferedImage loading;
 	private static BufferedImage loadingicon;
 	private static int world_x = 2400;
+	private static int world_y = 2400;
 	public static boolean debug = false;
 	public static boolean debuggrid = false;
 	public static float camera_x = 0;
@@ -253,14 +254,14 @@ public class World2 extends JPanel {
 		};
 		frametimer.scheduleAtFixedRate(updateFPS, 1000, 1000);
 		updatetimer.scheduleAtFixedRate(update, 10, 10);
-		for (int i = 75; i < world_x*2; i++) {
+		for (int i = 75; i < world_x+Video_Settings.window_size_x-25; i++) {
 			Random rnd = new Random();
 			int kaas = rnd.nextInt(400);
 			if (kaas == 200) {
 				Build.Place("Tree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,75,175), true);
 			}
 		}
-		for (int i = 0; i < world_x*2; i += 25) {
+		for (int i = 0; i < world_x+Video_Settings.window_size_x-25; i += 25) {
 			Build.Place("Grass", new Rectangle(i,f.getSize().height-f.getSize().height/4, 25 , 25), false);
 			for (int j = f.getSize().height-f.getSize().height/4+25; j < f.getSize().height-25; j += 25) {
 				Build.Place("Dirt", new Rectangle(i,j, 25 , 25),false);
