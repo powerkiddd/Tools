@@ -10,6 +10,8 @@ public class Players implements Runnable {
 	DataInputStream in;
 	public static Players[] player = new Players[10];
 	public static int playersinserver;
+	public static int playerx[];
+	public static int playery[];
 	
 	public Players(DataOutputStream out, DataInputStream in, Players[] player) {
 		this.in = in;

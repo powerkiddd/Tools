@@ -10,6 +10,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,9 +43,6 @@ public class World2 extends JPanel {
 	private static BufferedImage playerimage;
 	public static BufferedImage[] allblocks;
 	public static String[] blockidentifiers; //Names of blocks must align to pictures
-	private static BufferedImage grassblock;
-	private static BufferedImage dirtblock;
-	private static BufferedImage tree;
 	private static BufferedImage invslot;
 	private static BufferedImage collider;
 	private static BufferedImage collider2;
@@ -69,6 +69,7 @@ public class World2 extends JPanel {
 	public static Timer updatetimer = new Timer();
 	public static int FPS = 0;
 	public static int lastFPS = 0;
+	public static String special = "";
 	public static boolean once = false;
 	public static Runtime runtime = Runtime.getRuntime();
 	public static long maxmemory = runtime.maxMemory();
@@ -111,31 +112,40 @@ public class World2 extends JPanel {
 				String[] split = allfiles[i].substring(14).split("\\.");
 				blockidentifiers[i-1] = split[0];
 			}
+			String[] allfiles2 = Directory.GetAllFilesFromDirectory("images\\birthday\\");
+			BufferedImage[] allblocks_ = allblocks.clone();
+			String[] blockidentifiers_ = blockidentifiers.clone();
+			allblocks = new BufferedImage[allblocks_.length + allfiles2.length-1];
+			blockidentifiers = new String[blockidentifiers_.length + allfiles2.length-1];
+			for (int i = 0; i < allblocks_.length; i++) {
+				allblocks[i] = allblocks_[i];
+				blockidentifiers[i] = blockidentifiers_[i];
+			}
+			for (int i = 1; i < allfiles2.length; i++) {
+				File newfile = new File("images\\birthday\\"+allfiles2[i].substring(16));
+				allblocks[allblocks_.length+i-1] = ImageIO.read(newfile);
+				String[] split = allfiles2[i].substring(16).split("\\.");
+				blockidentifiers[blockidentifiers_.length+i-1] = split[0];
+			}
 			File file = new File("images\\skybox.jpg");
 			File file2 = new File("images\\player.png");
-			File file3 = new File("images\\blocks\\grass.png");
-			File file4 = new File("images\\blocks\\dirt.png");
 			File file5 = new File("images\\inventory_slot.png");
 			File file6 = new File("images\\Collider.png");
 			File file7 = new File("images\\Collider2.png");
 			File file8 = new File("images\\BlockHolder.png");
 			File file9 = new File("images\\Grid.png");
 			File file10 = new File("images\\Collider3.png");
-			File file11 = new File("images\\blocks\\Tree.png");
 			File file12 = new File("images\\background_land.png");
 			File file13 = new File("images\\loading\\loading.png");
 			File file14 = new File("images\\loading\\loading_icon.png");
 			image = ImageIO.read(file);
 			playerimage = ImageIO.read(file2);
-			grassblock = ImageIO.read(file3);
-			dirtblock = ImageIO.read(file4);
 			invslot = ImageIO.read(file5);
 			collider = ImageIO.read(file6);
 			collider2 = ImageIO.read(file7);
 			blockholder = ImageIO.read(file8);
 			grid = ImageIO.read(file9);
 			collider3 = ImageIO.read(file10);
-			tree = ImageIO.read(file11);
 			background_land = ImageIO.read(file12);
 			loading = ImageIO.read(file13);
 			loadingicon = ImageIO.read(file14);
@@ -149,7 +159,7 @@ public class World2 extends JPanel {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setResizable(false);
 		f.add(new World2());
-		f.setTitle("Tools " + Version.version + " [FPS: " + lastFPS + "]");
+		f.setTitle("Tools " + Version.version + " [FPS: " + lastFPS + "] " + special);
 		Runtime.getRuntime().gc();
 		if (Settings.fullscreen == true) {
 			f.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -176,7 +186,7 @@ public class World2 extends JPanel {
 				else {
 					hasitcrashed = 0;
 				}
-				f.setTitle("Tools " + Version.version + " [FPS: " + lastFPS + "]");
+				f.setTitle("Tools " + Version.version + " [FPS: " + lastFPS + "] " + special);
 				FPS = 0;
 			}
 		};
@@ -268,6 +278,35 @@ public class World2 extends JPanel {
 				Build.Place("Dirt", new Rectangle(i,j, 25 , 25),false);
 			}
 		}
+		DateFormat dateformat = new SimpleDateFormat("dd/MM");
+		Date date = new Date();
+		if (dateformat.format(date).equals("18/03") || dateformat.format(date).equals("10/12")) {
+			if (dateformat.format(date).equals("18/03")) {
+				special = "Happy birthday powerkiddd!";
+			}
+			if (dateformat.format(date).equals("10/12")) {
+				special = "Happy birthday Menleader!";
+			}
+			for (int i = 0; i < Video_Settings.window_size_x; i += 25) {
+				Random rnd = new Random();
+				int kaas = rnd.nextInt(4);
+				int j = rnd.nextInt(world_y);
+				switch (kaas) {
+					case 0:
+						Build.Place("Balloon_red", new Rectangle(i,j,47,90), true);
+					break;
+					case 1:
+						Build.Place("Balloon_blue", new Rectangle(i,j,47,90), true);
+					break;
+					case 2:
+						Build.Place("Balloon_green", new Rectangle(i,j,47,90), true);
+					break;
+					case 3:
+						Build.Place("Balloon_yellow", new Rectangle(i,j,47,90), true);
+					break;
+				}
+			}
+		}
 		buildingworld = false;
 	}
 	
@@ -295,6 +334,10 @@ public class World2 extends JPanel {
 				String[] xy = pos.split(",");
 				int x = Math.round(Float.parseFloat(xy[0]));
 				int y = Integer.parseInt(xy[1]);
+				if (backgroundblocks[i] == "Balloon_red" || backgroundblocks[i] == "Balloon_blue" || backgroundblocks[i] == "Balloon_green" || backgroundblocks[i] == "Balloon_yellow") {
+					backgroundblockposses[i] = "" + x + "," + (y-1);
+					backgroundblockcollisions[i] = new Rectangle(x,(int) (y-1),47,90);
+				}
 				for (int j = 0; j < allblocks.length; j++) {
 					if (blockidentifiers[j].equalsIgnoreCase(backgroundblocks[i])) {
 						g.drawImage(allblocks[j], (int) ((int) x-camera_x), y, backgroundblockcollisions[i].width, backgroundblockcollisions[i].height, null);
@@ -304,6 +347,9 @@ public class World2 extends JPanel {
 				temprect.x -= camera_x;
 				if (debug == true) {
 					g.drawImage(collider3, temprect.x, temprect.y, temprect.width, temprect.height, null);
+				}
+				if (y < -90) {
+					Build.Mine(i, false, true);
 				}
 			}
 			//Draw world
@@ -443,7 +489,7 @@ public class World2 extends JPanel {
 				if (Mouse.left == true) {
 					if (Mouse.gamecursorrect.intersects(temprect)) {
 						//System.out.println("You clicked an block!");
-						Build.Mine(i, true);
+						Build.Mine(i, true, false);
 					}
 				}
 				if (Player2.playerrect.intersects(temprect)) {
@@ -483,7 +529,7 @@ public class World2 extends JPanel {
 					}
 				}
 				if (removeblock) {
-					Build.Mine(i, false);
+					Build.Mine(i, false, false);
 					//BlockInfo.RemoveAllInfo(i);
 				}
 			}

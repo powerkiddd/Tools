@@ -71,30 +71,61 @@ public class Build {
 		}
 	}
 	
-	public static void Mine (int number, boolean giveplayerblock) {
-		String[] blocks_ = World2.blocks.clone();
-		String[] blockposses_ = World2.blockposses.clone();
-		Rectangle[] blockcollisions_ = World2.blockcollisions.clone();
+	public static void Mine (int number, boolean giveplayerblock, boolean background) {
+		String[] blocks_;
+		String[] blockposses_;
+		Rectangle[] blockcollisions_;
+		if (background == false) {
+			blocks_ = World2.blocks.clone();
+			blockposses_ = World2.blockposses.clone();
+			blockcollisions_ = World2.blockcollisions.clone();
+		}
+		else {
+			blocks_ = World2.backgroundblocks.clone();
+			blockposses_ = World2.backgroundblockposses.clone();
+			blockcollisions_ = World2.backgroundblockcollisions.clone();
+		}
 		if (giveplayerblock) {
 			Inventory.AddBlock(blocks_[number], (byte) 1);
 		}
 		boolean foundnumber = false;
 		//Reset Blocks, blockposses and blockcollisions
 		//System.out.println(number);
-		World2.blocks = new String[World2.blocks.length-1];
-		World2.blockposses = new String[World2.blockposses.length-1];
-		World2.blockcollisions = new Rectangle[World2.blockcollisions.length-1];
+		if (background == false) {
+			World2.blocks = new String[World2.blocks.length-1];
+			World2.blockposses = new String[World2.blockposses.length-1];
+			World2.blockcollisions = new Rectangle[World2.blockcollisions.length-1];
+		}
+		else {
+			World2.backgroundblocks = new String[World2.backgroundblocks.length-1];
+			World2.backgroundblockposses = new String[World2.backgroundblockposses.length-1];
+			World2.backgroundblockcollisions = new Rectangle[World2.backgroundblockcollisions.length-1];
+		}
 		for (int i=0; i < blocks_.length; i++) {
 			if (i != number) {
-				if (foundnumber == false) {
-					World2.blocks[i] = blocks_[i];
-					World2.blockposses[i] = blockposses_[i];
-					World2.blockcollisions[i] = blockcollisions_[i];
+				if (background == false) {
+					if (foundnumber == false) {
+						World2.blocks[i] = blocks_[i];
+						World2.blockposses[i] = blockposses_[i];
+						World2.blockcollisions[i] = blockcollisions_[i];
+					}
+					else {
+						World2.blocks[i-1] = blocks_[i];
+						World2.blockposses[i-1] = blockposses_[i];
+						World2.blockcollisions[i-1] = blockcollisions_[i];
+					}
 				}
 				else {
-					World2.blocks[i-1] = blocks_[i];
-					World2.blockposses[i-1] = blockposses_[i];
-					World2.blockcollisions[i-1] = blockcollisions_[i];
+					if (foundnumber == false) {
+						World2.backgroundblocks[i] = blocks_[i];
+						World2.backgroundblockposses[i] = blockposses_[i];
+						World2.backgroundblockcollisions[i] = blockcollisions_[i];
+					}
+					else {
+						World2.backgroundblocks[i-1] = blocks_[i];
+						World2.backgroundblockposses[i-1] = blockposses_[i];
+						World2.backgroundblockcollisions[i-1] = blockcollisions_[i];
+					}
 				}
 			}
 			else {
