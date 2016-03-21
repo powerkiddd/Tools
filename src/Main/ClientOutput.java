@@ -10,7 +10,6 @@ import Game.World2;
 public class ClientOutput implements Runnable {
 	
 	DataOutputStream out;
-	int ms = 0;
 	
 	public ClientOutput (DataOutputStream out) {
 		this.out = out;

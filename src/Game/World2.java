@@ -81,7 +81,6 @@ public class World2 extends JPanel {
 	public static boolean NextFrame_Water = false;
 	public static byte hasitcrashed = 0;
 	public static boolean buildingworld = true;
-	public static boolean playermoved = true;
 	private static float rot = 0;
 	
 	public static void main(String[] args) {
