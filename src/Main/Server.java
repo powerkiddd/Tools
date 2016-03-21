@@ -26,12 +26,12 @@ public class Server {
 				for (byte i = 0; i < 10; i++) {
 					playersinserver++;
 					out = new DataOutputStream(socket.getOutputStream());
-					out.writeUTF("Kaasknal");
 					in = new DataInputStream(socket.getInputStream());
 					if (player[i] == null) {
 						out.writeUTF("PIS:" + playersinserver);
+						out.writeUTF("AID:" + i);
 						player[i] = new Players(out,in,player);
-						Thread thread = new Thread();
+						Thread thread = new Thread(player[i]);
 						thread.start();
 						break;
 					}

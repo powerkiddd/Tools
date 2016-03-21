@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import Main.Client;
+import Main.ClientOutput;
 import Main.Collision;
 import Main.Crash;
 import Main.Directory;
@@ -328,7 +329,6 @@ public class World2 extends JPanel {
 			//Draw blocks in background
 			for (int i = 0; i < backgroundblocks.length; i++) {
 				Rectangle temprect = new Rectangle();
-				//System.out.println(backgroundblockcollisions);
 				temprect = (Rectangle) backgroundblockcollisions[i].clone();
 				String pos = backgroundblockposses[i];
 				String[] xy = pos.split(",");
@@ -492,34 +492,7 @@ public class World2 extends JPanel {
 						Build.Mine(i, true, false);
 					}
 				}
-				if (Player2.playerrect.intersects(temprect)) {
-					/*Player2.collisionpos = temprect;
-					if (Input.GetInput("a") && Player2.collision != "d" && Player2.collisiondown == false) {
-						Player2.collision = "a";
-					}
-					if (Input.GetInput("d") && Player2.collision != "a" && Player2.collisiondown == false) {
-						Player2.collision = "d";
-					}*/
-					/*if (Player2.isFalling == true) {
-						System.out.println(Player2.player_y + "," + temprect.y);
-						if (Player2.player_y+64 > temprect.y) {
-							//Player2.player_y--;
-							Player2.collisiondown = true;
-						}
-					}*/
-					//System.out.println(Player2.i + "," + Player2.isFalling + "," + Player2.isJumping);
-					/*if (Player2.isJumping == true) {
-						Player2.player_y -= 0.5;
-						//Player2.i = 101;
-					}
-					if (Player2.collision == "a") {
-						Player2.player_x += 0.02;
-					}
-					if (Player2.collision == "d") {
-						Player2.player_x -= 0.02;
-					}*/
-				}
-				else if (Player2.collisionpos != null) {
+				if (Player2.collisionpos != null) {
 					if (!Player2.playerrect.intersects(Player2.collisionpos)) {
 						Player2.collision = "";
 						if (Player2.collisiondown == true) {
@@ -536,7 +509,7 @@ public class World2 extends JPanel {
 			//Draw Player
 			g.drawImage(playerimage, (int) (Player2.player_x), (int) Player2.player_y, null);
 			for (int i = 1; i < Players.playersinserver; i++) {
-				g.drawImage(playerimage, 0, 0, null);
+				g.drawImage(playerimage, Players.playerx[i-1], Players.playery[i-1], null);
 			}
 			//Draw Chi
 			if (Settings.chi == true) {

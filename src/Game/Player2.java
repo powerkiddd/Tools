@@ -9,6 +9,7 @@ import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 
+import Main.Collision;
 import Main.Crash;
 
 public class Player2 {
