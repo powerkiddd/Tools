@@ -15,6 +15,7 @@ public class Collision {
 		Rectangle temprect = new Rectangle();
 		temprect = (Rectangle) World2.blockcollisions[i].clone();
 		temprect.x -= (int) World2.camera_x;
+		temprect.y -= (int) World2.camera_y;
 		
 		//System.out.println(World2.blocks[i]);
 		if (World2.blocks[i].equals("Water")) {

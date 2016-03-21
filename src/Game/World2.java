@@ -57,6 +57,8 @@ public class World2 extends JPanel {
 	public static boolean debug = false;
 	public static boolean debuggrid = false;
 	public static float camera_x = 0;
+	public static float camera_y = 0;
+	public static boolean canplayermovey = true;
 	public static String[] blocks = new String[0];
 	public static String[] blockposses = new String[0];
 	public static Rectangle[] blockcollisions = new Rectangle[0];
@@ -219,7 +221,6 @@ public class World2 extends JPanel {
 						if (camera_x < 0) {
 							camera_x = 0;
 						}
-						//System.out.println("GO LEFT");
 					}
 					else {
 						Player2.atborder = false;
@@ -245,7 +246,6 @@ public class World2 extends JPanel {
 						if (camera_x > world_x) {
 							camera_x = world_x;
 						}
-						//System.out.println("GO RIGHT");
 					}
 					else {
 						Player2.atborder = false;
@@ -261,6 +261,13 @@ public class World2 extends JPanel {
 					if (Player2.isJumping == false && Player2.isFalling == false) {
 						Player2.isJumping = true;
 					}
+				}
+				if (Player2.player_y > Video_Settings.window_size_y-Video_Settings.window_size_y/3 && camera_y < world_y) {
+					//camera_y = Player2.player_y-Video_Settings.window_size_y+Video_Settings.window_size_y/3;
+					canplayermovey = false;
+				}
+				else {
+					canplayermovey = true;
 				}
 			}
 		};
@@ -324,7 +331,7 @@ public class World2 extends JPanel {
 				}
 			}
 			for (int i = 0; i < world_x+f.getSize().width; i += 640) {
-				g.drawImage(background_land, (int) ((int)i-camera_x), f.getSize().height-f.getSize().height/4-380, 640, 400,null);
+				g.drawImage(background_land, (int) (i-camera_x),(int) (f.getSize().height-f.getSize().height/4-380-camera_y), 640, 400,null);
 			}
 			//Draw blocks in background
 			for (int i = 0; i < backgroundblocks.length; i++) {
@@ -340,11 +347,12 @@ public class World2 extends JPanel {
 				}
 				for (int j = 0; j < allblocks.length; j++) {
 					if (blockidentifiers[j].equalsIgnoreCase(backgroundblocks[i])) {
-						g.drawImage(allblocks[j], (int) ((int) x-camera_x), y, backgroundblockcollisions[i].width, backgroundblockcollisions[i].height, null);
+						g.drawImage(allblocks[j], (int) (x-camera_x), (int) (y-camera_y), backgroundblockcollisions[i].width, backgroundblockcollisions[i].height, null);
 						break;
 					}
 				}
 				temprect.x -= camera_x;
+				temprect.y -= camera_y;
 				if (debug == true) {
 					g.drawImage(collider3, temprect.x, temprect.y, temprect.width, temprect.height, null);
 				}
@@ -365,18 +373,11 @@ public class World2 extends JPanel {
 				boolean removeblock = false;
 				for (int j = 0; j < allblocks.length; j++) {
 					if (blockidentifiers[j].equalsIgnoreCase(blocks[i])) {
-						g.drawImage(allblocks[j], (int) ((int) x-camera_x), y, blockcollisions[i].width, blockcollisions[i].height, null);
+						g.drawImage(allblocks[j], (int) (x-camera_x), (int) (y-camera_y), blockcollisions[i].width, blockcollisions[i].height, null);
 						break;
 					}
 				}
-				if (blocks[i] == "Dirt") {
-					//g.drawImage(dirtblock, (int) ((int) x-camera_x), y, 25, 25, null);
-				}
-				else if (blocks[i] == "Grass") {
-					//g.drawImage(grassblock, (int) ((int) x-camera_x), y, 25, 25, null);
-				}
-				else if (blocks[i] == "Water") {
-					//g.drawImage(waterblock, (int) ((int) x-camera_x), y, blockcollisions[i].width, blockcollisions[i].height, null);
+				if (blocks[i] == "Water") {
 					if (y < World2.f.getSize().height) {
 						int hascolwith = Collision.testblockcol(i);
 						if (hascolwith == -1) {
@@ -463,9 +464,6 @@ public class World2 extends JPanel {
 						}
 					}
 				}
-				else if (blocks[i] == "Stone") {
-					//g.drawImage(stoneblock, (int) ((int) x-camera_x), y, 25, 25, null);
-				}
 				Collision.testplayercol(i);
 				Rectangle temprect = new Rectangle();
 				temprect = (Rectangle) blockcollisions[i].clone();
@@ -479,6 +477,7 @@ public class World2 extends JPanel {
 					}
 				}
 				temprect.x -= (int) camera_x;
+				temprect.y -= (int) camera_y;
 				if (debug == true) {
 					g.drawImage(collider, temprect.x, temprect.y, temprect.width, temprect.height, null);
 					if (Mouse.gamecursorrect != null) {
@@ -488,7 +487,6 @@ public class World2 extends JPanel {
 				}
 				if (Mouse.left == true) {
 					if (Mouse.gamecursorrect.intersects(temprect)) {
-						//System.out.println("You clicked an block!");
 						Build.Mine(i, true, false);
 					}
 				}
@@ -569,27 +567,28 @@ public class World2 extends JPanel {
 				g.drawString("This is currently " + Version.version + "!", 0, 10);
 				g.drawString("DEBUGGING INFORMATION:",0,25);
 				g.drawString("Camera_x = " + camera_x,0,40);
-				g.drawString("Player_x = " + Player2.player_x + " | Player_y = " + Player2.player_y,0,55);
-				g.drawString("Playerspeed = " + Player2.playerspeed,0,70);
-				g.drawString("Mapsize = " + world_x,0,85);
-				g.drawString("Max Memory = " + (maxmemory/1024) + " KiloBytes | " + (maxmemory/1024/1024) + " MegaBytes",0,100);
-				g.drawString("Allocated Memory = " + (allocatedmemory/1024) + " KiloBytes | " + (allocatedmemory/1024/1024) + " MegaBytes",0,115);
-				g.drawString("Free Memory = " + (freememory/1024) + " KiloBytes | " + (freememory/1024/1024) + " MegaBytes",0,130);
-				g.drawString("Total Free Memory = " + ((freememory + (maxmemory - allocatedmemory))/1024/1024) + " MegaBytes", 0, 145);
-				g.drawString("FPS: " + lastFPS, 0, 160);
+				g.drawString("Camera_y = " + camera_y + " | I = " + Player2.i + " | Collisiondown = " + Player2.collisiondown,0,55);
+				g.drawString("Player_x = " + Player2.player_x + " | Player_y = " + Player2.player_y,0,70);
+				g.drawString("Playerspeed = " + Player2.playerspeed,0,85);
+				g.drawString("Mapsize = " + world_x,0,100);
+				g.drawString("Max Memory = " + (maxmemory/1024) + " KiloBytes | " + (maxmemory/1024/1024) + " MegaBytes",0,115);
+				g.drawString("Allocated Memory = " + (allocatedmemory/1024) + " KiloBytes | " + (allocatedmemory/1024/1024) + " MegaBytes",0,130);
+				g.drawString("Free Memory = " + (freememory/1024) + " KiloBytes | " + (freememory/1024/1024) + " MegaBytes",0,145);
+				g.drawString("Total Free Memory = " + ((freememory + (maxmemory - allocatedmemory))/1024/1024) + " MegaBytes", 0, 160);
+				g.drawString("FPS: " + lastFPS, 0, 175);
 				g.drawImage(collider, (int) Player2.playerrect.x, (int) Player2.playerrect.y, Player2.playerrect.width, Player2.playerrect.height, null);
-				g.drawString("Graphics Device: " + Video_Settings.gs, 0, 175);
-				g.drawString("Total Graphics Devices: " + (Video_Settings.ge.getScreenDevices().length), 0, 190);
-				g.drawString("Using Graphics Device:" + Video_Settings.gd[0].getIDstring(), 0, 205);
-				g.drawString("IsJumping: " + Player2.isJumping + " , IsFalling: " + Player2.isFalling,0, 220);
-				g.drawString("Total CPU Cores available: " + processors, 0, 235);
+				g.drawString("Graphics Device: " + Video_Settings.gs, 0, 190);
+				g.drawString("Total Graphics Devices: " + (Video_Settings.ge.getScreenDevices().length), 0, 205);
+				g.drawString("Using Graphics Device:" + Video_Settings.gd[0].getIDstring(), 0, 220);
+				g.drawString("IsJumping: " + Player2.isJumping + " , IsFalling: " + Player2.isFalling,0, 235);
+				g.drawString("Total CPU Cores available: " + processors, 0, 250);
 			}
 			//End Debugging Information
 			//DRAW GRID
 			if (debuggrid == true) {
 				for (int gridx = 0; gridx < world_x; gridx += 25) {
 					for (int gridy = 0; gridy < f.getHeight(); gridy += 25) {
-						g.drawImage(grid, gridx - (int) camera_x, gridy, 25, 25, null);
+						g.drawImage(grid, gridx - (int) camera_x, gridy - (int) camera_y, 25, 25, null);
 					}
 				}
 			}

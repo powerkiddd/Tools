@@ -56,22 +56,43 @@ public class Player2 {
 					else if (i < 100) {
 						isFalling = false;
 						isJumping = true;
+						collisiondown = false;
 						if (isInWater) {
 							//i = 1;
-							player_y-=0.1;
+							if (World2.canplayermovey) {
+								player_y -= 0.1;
+							}
+							else {
+								World2.camera_y -= 0.1;
+							}
 						}
 						else {
-							player_y--;
+							if (World2.canplayermovey) {
+								player_y--;
+							}
+							else {
+								World2.camera_y--;
+							}
 						}
 						momentum = 0;
 					}
 					else if (i == 101) {
 						if (isInWater == false) {
-							player_y += momentum;
+							if (World2.canplayermovey) {
+								player_y += momentum;
+							}
+							else {
+								World2.camera_y += momentum;
+							}
 							momentum = -1;
 						}
 						else {
-							player_y -= 0.1;
+							if (World2.canplayermovey) {
+								player_y -= 0.1;
+							}
+							else {
+								World2.camera_y -= 0.1;
+							}
 						}
 					}
 					/*else if (i > 100 && i < 200) {
@@ -84,19 +105,30 @@ public class Player2 {
 					else if (collisiondown == false) {
 						if (isInWater == false) {
 							for (float j = 0; j < 10; j++) {
-								player_y += momentum/10;
+								if (World2.canplayermovey) {
+									player_y += momentum/10;
+								}
+								else {
+									World2.camera_y += momentum/10;
+								}
 							}
 							isFalling = true;
 							isJumping = false;
 							momentum += 0.01;
 							if (player_y > World2.f.getHeight()) {
+								World2.camera_y = 0;
 								player_y = World2.f.getSize().height-(World2.f.getSize().height/4)-67;
 								player_x = 0;
 								momentum = 0;
 							}
 						}
 						else {
-							player_y -= 0.1;
+							if (World2.canplayermovey) {
+								player_y -= 0.1;
+							}
+							else {
+								World2.camera_y -= 0.1;
+							}
 						}
 					}
 					else {
