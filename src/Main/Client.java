@@ -13,7 +13,6 @@ public class Client {
 	public static Socket socket;
 	public static DataInputStream in;
 	public static DataOutputStream out;
-	public static byte id;
 	
 	public static void Connect(String IP, int port) {
 		try {
@@ -23,14 +22,6 @@ public class Client {
 			ClientInput input = new ClientInput(in);
 			Thread thread = new Thread(input);
 			thread.start();
-			ClientOutput output = new ClientOutput(out);
-			Thread thread2 = new Thread(output);
-			thread2.start();
-			//Scanner sc = new Scanner(System.in);
-			/*while (true) {
-				//String sendMessage = sc.nextLine();
-				//out.writeUTF(sendMessage);
-			}*/
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();

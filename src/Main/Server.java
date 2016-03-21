@@ -28,8 +28,6 @@ public class Server {
 					out = new DataOutputStream(socket.getOutputStream());
 					in = new DataInputStream(socket.getInputStream());
 					if (player[i] == null) {
-						out.writeUTF("PIS:" + playersinserver);
-						out.writeUTF("AID:" + i);
 						player[i] = new Players(out,in,player);
 						Thread thread = new Thread(player[i]);
 						thread.start();

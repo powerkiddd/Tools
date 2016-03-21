@@ -5,11 +5,12 @@ import java.io.IOException;
 
 import Game.Player;
 import Game.Player2;
+import Game.World2;
 
 public class ClientOutput implements Runnable {
 	
 	DataOutputStream out;
-	public static Boolean playermoved = true;
+	int ms = 0;
 	
 	public ClientOutput (DataOutputStream out) {
 		this.out = out;
@@ -18,12 +19,10 @@ public class ClientOutput implements Runnable {
 	public void run () {
 		while(true) {
 			try {
-				if (playermoved) {
-					out.writeUTF("PPOS:" + Player2.player_x + "," + Player2.player_y + "," + Client.id);
-					playermoved = false;
-				}
+				
 			} catch (Exception ex) {
 				ex.printStackTrace();
+				System.exit(0);
 			}
 		}
 	}
