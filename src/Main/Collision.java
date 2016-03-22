@@ -51,7 +51,7 @@ public class Collision {
 				//Sta rechts van blok
 				Player2.collision = "a";
 			}
-			if (Player2.playerrect.getMaxY() < temprect.getMaxY()) {
+			if (Player2.playerrect.getMaxY() < temprect.getMaxY() && Player2.playerrect.getMaxX() > temprect.getMinX() && Player2.playerrect.getMinX() < temprect.getMaxX()) {
 				//Sta op blok
 				Player2.collisiondown = true;
 			}

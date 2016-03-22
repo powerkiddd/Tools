@@ -33,17 +33,17 @@ public class Build {
 			String pos = "";
 			if (Input.snap) {
 				if (World2.camera_x/25==Math.floor(World2.camera_x/25)) {
-					pos = "" + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - World2.f.getLocationOnScreen().x + World2.camera_x)) + "," + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - World2.f.getLocationOnScreen().y);
+					pos = "" + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - World2.f.getLocationOnScreen().x + World2.camera_x)) + "," + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - World2.f.getLocationOnScreen().y + (int) World2.camera_y);
 				}
 				else {
 					byte temp_x = (byte)Math.round((World2.camera_x/25));
 					World2.final_x = (byte)(World2.camera_x-(25*temp_x));
-					pos = "" + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25)-(int) World2.final_x) - World2.f.getLocationOnScreen().x + World2.camera_x) + "," + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - World2.f.getLocationOnScreen().y);
+					pos = "" + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25)-(int) World2.final_x) - World2.f.getLocationOnScreen().x + World2.camera_x) + "," + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - World2.f.getLocationOnScreen().y + (int) World2.camera_y);
 				}
 				//pos = "" + (short) (CurrentMousePos.x + World2.camera_x - World2.final_x) + "," + "" + CurrentMousePos.y;
 			}
 			else {
-				pos = "" + (short) (CurrentMousePos.x + World2.camera_x) + "," + "" + CurrentMousePos.y;
+				pos = "" + (short) (CurrentMousePos.x + World2.camera_x) + "," + "" + (short) (CurrentMousePos.y + World2.camera_y);
 			}
 			//System.out.println(pos);
 			UpdateBlocks(Inventory.items[selected-1], pos, CurrentMousePos);
@@ -156,7 +156,7 @@ public class Build {
 		World2.blockposses[World2.blockposses.length-1] = pos;
 		if (selected != 0 && Inventory.slots[selected-1] != null) {
 			//Get index from inventory
-			World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y,Inventory.slots[selected-1].getWidth(),Inventory.slots[selected-1].getHeight());
+			World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y+(int)World2.camera_y,Inventory.slots[selected-1].getWidth(),Inventory.slots[selected-1].getHeight());
 		}
 		else {
 			//Get index from world block collection
