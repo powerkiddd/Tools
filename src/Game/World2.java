@@ -38,6 +38,7 @@ import Settings.Video_Settings;
 public class World2 extends JPanel {
 	
 	private static BufferedImage image;
+	private static BufferedImage space;
 	private static BufferedImage background_land;
 	public static int backgroundx = 640;
 	public static int backgroundy = 400;
@@ -80,6 +81,7 @@ public class World2 extends JPanel {
 	public static long freememory = runtime.freeMemory();
 	public static byte processors = (byte) runtime.availableProcessors();
 	public static byte final_x;
+	public static byte final_y;
 	public static boolean NextFrame_Water = false;
 	public static byte hasitcrashed = 0;
 	public static boolean buildingworld = true;
@@ -141,6 +143,7 @@ public class World2 extends JPanel {
 			File file12 = new File("images\\background_land.png");
 			File file13 = new File("images\\loading\\loading.png");
 			File file14 = new File("images\\loading\\loading_icon.png");
+			File file15 = new File("images\\skybox_space.jpg");
 			image = ImageIO.read(file);
 			playerimage = ImageIO.read(file2);
 			invslot = ImageIO.read(file5);
@@ -152,6 +155,7 @@ public class World2 extends JPanel {
 			background_land = ImageIO.read(file12);
 			loading = ImageIO.read(file13);
 			loadingicon = ImageIO.read(file14);
+			space = ImageIO.read(file15);
 		}
 		catch (IOException ex) {
 			ex.printStackTrace();
@@ -327,7 +331,12 @@ public class World2 extends JPanel {
 			//Draw Background
 			for (int i=0; i < f.getSize().height; i += backgroundy) {
 				for (int j=0; j < world_x+f.getSize().width; j += backgroundx) {
-					g.drawImage(image, (int) ((int)j-camera_x), i, backgroundx, backgroundy,null);
+					if (camera_y > -1500) {
+						g.drawImage(image, (int) ((int)j-camera_x), i, backgroundx, backgroundy,null);
+					}
+					else {
+						g.drawImage(space, (int) ((int)j-camera_x), i, backgroundx, backgroundy,null);
+					}
 				}
 			}
 			for (int i = 0; i < world_x+f.getSize().width; i += 640) {
@@ -547,13 +556,16 @@ public class World2 extends JPanel {
 			if (Build.selected != 0) {
 				if (Inventory.items[Build.selected-1] != "Empty") {
 					if (Input.snap) {
-						if (camera_x/25==Math.floor(camera_x/25)) {
+						if (camera_x/25==Math.floor(camera_x/25) && camera_y/25==Math.floor(camera_y/25)) {
 							g.drawImage(blockholder, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, 25,25,null);
 						}
 						else {
 							byte temp_x = (byte)Math.round((camera_x/25));
 							final_x = (byte)(camera_x-(25*temp_x));
-							g.drawImage(blockholder, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25)-(int) final_x) - f.getLocationOnScreen().x, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, 25,25,null);
+							byte temp_y = (byte)Math.round((camera_y/25));
+							final_y = (byte)(camera_y-(25*temp_y));
+							final_y = (byte) (final_y + 25);
+							g.drawImage(blockholder, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25)-(int) final_x) - f.getLocationOnScreen().x, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25)*25)-(int) final_y) - f.getLocationOnScreen().y, 25,25,null);
 						}
 					}
 					else {

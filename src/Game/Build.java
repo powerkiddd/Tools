@@ -32,13 +32,15 @@ public class Build {
 			}
 			String pos = "";
 			if (Input.snap) {
-				if (World2.camera_x/25==Math.floor(World2.camera_x/25)) {
+				if (World2.camera_x/25==Math.floor(World2.camera_x/25) && World2.camera_y/25==Math.floor(World2.camera_y/25)) {
 					pos = "" + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - World2.f.getLocationOnScreen().x + World2.camera_x)) + "," + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - World2.f.getLocationOnScreen().y + (int) World2.camera_y);
 				}
 				else {
 					byte temp_x = (byte)Math.round((World2.camera_x/25));
 					World2.final_x = (byte)(World2.camera_x-(25*temp_x));
-					pos = "" + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25)-(int) World2.final_x) - World2.f.getLocationOnScreen().x + World2.camera_x) + "," + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - World2.f.getLocationOnScreen().y + (int) World2.camera_y);
+					byte temp_y = (byte)Math.round((World2.camera_y/25));
+					World2.final_y = (byte)(World2.camera_y-(25*temp_y));
+					pos = "" + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25)-(int) World2.final_x) - World2.f.getLocationOnScreen().x + World2.camera_x) + "," + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25)*25)-(int)World2.final_y)-25 - World2.f.getLocationOnScreen().y + (int) World2.camera_y);
 				}
 				//pos = "" + (short) (CurrentMousePos.x + World2.camera_x - World2.final_x) + "," + "" + CurrentMousePos.y;
 			}
@@ -156,14 +158,14 @@ public class Build {
 		World2.blockposses[World2.blockposses.length-1] = pos;
 		if (selected != 0 && Inventory.slots[selected-1] != null) {
 			//Get index from inventory
-			World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y+(int)World2.camera_y,Inventory.slots[selected-1].getWidth(),Inventory.slots[selected-1].getHeight());
+			World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y+(int)World2.camera_y-World2.final_y,Inventory.slots[selected-1].getWidth(),Inventory.slots[selected-1].getHeight());
 		}
 		else {
 			//Get index from world block collection
 			boolean found = false;
 			for (int j = 0; j < World2.allblocks.length; j++) {
 				if (type.equalsIgnoreCase(World2.blockidentifiers[j])) {
-					World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y,World2.allblocks[j].getWidth(),World2.allblocks[j].getHeight());
+					World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y+(int)World2.camera_y-World2.final_y,World2.allblocks[j].getWidth(),World2.allblocks[j].getHeight());
 					found = true;
 					break;
 				}
@@ -194,14 +196,14 @@ public class Build {
 		World2.backgroundblockposses[World2.backgroundblockposses.length-1] = pos;
 		if (selected != 0 && Inventory.slots[selected-1] != null) {
 			//Get index from inventory
-			World2.backgroundblockcollisions[World2.backgroundblockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y,Inventory.slots[selected-1].getWidth(),Inventory.slots[selected-1].getHeight());
+			World2.backgroundblockcollisions[World2.backgroundblockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y+(int)World2.camera_y-World2.final_y,Inventory.slots[selected-1].getWidth(),Inventory.slots[selected-1].getHeight());
 		}
 		else {
 			//Get index from world block collection
 			boolean found = false;
 			for (int j = 0; j < World2.allblocks.length; j++) {
 				if (type.equalsIgnoreCase(World2.blockidentifiers[j])) {
-					World2.backgroundblockcollisions[World2.backgroundblockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y,World2.allblocks[j].getWidth(),World2.allblocks[j].getHeight());
+					World2.backgroundblockcollisions[World2.backgroundblockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y+(int)World2.camera_y-World2.final_y,World2.allblocks[j].getWidth(),World2.allblocks[j].getHeight());
 					found = true;
 					break;
 				}
