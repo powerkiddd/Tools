@@ -12,10 +12,6 @@ public class Music {
 	
 	public static void main(String[] args) {
 		try {
-			/*AudioInputStream audioIn = AudioSystem.getAudioInputStream(Music.class.getResource("music/music1.wav"));
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioIn);
-			clip.start();*/
 			if (Settings.Settings.music) {
 				File path = new File("music/");
 				if (!path.exists()) {

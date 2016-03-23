@@ -4,10 +4,8 @@ public class BlockInfo {
 	
 	//Get info from a block, returns all info.
 	public static String[] GetBlockInfo (int block) {
-		//System.out.println("Getting info from block: " + block);
 		for (int i = 0; i < World2.blockinfo.length; i++) {
 			String[] split = World2.blockinfo[i].split(",");
-			//System.out.println(block + " | " + split);
 			if (split[0].equals(String.valueOf(block))) {
 				return split;
 			}
@@ -18,7 +16,6 @@ public class BlockInfo {
 	
 	//Assign info to a block
 	public static void SetBlockInfo (int block, String[] info) {
-		//System.out.println("Setting block: " + block + " | info: " + info);
 		String[] copy = World2.blockinfo.clone();
 		String[] newinfo = new String[copy.length+1];
 		
@@ -28,10 +25,7 @@ public class BlockInfo {
 		
 		newinfo[newinfo.length-1] = block + ",";
 		
-		//System.out.println(newinfo.length-1);
-		
 		for (byte i = 0; i < info.length; i++) {
-			//System.out.println("Setting info on block: " + info[i]);
 			newinfo[newinfo.length-1] = newinfo[newinfo.length-1] + info[i] + ",";
 		}
 		

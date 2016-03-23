@@ -1,7 +1,6 @@
 package Game;
 
 import java.awt.BorderLayout;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import Game.TestPlayer;
-import Main.Version;
 
 public class TestWorld extends JFrame{
 
@@ -29,9 +27,9 @@ public class TestWorld extends JFrame{
 		try {
 			File file = new File("images\\skybox.jpg");
 			image = ImageIO.read(file);
-			}
-			catch (IOException ex) {
-				//je weet zeluf
+		}
+		catch (IOException ex) {
+			//je weet zeluf
 		}
 		System.out.println("Derp");
 	}

@@ -1,21 +1,11 @@
 package Game;
 
-import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.imageio.ImageIO;
-
-import Blocks.GrassBlock;
 import Game.BlockStorage;
 
 public class Player extends World {
@@ -34,31 +24,31 @@ public class Player extends World {
 public static void Update () {
 	playerrect = new Rectangle(x, (int) y, 25, 67);
 	for (Rectangle grassrect : BlockStorage.grassblocks) {
-	if (grassrect != null) {
-	if (playerrect.intersects(grassrect)) {
-		calledonblock = true;
-		isonblock();
-	}
-	else{
-		if (timerfinished == true) {
-			timerfinished = false;
-		new Timer().schedule(new TimerTask() {          
-		    @Override
-		    public void run() {
-		    	isnotonblock();
-		    }
-		}, 100);
+		if (grassrect != null) {
+			if (playerrect.intersects(grassrect)) {
+				calledonblock = true;
+				isonblock();
+			}
+			else{
+				if (timerfinished == true) {
+					timerfinished = false;
+					new Timer().schedule(new TimerTask() {          
+					    @Override
+					    public void run() {
+					    	isnotonblock();
+					    }
+					}, 100);
+				}
+			}
 		}
 	}
-	}
-	}
 	if (onblock == false) {
-	if (fallspeed < 0.1) {
-		fallspeed += 0.0001;
-	}
+		if (fallspeed < 0.1) {
+			fallspeed += 0.0001;
+		}
 	}
 	if (fallspeed > 0 && onblock == false) {
-	y += fallspeed;
+		y += fallspeed;
 	}
 	if (onblock == true) {
 		fallspeed = 0;
@@ -84,7 +74,7 @@ public static void move (KeyEvent e) {
 			xspeed = 0;
 		}
 		if (xspeed > -1) {
-		xspeed -= 0.2;
+			xspeed -= 0.2;
 		}
 		x += xspeed;
 		//System.out.println("GO LEFT");
@@ -94,18 +84,18 @@ public static void move (KeyEvent e) {
 			xspeed = 0;
 		}
 		if (xspeed < 1) {
-		xspeed += 0.2;
+			xspeed += 0.2;
 		}
 		x += xspeed;
 		//System.out.println("GO RIGHT");
 	}
 	if (e.getKeyCode() == 27) {
 		if (pause == false) {
-		pause = true;
-		//System.out.println("GO PAUSEMENU");
+			pause = true;
+			//System.out.println("GO PAUSEMENU");
 		}
 		else {
-		pause = false;
+			pause = false;
 		}
 	}
 }
@@ -116,12 +106,12 @@ public static void isonblock() {
 
 public static void isnotonblock() {
 	timerfinished = true;
-if (calledonblock == false) {
-	onblock = false;
-}
-else {
-	calledonblock = false;
-}
+	if (calledonblock == false) {
+		onblock = false;
+	}
+	else {
+		calledonblock = false;
+	}
 }
 
 }

@@ -1,16 +1,7 @@
 package Blocks;
 
-import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Array;
 
-import javax.swing.JFrame;
-import javax.imageio.ImageIO;
-
-import Game.Player;
 import Game.World;
 import Settings.Video_Settings;
 
@@ -51,46 +42,46 @@ public class GrassBlock extends World {
 	}
 	
 	public static void Update() {
-	everyblock = new Rectangle[totalblockzcount];
-	everyblock[totalblockzcountcount - 1] = new Rectangle(x[totalblockzcountcount - 1], y[totalblockzcountcount - 1], 25, 25);
-	if (totalblockzcountcount != totalblockzcount) {
-	totalblockzcountcount++;
-	}
-	else {
-	totalblockzcountcount = 1;
-	}
+		everyblock = new Rectangle[totalblockzcount];
+		everyblock[totalblockzcountcount - 1] = new Rectangle(x[totalblockzcountcount - 1], y[totalblockzcountcount - 1], 25, 25);
+		if (totalblockzcountcount != totalblockzcount) {
+			totalblockzcountcount++;
+		}
+		else {
+			totalblockzcountcount = 1;
+		}
 	}
 	
 	public static void Generate() {
-	if (totalblockzcount < shouldcreate + 1) {
-	totalblockzcount++;
-	x = new int[totalblockzcount];
-	y = new int[totalblockzcount];
-	for (int x3 : x2) {
-		x[count] = x2[count];
-		count++;
-	}
-	count = 0;
-	for (int y3 : y2) {
-		y[count] = y2[count];
-		count++;
-	}
-	count = 0;
-	x[totalblockzcount - 1] = x[totalblockzcount - 2] + 25;
-	y[totalblockzcount - 1] = 250;
-	x2 = new int[totalblockzcount];
-	y2 = new int[totalblockzcount];
-	for (int x4 : x) {
-		x2[count] = x[count];
-		count++;
-	}
-	count = 0;
-	for (int y3 : y2) {
-		y2[count] = y[count];
-		count++;
-	}
-	count = 0;
-	}
+		if (totalblockzcount < shouldcreate + 1) {
+			totalblockzcount++;
+			x = new int[totalblockzcount];
+			y = new int[totalblockzcount];
+			for (int x3 : x2) {
+				x[count] = x2[count];
+				count++;
+			}
+			count = 0;
+			for (int y3 : y2) {
+				y[count] = y2[count];
+				count++;
+			}
+			count = 0;
+			x[totalblockzcount - 1] = x[totalblockzcount - 2] + 25;
+			y[totalblockzcount - 1] = 250;
+			x2 = new int[totalblockzcount];
+			y2 = new int[totalblockzcount];
+			for (int x4 : x) {
+				x2[count] = x[count];
+				count++;
+			}
+			count = 0;
+			for (int y3 : y2) {
+				y2[count] = y[count];
+				count++;
+			}
+			count = 0;
+		}
 	}
 	
 }

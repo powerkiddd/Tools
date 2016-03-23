@@ -34,7 +34,7 @@ public class Video_Settings {
 				derp = derp + "" + notderp;
 			}
 			reader.close();
-			*/
+			*///This code is legendary! Because it looks very derpy ;) I'll keep this.
 			String derp = ReadFromFile.readstuff("settings", "video_settings.ini", "");
 			derp = derp.replaceAll("\\s+", "");
 			String[] derps = derp.split(":");

@@ -17,16 +17,13 @@ public class Collision {
 		temprect.x -= (int) World2.camera_x;
 		temprect.y -= (int) World2.camera_y;
 		
-		//System.out.println(World2.blocks[i]);
 		if (World2.blocks[i].equals("Water")) {
 			if (Player2.playerrect.intersects(temprect)) {
 				acol = true;
-				//System.out.println(World2.blocks[i]);
 				Player2.overridespeed = true;
 				Player2.playerspeed = 1;
 				World2.NextFrame_Water = true;
 				Player2.isInWater = true;
-				//System.out.println(Player2.playerspeed);
 				return;
 			}
 			else if (World2.blocks.length-1 == i && Player2.isFalling == false && Player2.isJumping == false && acol == false) {
@@ -79,9 +76,7 @@ public class Collision {
 		Rectangle temprect = new Rectangle();
 		Rectangle temprect2 = new Rectangle();
 		temprect = (Rectangle) World2.blockcollisions[i].clone();
-		//temprect2 = (Rectangle) World2.blockcollisions[i+1].clone();
 		temprect.x -= (int) World2.camera_x;
-		//temprect2.x -= (int) World2.camera_x;
 		
 		for (int j = 0; j < World2.blockcollisions.length; j++) {
 			if (j == i) {
@@ -105,32 +100,27 @@ public class Collision {
 		temprect.x -= (int) World2.camera_x;
 		
 		for (int j = 0; j < World2.blockcollisions.length; j++) {
-			temprect = (Rectangle) World2.blockcollisions[i].clone();
-			temprect.x -= (int) World2.camera_x;
-			if (j == i) {
-				//break;
-			}
-			temprect2 = (Rectangle) World2.blockcollisions[j].clone();
-			temprect2.x -= (int) World2.camera_x;
-			if (side == "Left") {
-				temprect.x = temprect.x - 25;
-				temprect.y = temprect.y - 1;
-				//System.out.println("Checking intersection: " + temprect.x + " | " + temprect2.x);
-				if (temprect2.intersects(temprect)) {
-					return true;
+			if (j != i) {
+				temprect = (Rectangle) World2.blockcollisions[i].clone();
+				temprect.x -= (int) World2.camera_x;
+				temprect2 = (Rectangle) World2.blockcollisions[j].clone();
+				temprect2.x -= (int) World2.camera_x;
+				if (side == "Left") {
+					temprect.x = temprect.x - 25;
+					temprect.y = temprect.y - 1;
+					if (temprect2.intersects(temprect)) {
+						return true;
+					}
 				}
-			}
-			else if (side == "Right") {
-				temprect.x = temprect.x + 25;
-				temprect.y = temprect.y - 1;
-				//System.out.println("Checking intersection: " + temprect.x + " | " + temprect2.x);
-				if (temprect2.intersects(temprect)) {
-					return true;
+				else if (side == "Right") {
+					temprect.x = temprect.x + 25;
+					temprect.y = temprect.y - 1;
+					if (temprect2.intersects(temprect)) {
+						return true;
+					}
 				}
 			}
 		}
-		
-		//System.out.println("No intersections!");
 		
 		return false;
 	}

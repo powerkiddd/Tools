@@ -584,6 +584,7 @@ public class World2 extends JPanel {
 				g.drawImage(PauseMenu.mainmenubutton, PauseMenu.mainmenubuttonrect.x, PauseMenu.mainmenubuttonrect.y, null);
 				if (Mouse.left) {
 					if (Mouse.gamecursorrect.intersects(PauseMenu.mainmenubuttonrect)) {
+						f.removeAll();
 						f.dispose();
 						MainMenu.main(null);
 					}

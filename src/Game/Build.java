@@ -24,7 +24,6 @@ public class Build {
 	public static void build () {
 		if (selected != 0) {
 			Rectangle CurrentMousePos = Mouse.Recalculate_Rect();
-			//CurrentMousePos.x = CurrentMousePos.x - World2.final_x;
 			for (int i = 0; i < World2.blockcollisions.length; i++) {
 				if (CurrentMousePos.intersects(World2.blockcollisions[i])) {
 					return;
@@ -42,12 +41,10 @@ public class Build {
 					World2.final_y = (byte)(World2.camera_y-(25*temp_y));
 					pos = "" + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25)-(int) World2.final_x) - World2.f.getLocationOnScreen().x + World2.camera_x) + "," + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25)*25)-(int)World2.final_y)-25 - World2.f.getLocationOnScreen().y + (int) World2.camera_y);
 				}
-				//pos = "" + (short) (CurrentMousePos.x + World2.camera_x - World2.final_x) + "," + "" + CurrentMousePos.y;
 			}
 			else {
 				pos = "" + (short) (CurrentMousePos.x + World2.camera_x) + "," + "" + (short) (CurrentMousePos.y + World2.camera_y);
 			}
-			//System.out.println(pos);
 			UpdateBlocks(Inventory.items[selected-1], pos, CurrentMousePos, false);
 			Inventory.count[selected-1]--;
 			if (Inventory.count[selected-1] == 0) {
@@ -80,7 +77,6 @@ public class Build {
 		}
 		boolean foundnumber = false;
 		//Reset Blocks, blockposses and blockcollisions
-		//System.out.println(number);
 		if (background == false) {
 			World2.blocks = new String[World2.blocks.length-1];
 			World2.blockposses = new String[World2.blockposses.length-1];
