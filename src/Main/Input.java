@@ -25,6 +25,7 @@ public class Input {
 	public static boolean f3 = false;
 	public static boolean f4 = false;
 	public static boolean snap = true;
+	public static boolean escape = false;
 	
 	public static void main (String[] args) {
 		World2.f.addKeyListener(new KeyListener () {
@@ -93,6 +94,9 @@ public class Input {
 				if (e.getKeyCode() == 115) {
 					f4 =! f4;
 					World2.debuggrid = f4;
+				}
+				if (e.getKeyCode() == 27) {
+					escape =! escape;
 				}
 				//System.out.println(e.getKeyCode());				
 			}

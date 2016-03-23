@@ -601,6 +601,17 @@ public class World2 extends JPanel {
 					}
 				}
 			}
+			//Draw pausemenu
+			if (Input.escape) {
+				PauseMenu.PauseChanged();
+				g.drawImage(PauseMenu.mainmenubutton, PauseMenu.mainmenubuttonrect.x, PauseMenu.mainmenubuttonrect.y, null);
+				if (Mouse.left) {
+					if (Mouse.gamecursorrect.intersects(PauseMenu.mainmenubuttonrect)) {
+						f.dispose();
+						MainMenu.main(null);
+					}
+				}
+			}
 			//Start Debugging Information
 			if (debug == true) {
 				if (camera_y > -1500) {
@@ -628,7 +639,6 @@ public class World2 extends JPanel {
 				g.drawString("IsJumping: " + Player2.isJumping + " , IsFalling: " + Player2.isFalling,0, 235);
 				g.drawString("Total CPU Cores available: " + processors, 0, 250);
 			}
-			//End Debugging Information
 			//DRAW GRID
 			if (debuggrid == true) {
 				for (int gridx = 0; gridx < world_x; gridx += 25) {
@@ -637,6 +647,7 @@ public class World2 extends JPanel {
 					}
 				}
 			}
+			//End Debugging Information
 		}
 		else {
 			g.drawImage(loading, 0,0, f.getSize().width, f.getSize().height, null);

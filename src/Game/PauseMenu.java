@@ -24,9 +24,9 @@ public class PauseMenu {
 		}
 	}
 	
-	public static void Update () {
+	public static void PauseChanged () {
 		paused = Player.pause;
-		mainmenubuttonrect = new Rectangle(Video_Settings.window_size_x / 2 - 110, 0,200,60);
+		mainmenubuttonrect = new Rectangle(Video_Settings.window_size_x / 2 - 110, 100,200,60);
 	}
 	
 }
