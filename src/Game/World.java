@@ -121,7 +121,7 @@ public class World extends JPanel implements ActionListener {
 		BlockStorage.Store();
 		Player.Update();
 		PauseMenu.Update();
-		Mouse.Recalculate_Rect();
+		//Mouse.Recalculate_Rect();
 		if (cangenerategrass == true) {
 			GrassBlock.Generate();
 		}
