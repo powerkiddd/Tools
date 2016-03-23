@@ -2,7 +2,6 @@ package Game;
 
 import java.awt.Frame;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -10,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -174,6 +172,7 @@ public class MainMenu extends JPanel{
 				System.out.println("You clicked button5!");
 				f.repaint();
 				Settings.chi =! Settings.chi;
+				Settings.Changed();
 				b5.setText("Chi: " + Settings.chi);
 				//new World().main(null);
 			}
@@ -184,6 +183,7 @@ public class MainMenu extends JPanel{
 				System.out.println("You clicked the music button!");
 				f.repaint();
 				Settings.music =! Settings.music;
+				Settings.Changed();
 				music.setText("Music: " + Settings.music);
 			}
 		});
@@ -226,12 +226,12 @@ public class MainMenu extends JPanel{
 			//That's the mainmenu texture broken.
 			System.out.println("Error in mainmenu texture: " + ex.getCause());
 		}
-		TimerTask update = new TimerTask () {
+		/*TimerTask update = new TimerTask () {
 			public void run () {
 				
 			}
 		};
-		update_.scheduleAtFixedRate(update, 10, 10);
+		update_.scheduleAtFixedRate(update, 10, 10);*/
 		f.repaint();
 	}
 	
