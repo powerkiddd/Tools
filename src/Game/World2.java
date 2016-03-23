@@ -95,7 +95,7 @@ public class World2 extends JPanel {
 			Player2.main(null);
 			Build.Main(null);
 			Inventory.main(null);
-			//pausemenu.main(null);
+			PauseMenu.main(null);
 			Mouse.main(null);
 			//Server.main(null);
 			//Client.Connect("127.0.0.1", 8888);
@@ -535,6 +535,14 @@ public class World2 extends JPanel {
 			}
 			//Draw Player
 			g.drawImage(playerimage, (int) (Player2.player_x), (int) Player2.player_y, null);
+			if (Player2.hasJetpack) {
+				if (Player2.lookingatside) {
+					g.drawImage(Player2.jetpack, (int) (Player2.player_x), (int) Player2.player_y,19,67, null);
+				}
+				else {
+					g.drawImage(Player2.jetpack, (int) (Player2.player_x+19), (int) Player2.player_y,-19,67, null);
+				}
+			}
 			for (int i = 1; i < Players.playersinserver; i++) {
 				g.drawImage(playerimage, Players.playerx[i-1], Players.playery[i-1], null);
 			}
@@ -595,7 +603,12 @@ public class World2 extends JPanel {
 			}
 			//Start Debugging Information
 			if (debug == true) {
-				g.setColor(Color.BLACK);
+				if (camera_y > -1500) {
+					g.setColor(Color.BLACK);
+				}
+				else {
+					g.setColor(Color.WHITE);
+				}
 				g.drawString("This is currently " + Version.version + "!", 0, 10);
 				g.drawString("DEBUGGING INFORMATION:",0,25);
 				g.drawString("Camera_x = " + camera_x,0,40);

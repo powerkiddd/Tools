@@ -1,18 +1,15 @@
 package Game;
 
 import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import Main.Mouse;
 import Settings.Video_Settings;
 
-public class pausemenu extends MouseAdapter {
+public class PauseMenu {
 
 	public static boolean paused = false;
 	public static BufferedImage mainmenubutton;

@@ -37,7 +37,7 @@ public class World extends JPanel implements ActionListener {
 	public static void main(String [] args) {	
 		try {
 			Video_Settings.main(null);
-			pausemenu.main(null);
+			PauseMenu.main(null);
 			Mouse.main(null);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -62,12 +62,12 @@ public class World extends JPanel implements ActionListener {
 			}
 	    f.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
-	        	if (pausemenu.paused == true) {
-	        		if (Mouse.gamecursorrect.intersects(pausemenu.mainmenubuttonrect)) {
+	        	if (PauseMenu.paused == true) {
+	        		if (Mouse.gamecursorrect.intersects(PauseMenu.mainmenubuttonrect)) {
 	        			if (e.getButton() == 1) {
 	        				System.out.println("Exiting to mainmenu");
 	        				Player.pause = false;
-	        				pausemenu.paused = false;
+	        				PauseMenu.paused = false;
 	        				GrassBlock.totalblockzcount = 0;
 	        				GrassBlock.shouldcreate = 0;
 	        				GrassBlock.totalblockzcountcount = 1;
@@ -110,8 +110,8 @@ public class World extends JPanel implements ActionListener {
 		g.drawImage(grassblock, grassx, grassy, null);
 		}
 		g.drawString("This is currently " + Version.version + "!", 0, 10);
-		if (pausemenu.paused == true) {
-			g.drawImage(pausemenu.mainmenubutton, Video_Settings.window_size_x / 2 - 110, 0, null);
+		if (PauseMenu.paused == true) {
+			g.drawImage(PauseMenu.mainmenubutton, Video_Settings.window_size_x / 2 - 110, 0, null);
 			g.drawImage(Mouse.gamecursor, MouseInfo.getPointerInfo().getLocation().x - 2, MouseInfo.getPointerInfo().getLocation().y - 25, null);
 			Player.x = MouseInfo.getPointerInfo().getLocation().x;
 			Player.y = MouseInfo.getPointerInfo().getLocation().y;
@@ -120,7 +120,7 @@ public class World extends JPanel implements ActionListener {
 		GrassBlock.Update();
 		BlockStorage.Store();
 		Player.Update();
-		pausemenu.Update();
+		PauseMenu.Update();
 		Mouse.Recalculate_Rect();
 		if (cangenerategrass == true) {
 			GrassBlock.Generate();
