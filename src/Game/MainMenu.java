@@ -1,7 +1,6 @@
 package Game;
 
 import java.awt.Frame;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -226,23 +225,4 @@ public class MainMenu extends JPanel{
 		update_.scheduleAtFixedRate(update, 10, 10);*/
 		f.repaint();
 	}
-	
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.drawImage(bgr, 0, 0, Video_Settings.window_size_x, Video_Settings.window_size_y, null);
-		g.drawString(Version.version, 0, 10);
-		if (bgr == null) {
-			f.repaint();
-			System.out.println("Repainted in mainmenu");
-		}
-		if (Settings.fullscreen == true) {
-			g.drawString("FULLSCREEN NOT YET SUPPORTED", 100, 10);
-			f.repaint();
-		}
-		if (error == true) {
-			g.drawString("An unexpected error has occured, please report this to the developer.", 0, 100);
-		}
-	}
-
 }
