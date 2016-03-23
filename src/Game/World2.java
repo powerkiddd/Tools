@@ -374,7 +374,7 @@ public class World2 extends JPanel {
 					backgroundblockcollisions[i] = new Rectangle(x,(int) (y-1),47,90);
 				}
 				for (int j = 0; j < allblocks.length; j++) {
-					if (blockidentifiers[j].equalsIgnoreCase(backgroundblocks[i])) {
+					if (blockidentifiers[j].equalsIgnoreCase(backgroundblocks[i]) && x > camera_x-25-backgroundblockcollisions[i].width && x < camera_x+f.getSize().width && y > camera_y-25 && y < camera_y+f.getSize().height-25) {
 						g.drawImage(allblocks[j], (int) (x-camera_x), (int) (y-camera_y), backgroundblockcollisions[i].width, backgroundblockcollisions[i].height, null);
 						break;
 					}
@@ -400,7 +400,7 @@ public class World2 extends JPanel {
 				int y = Integer.parseInt(xy[1]);
 				boolean removeblock = false;
 				for (int j = 0; j < allblocks.length; j++) {
-					if (blockidentifiers[j].equalsIgnoreCase(blocks[i])) {
+					if (blockidentifiers[j].equalsIgnoreCase(blocks[i]) && x > camera_x-25 && x < camera_x+f.getSize().width && y > camera_y-25 && y < camera_y+f.getSize().height-25) {
 						g.drawImage(allblocks[j], (int) (x-camera_x), (int) (y-camera_y), blockcollisions[i].width, blockcollisions[i].height, null);
 						break;
 					}
