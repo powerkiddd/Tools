@@ -94,8 +94,10 @@ public class Inventory {
 			}
 			else {
 				if (new String(items[i].toLowerCase().toString()).equals(block.toLowerCase().toString())) {
-					count[i] += amount;
-					return;
+					if (count[i] < 127) {
+						count[i] += amount;
+						return;
+					}
 				}
 			}
 		}

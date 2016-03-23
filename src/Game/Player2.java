@@ -47,7 +47,7 @@ public class Player2 {
 		}
 		jump = new TimerTask () {
 			public void run () {
-				if (isFalling == true && collisiondown == false || isJumping == true) {
+				if (isFalling == true && collisiondown == false && World2.buildingworld == false || isJumping == true) {
 					if (i == 0) {
 						//staticplayer_y = player_y;
 						isFalling = false;

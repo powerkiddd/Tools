@@ -54,7 +54,7 @@ public class World2 extends JPanel {
 	private static BufferedImage loading;
 	private static BufferedImage loadingicon;
 	private static int world_x = 2400;
-	private static int world_y = 2400;
+	private static int world_y = 1200;
 	public static boolean debug = false;
 	public static boolean debuggrid = false;
 	public static float camera_x = 0;
@@ -288,6 +288,25 @@ public class World2 extends JPanel {
 			Build.Place("Grass", new Rectangle(i,f.getSize().height-f.getSize().height/4, 25 , 25), false);
 			for (int j = f.getSize().height-f.getSize().height/4+25; j < f.getSize().height-25; j += 25) {
 				Build.Place("Dirt", new Rectangle(i,j, 25 , 25),false);
+			}
+			for (int j = f.getSize().height-25; j < world_y+Video_Settings.window_size_y-25; j += 25) {
+				Random rnd = new Random();
+				int kaas = rnd.nextInt(15);
+				if (kaas >= 0 && kaas < 11) {
+					Build.Place("Dirt", new Rectangle(i,j, 25 , 25),false);
+				}
+				else if (kaas == 11) {
+					Build.Place("Coal_ore", new Rectangle(i,j, 25 , 25),false);
+				}
+				else if (kaas == 12) {
+					Build.Place("Copper_ore", new Rectangle(i,j, 25 , 25),false);
+				}
+				else if (kaas == 13) {
+					Build.Place("Gold_ore", new Rectangle(i,j, 25 , 25),false);
+				}
+				else if (kaas == 14) {
+					Build.Place("Iron_ore", new Rectangle(i,j, 25 , 25),false);
+				}
 			}
 		}
 		DateFormat dateformat = new SimpleDateFormat("dd/MM");
