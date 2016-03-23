@@ -35,8 +35,10 @@ public class Mouse {
 					//right
 					gamecursorrect = Recalculate_Rect();
 					right = true;
-					if (Inventory.items[Build.selected-1] != "Empty") {
-						Build.build();
+					if (Build.selected-1 >= 0) {
+						if (Inventory.items[Build.selected-1] != "Empty") {
+							Build.build();
+						}
 					}
 				}
 				//System.out.println(e.getButton());
