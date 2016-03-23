@@ -60,9 +60,7 @@ public class World2 extends JPanel {
 	public static String[] blocks = new String[0];
 	public static String[] blockposses = new String[0];
 	public static Rectangle[] blockcollisions = new Rectangle[0];
-	public static String[] backgroundblocks = new String[0];
-	public static String[] backgroundblockposses = new String[0];
-	public static Rectangle[] backgroundblockcollisions = new Rectangle[0];
+	public static Boolean[] blockbackground = new Boolean[0];
 	public static String[] blockinfo = new String[0];
 	public static JFrame f = new JFrame();
 	public static JPanel p = new JPanel();
@@ -358,36 +356,6 @@ public class World2 extends JPanel {
 			for (int i = 0; i < world_x+f.getSize().width; i += 640) {
 				g.drawImage(background_land, (int) (i-camera_x),(int) (f.getSize().height-f.getSize().height/4-380-camera_y), 640, 400,null);
 			}
-			//Draw blocks in background
-			for (int i = 0; i < backgroundblocks.length; i++) {
-				Rectangle temprect = new Rectangle();
-				temprect = (Rectangle) backgroundblockcollisions[i].clone();
-				String pos = backgroundblockposses[i];
-				String[] xy = pos.split(",");
-				int x = Math.round(Float.parseFloat(xy[0]));
-				int y = Integer.parseInt(xy[1]);
-				if (backgroundblocks[i] == "Balloon_red" || backgroundblocks[i] == "Balloon_blue" || backgroundblocks[i] == "Balloon_green" || backgroundblocks[i] == "Balloon_yellow") {
-					backgroundblockposses[i] = "" + x + "," + (y-1);
-					backgroundblockcollisions[i] = new Rectangle(x,(int) (y-1),47,90);
-				}
-				for (int j = 0; j < allblocks.length; j++) {
-					if (blockidentifiers[j].equalsIgnoreCase(backgroundblocks[i]) && x > camera_x-25-backgroundblockcollisions[i].width && x < camera_x+f.getSize().width && y > camera_y-25 && y < camera_y+f.getSize().height-25) {
-						g.drawImage(allblocks[j], (int) (x-camera_x), (int) (y-camera_y), backgroundblockcollisions[i].width, backgroundblockcollisions[i].height, null);
-						break;
-					}
-				}
-				temprect.x -= camera_x;
-				temprect.y -= camera_y;
-				if (debug == true) {
-					g.drawImage(collider3, temprect.x, temprect.y, temprect.width, temprect.height, null);
-				}
-				if (y < -90) {
-					Build.Mine(i, false, true);
-				}
-			}
-			//Draw world
-			//g.drawImage(grassblock, 0,f.getSize().height-f.getSize().height/4, f.getSize().width , 25, null);
-			//g.drawImage(dirtblock, 0,f.getSize().height-f.getSize().height/4+25, f.getSize().width , f.getSize().height/4-25, null);
 			//Draw Blocks
 			for (int i=0; i < blocks.length; i++) {
 				String pos = blockposses[i];
@@ -397,8 +365,11 @@ public class World2 extends JPanel {
 				int y = Integer.parseInt(xy[1]);
 				boolean removeblock = false;
 				for (int j = 0; j < allblocks.length; j++) {
-					if (blockidentifiers[j].equalsIgnoreCase(blocks[i]) && x > camera_x-25 && x < camera_x+f.getSize().width && y > camera_y-25 && y < camera_y+f.getSize().height-25) {
+					if (blockidentifiers[j].equalsIgnoreCase(blocks[i]) && x > camera_x-blockcollisions[i].width && x < camera_x+f.getSize().width && y > camera_y-25 && y < camera_y+f.getSize().height-25) {
 						g.drawImage(allblocks[j], (int) (x-camera_x), (int) (y-camera_y), blockcollisions[i].width, blockcollisions[i].height, null);
+						break;
+					}
+					else if (x < camera_x-25 && x > camera_x+f.getSize().width && y < camera_y-25 && y > camera_y+f.getSize().height-25) {
 						break;
 					}
 				}
@@ -493,10 +464,12 @@ public class World2 extends JPanel {
 						}
 					}
 				}
-				Collision.testplayercol(i);
+				if (blockbackground[i] == false) {
+					Collision.testplayercol(i);
+				}
 				Rectangle temprect = new Rectangle();
 				temprect = (Rectangle) blockcollisions[i].clone();
-				if (temprect.intersects(Player2.playerrect)) {
+				if (temprect.intersects(Player2.playerrect) && blockbackground[i] == false) {
 					Collision.testplayercol(i);
 				}
 				else {
@@ -508,11 +481,15 @@ public class World2 extends JPanel {
 				temprect.x -= (int) camera_x;
 				temprect.y -= (int) camera_y;
 				if (debug == true) {
-					g.drawImage(collider, temprect.x, temprect.y, temprect.width, temprect.height, null);
+					if (blockbackground[i] == false) {
+						g.drawImage(collider, temprect.x, temprect.y, temprect.width, temprect.height, null);
+					}
+					else {
+						g.drawImage(collider3, temprect.x, temprect.y, temprect.width, temprect.height, null);
+					}
 					if (Mouse.gamecursorrect != null) {
 						g.drawImage(collider2, Mouse.gamecursorrect.x, Mouse.gamecursorrect.y, Mouse.gamecursorrect.width, Mouse.gamecursorrect.height, null);
 					}
-					//g.drawImage(collider2, blockcollisions[i].x, blockcollisions[i].y, blockcollisions[i].width, blockcollisions[i].height, null);
 				}
 				if (Mouse.left == true) {
 					if (Mouse.gamecursorrect.intersects(temprect)) {
