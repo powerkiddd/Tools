@@ -406,6 +406,10 @@ public class World2 extends JPanel {
 					}
 				}
 				if (blocks[i] == "Water") {
+					if (y < -1500) {
+						removeblock = true;
+						Build.Place("Ice", new Rectangle(blockcollisions[i].x,blockcollisions[i].y,25,25),false);
+					}
 					if (y < World2.f.getSize().height) {
 						int hascolwith = Collision.testblockcol(i);
 						if (hascolwith == -1) {
