@@ -82,7 +82,6 @@ public class MainMenu extends JPanel{
 		b1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Options menu
-				System.out.println("You clikced button1!");
 				f.add(b3, this);
 				f.add(b2, this);
 				f.add(b5, this);
@@ -96,13 +95,11 @@ public class MainMenu extends JPanel{
 				f.remove(b1);
 				f.remove(maintext);
 				f.repaint();
-				System.out.println("repainted for buttons");
 			}
 		});
 		b2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//MainMenu
-				System.out.println("You clikced button2!");
 				f.remove(b3);
 				f.remove(b2);
 				f.remove(b5);
@@ -117,7 +114,6 @@ public class MainMenu extends JPanel{
 				f.add(derp);
 				f.add(maintext);
 				f.repaint();
-				System.out.println("repainted for buttons");
 			}
 		});
 		b3.addActionListener(new ActionListener() {
@@ -125,7 +121,6 @@ public class MainMenu extends JPanel{
 				//Fullscreen
 				Settings.fullscreen = !Settings.fullscreen;
 				Settings.Changed();
-				b3.setText("Fullscreen: " + Settings.fullscreen);
 				//f.setExtendedState(Frame.MAXIMIZED_BOTH);
 				//f.setUndecorated(true);
 				if (Settings.fullscreen == true) {
@@ -157,7 +152,6 @@ public class MainMenu extends JPanel{
 		b4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Play Game
-				System.out.println("You clicked button4!");
 				error = true;
 				f.repaint();
 				World2.main(null);
@@ -169,7 +163,6 @@ public class MainMenu extends JPanel{
 		b5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Chi
-				System.out.println("You clicked button5!");
 				f.repaint();
 				Settings.chi =! Settings.chi;
 				Settings.Changed();
@@ -180,7 +173,6 @@ public class MainMenu extends JPanel{
 		music.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Music
-				System.out.println("You clicked the music button!");
 				f.repaint();
 				Settings.music =! Settings.music;
 				Settings.Changed();

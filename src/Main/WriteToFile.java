@@ -21,7 +21,8 @@ public class WriteToFile {
 					System.out.println("File already exists.");
 					file.delete();
 					file.createNewFile();
-					PrintWriter writer = new PrintWriter(path + fileextension, "UTF-8");
+					System.out.println("FILENAME: " + file.getName());
+					PrintWriter writer = new PrintWriter(path + filename + fileextension, "UTF-8");
 					writer.println(text);
 					writer.close();
 				}
