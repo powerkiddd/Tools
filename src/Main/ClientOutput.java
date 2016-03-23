@@ -1,11 +1,6 @@
 package Main;
 
 import java.io.DataOutputStream;
-import java.io.IOException;
-
-import Game.Player;
-import Game.Player2;
-import Game.World2;
 
 public class ClientOutput implements Runnable {
 	

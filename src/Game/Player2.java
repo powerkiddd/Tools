@@ -9,7 +9,6 @@ import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 
-import Main.Collision;
 import Main.Crash;
 
 public class Player2 {
@@ -18,7 +17,6 @@ public class Player2 {
 	public static BufferedImage left;
 	public static float player_x = 0;
 	public static float player_y = 0;
-	//private static float staticplayer_y = 0;
 	public static short i = 102;
 	public static float momentum = 0;
 	public static Byte playerspeed = 0;
@@ -49,7 +47,6 @@ public class Player2 {
 			public void run () {
 				if (isFalling == true && collisiondown == false && World2.buildingworld == false || isJumping == true) {
 					if (i == 0) {
-						//staticplayer_y = player_y;
 						isFalling = false;
 						isJumping = true;
 					}
@@ -58,7 +55,6 @@ public class Player2 {
 						isJumping = true;
 						collisiondown = false;
 						if (isInWater) {
-							//i = 1;
 							if (World2.canplayermovey) {
 								player_y -= 0.1;
 							}
@@ -95,13 +91,6 @@ public class Player2 {
 							}
 						}
 					}
-					/*else if (i > 100 && i < 200) {
-						isFalling = true;
-						isJumping = false;
-						if (player_y < staticplayer_y) {
-							player_y++;
-						}
-					}*/
 					else if (collisiondown == false) {
 						if (isInWater == false) {
 							for (float j = 0; j < 10; j++) {

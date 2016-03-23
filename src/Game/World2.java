@@ -21,15 +21,12 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import Main.Client;
-import Main.ClientOutput;
 import Main.Collision;
 import Main.Crash;
 import Main.Directory;
 import Main.Input;
 import Main.Mouse;
 import Main.Players;
-import Main.Server;
 import Main.Version;
 import Mobs.Chi;
 import Settings.Settings;

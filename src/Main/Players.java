@@ -2,9 +2,6 @@ package Main;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
-
-import Game.Player2;
 
 public class Players implements Runnable {
 

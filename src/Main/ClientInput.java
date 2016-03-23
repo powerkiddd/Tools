@@ -1,7 +1,6 @@
 package Main;
 
 import java.io.DataInputStream;
-import java.io.IOException;
 
 public class ClientInput implements Runnable {
 	
