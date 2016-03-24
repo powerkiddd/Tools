@@ -24,8 +24,8 @@ public class Build {
 	public static void build () {
 		if (selected != 0) {
 			Rectangle CurrentMousePos = Mouse.Recalculate_Rect();
-			CurrentMousePos.y += World2.camera_y;
 			CurrentMousePos.x += World2.camera_x;
+			CurrentMousePos.y += World2.camera_y;
 			for (int i = 0; i < World2.blockcollisions.length; i++) {
 				if (CurrentMousePos.intersects(World2.blockcollisions[i])) {
 					return;
@@ -47,6 +47,8 @@ public class Build {
 			else {
 				pos = "" + (short) (CurrentMousePos.x) + "," + "" + (short) (CurrentMousePos.y);
 			}
+			CurrentMousePos.x -= World2.camera_x;
+			CurrentMousePos.y -= World2.camera_y;
 			UpdateBlocks(Inventory.items[selected-1], pos, CurrentMousePos, false);
 			Inventory.count[selected-1]--;
 			if (Inventory.count[selected-1] == 0) {
