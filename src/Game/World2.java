@@ -385,7 +385,7 @@ public class World2 extends JPanel {
 					}
 					if (y < World2.f.getSize().height) {
 						int hascolwith = Collision.testblockcol(i);
-						if (hascolwith == -1) {
+						if (hascolwith == -1 || blockbackground[hascolwith] == true) {
 							blockposses[i] = "" + x + "," + (y+1);
 							blockcollisions[i] = new Rectangle(x,y+1,25,25);
 						}
