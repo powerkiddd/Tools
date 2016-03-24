@@ -12,13 +12,11 @@ public class WriteToFile {
 			File file2 = new File(path);
 			if (file2.exists()) {
 				if (file.createNewFile()) {
-					System.out.println("New config file created.");
 					PrintWriter writer = new PrintWriter(path + filename + fileextension, "UTF-8");
 					writer.println(text);
 					writer.close();
 				}
 				else {
-					System.out.println("File already exists.");
 					file.delete();
 					file.createNewFile();
 					PrintWriter writer = new PrintWriter(path + filename + fileextension, "UTF-8");
@@ -30,6 +28,8 @@ public class WriteToFile {
 				file2.mkdir();
 				writestuff(path, filename, fileextension, text);
 			}
-		} catch (IOException ioe) {ioe.printStackTrace();}
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
 	}
 }
