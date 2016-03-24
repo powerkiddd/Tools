@@ -66,6 +66,7 @@ public class World2 extends JPanel {
 	public static JPanel p = new JPanel();
 	public static Timer frametimer = new Timer();
 	public static Timer updatetimer = new Timer();
+	public static Timer vsynctimer = new Timer();
 	public static int FPS = 0;
 	public static int lastFPS = 0;
 	public static String special = "";
@@ -270,8 +271,16 @@ public class World2 extends JPanel {
 				}
 			}
 		};
+		TimerTask vsyncnxtframe = new TimerTask () {
+
+			public void run() {
+				f.repaint();
+			}
+			
+		};
 		frametimer.scheduleAtFixedRate(updateFPS, 1000, 1000);
 		updatetimer.scheduleAtFixedRate(update, 10, 10);
+		vsynctimer.scheduleAtFixedRate(vsyncnxtframe, (long) (1000/Video_Settings.framelimit), (long) (1000/Video_Settings.framelimit));
 		for (int i = 75; i < world_x+Video_Settings.window_size_x-25; i++) {
 			Random rnd = new Random();
 			int kaas = rnd.nextInt(400);
@@ -631,16 +640,18 @@ public class World2 extends JPanel {
 		else {
 			g.drawImage(loading, 0,0, f.getSize().width, f.getSize().height, null);
 			AffineTransform at = new AffineTransform();
-            at.translate(getWidth()-loadingicon.getWidth()*2/2, getHeight()-loadingicon.getHeight()*2/2);
-            at.rotate(rot);
-            rot += 0.01f;
-            at.scale(2, 2);
-            at.translate(-loadingicon.getWidth()/2, -loadingicon.getHeight()/2);
-            // draw the image
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.drawImage(loadingicon, at, null);
+	        at.translate(getWidth()-loadingicon.getWidth()*2/2, getHeight()-loadingicon.getHeight()*2/2);
+	        at.rotate(rot);
+	        rot += 0.01f;
+	        at.scale(2, 2);
+	        at.translate(-loadingicon.getWidth()/2, -loadingicon.getHeight()/2);
+	        // draw the image
+	        Graphics2D g2d = (Graphics2D) g;
+	        g2d.drawImage(loadingicon, at, null);
 		}
 		g.dispose();
-		f.repaint();
+		if (Video_Settings.VSync == false) {
+			f.repaint();
+		}
 	}
 }

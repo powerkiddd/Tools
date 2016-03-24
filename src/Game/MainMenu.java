@@ -1,5 +1,6 @@
 package Game;
 
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,10 +34,13 @@ public class MainMenu extends JPanel{
 	static JButton exit = new JButton("Exit Game");
 	static JButton invisible = new JButton("");
 	static JButton music = new JButton("Music: " + Settings.music);
+	static JButton vsync = new JButton("Framelimit: " + Video_Settings.VSync);
 	static JTextField mapsize = new JTextField("INPUT MAPSIZE HERE");
+	static JTextField framelimit = new JTextField("INPUT FRAMELIMIT HERE");
 	static JLabel mapsizelabel = new JLabel("Mapsize: ");
 	static JLabel derp;
 	static JLabel maintext = new JLabel("As suggested by Mees... MEES...");
+	static JLabel framelimitlabel = new JLabel("Framelimit: ");
 	static boolean error = false;
 	static Timer update_ = new Timer();
 	static Random rand = new Random();
@@ -63,6 +67,7 @@ public class MainMenu extends JPanel{
 		b3.setText("Fullscreen: " + Settings.fullscreen);
 		b5.setText("Chi: " + Settings.chi);
 		music.setText("Music: " + Settings.music);
+		vsync.setText("Use framelimit: " + Video_Settings.VSync);
 		f.setLayout(null);
 		b1.setBounds(Video_Settings.window_size_x/4, 150, Video_Settings.window_size_x/2, 50);
 		b2.setBounds(Video_Settings.window_size_x/4, Video_Settings.window_size_y-100, Video_Settings.window_size_x/2, 50);
@@ -77,6 +82,11 @@ public class MainMenu extends JPanel{
 		music.setBounds(Video_Settings.window_size_x/4, 350, Video_Settings.window_size_x/2, 50);
 		music.setToolTipText("Toggles music on and off.");
 		maintext.setBounds(Video_Settings.window_size_x - Video_Settings.window_size_x/4,100, 200, 50);
+		vsync.setBounds(Video_Settings.window_size_x/4, 450, Video_Settings.window_size_x/2, 50);
+		framelimit.setBounds(Video_Settings.window_size_x/4, 550, Video_Settings.window_size_x/2, 50);
+		framelimit.setText(Integer.toString(Video_Settings.framelimit));
+		framelimitlabel.setBounds(Video_Settings.window_size_x/4-65, 550, Video_Settings.window_size_x/2, 50);
+		framelimitlabel.setForeground(Color.CYAN);
 		f.add(new MainMenu());
 		b1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -87,6 +97,9 @@ public class MainMenu extends JPanel{
 				f.add(music, this);
 				f.add(mapsize);
 				f.add(mapsizelabel);
+				f.add(vsync);
+				f.add(framelimit);
+				f.add(framelimitlabel);
 				f.remove(derp);
 				f.add(derp);
 				f.remove(exit);
@@ -106,6 +119,7 @@ public class MainMenu extends JPanel{
 				f.remove(mapsize);
 				f.remove(mapsizelabel);
 				Video_Settings.SaveConfig();
+				Settings.Save();
 				f.add(b1);
 				f.add(b4);
 				f.add(exit);
@@ -184,15 +198,35 @@ public class MainMenu extends JPanel{
 				System.exit(0);
 			}
 		});
+		vsync.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Toggle VSync
+				Video_Settings.VSync = !Video_Settings.VSync;
+				vsync.setText("Use Framelimit: " + Video_Settings.VSync);
+				Video_Settings.SaveConfig();
+			}
+		});
 		mapsize.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//MapSize input
 				System.out.println("mapsize changed!");
 				try {
 					Video_Settings.mapsize = Integer.parseInt(mapsize.getText());
+					Video_Settings.SaveConfig();
 				}
 				catch (NumberFormatException ex) {
 					Video_Settings.mapsize = 2400;
+				}
+			}
+		});
+		framelimit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Framelimit input
+				try {
+					Video_Settings.framelimit = Integer.parseInt(framelimit.getText());
+					Video_Settings.SaveConfig();
+				} catch (NumberFormatException ex) {
+					Video_Settings.framelimit = 120;
 				}
 			}
 		});
