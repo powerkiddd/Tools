@@ -369,7 +369,7 @@ public class World2 extends JPanel {
 				for (int j = 0; j < allblocks.length; j++) {
 					if (blockidentifiers[j].equalsIgnoreCase(blocks[i]) && x > camera_x-blockcollisions[i].width && x < camera_x+f.getSize().width && y > camera_y-25 && y < camera_y+f.getSize().height-25) {
 						g.drawImage(allblocks[j], (int) (x-camera_x), (int) (y-camera_y), blockcollisions[i].width, blockcollisions[i].height, null);
-						if (temprect.intersects(Player2.playerrect) && blockbackground[i] == false) {
+						if (blockbackground[i] == false) {
 							Collision.testplayercol(i);
 						}
 						break;
@@ -469,11 +469,11 @@ public class World2 extends JPanel {
 						}
 					}
 				}
-				if (blockbackground[i] == false) {
+				
+				if (temprect.intersects(Player2.playerrect) && blockbackground[i] == false) {
 					Collision.testplayercol(i);
 				}
-				
-				if (Player2.overridespeed == true) {
+				else {
 					if (NextFrame_Water == false) {
 						Player2.overridespeed = false;
 						Player2.isInWater = false;
