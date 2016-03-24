@@ -373,17 +373,21 @@ public class World2 extends JPanel {
 				//short x = Short.parseShort();
 				int y = Integer.parseInt(xy[1]);
 				boolean removeblock = false;
+				boolean isblockvisible = false;
 				Rectangle temprect = new Rectangle();
 				temprect = (Rectangle) blockcollisions[i].clone();
+				if (x > camera_x-blockcollisions[i].width && x < camera_x+f.getSize().width && y > camera_y-blockcollisions[i].height && y < camera_y+f.getSize().height-25) {
+					isblockvisible = true;
+				}
 				for (int j = 0; j < allblocks.length; j++) {
-					if (blockidentifiers[j].equalsIgnoreCase(blocks[i]) && x > camera_x-blockcollisions[i].width && x < camera_x+f.getSize().width && y > camera_y-25 && y < camera_y+f.getSize().height-25) {
+					if (blockidentifiers[j].equalsIgnoreCase(blocks[i]) && isblockvisible) {
 						g.drawImage(allblocks[j], (int) (x-camera_x), (int) (y-camera_y), blockcollisions[i].width, blockcollisions[i].height, null);
 						if (blockbackground[i] == false) {
 							Collision.testplayercol(i);
 						}
 						break;
 					}
-					else if (x < camera_x-25 && x > camera_x+f.getSize().width && y < camera_y-25 && y > camera_y+f.getSize().height-25) {
+					else if (isblockvisible == false) {
 						break;
 					}
 				}
@@ -491,10 +495,10 @@ public class World2 extends JPanel {
 				temprect.x -= (int) camera_x;
 				temprect.y -= (int) camera_y;
 				if (debug == true) {
-					if (blockbackground[i] == false) {
+					if (blockbackground[i] == false && isblockvisible) {
 						g.drawImage(collider, temprect.x, temprect.y, temprect.width, temprect.height, null);
 					}
-					else {
+					else if (isblockvisible) {
 						g.drawImage(collider3, temprect.x, temprect.y, temprect.width, temprect.height, null);
 					}
 					if (Mouse.gamecursorrect != null) {
