@@ -69,9 +69,11 @@ public class Build {
 		String[] blocks_;
 		String[] blockposses_;
 		Rectangle[] blockcollisions_;
+		Boolean[] blockbackground_;
 		blocks_ = World2.blocks.clone();
 		blockposses_ = World2.blockposses.clone();
 		blockcollisions_ = World2.blockcollisions.clone();
+		blockbackground_ = World2.blockbackground.clone();
 		if (giveplayerblock) {
 			Inventory.AddBlock(blocks_[number], (byte) 1);
 		}
@@ -81,6 +83,7 @@ public class Build {
 			World2.blocks = new String[World2.blocks.length-1];
 			World2.blockposses = new String[World2.blockposses.length-1];
 			World2.blockcollisions = new Rectangle[World2.blockcollisions.length-1];
+			World2.blockbackground = new Boolean[World2.blockbackground.length-1];
 		}
 		for (int i=0; i < blocks_.length; i++) {
 			if (i != number) {
@@ -89,11 +92,13 @@ public class Build {
 						World2.blocks[i] = blocks_[i];
 						World2.blockposses[i] = blockposses_[i];
 						World2.blockcollisions[i] = blockcollisions_[i];
+						World2.blockbackground[i] = blockbackground_[i];
 					}
 					else {
 						World2.blocks[i-1] = blocks_[i];
 						World2.blockposses[i-1] = blockposses_[i];
 						World2.blockcollisions[i-1] = blockcollisions_[i];
+						World2.blockbackground[i-1] = blockbackground_[i];
 					}
 				}
 			}
