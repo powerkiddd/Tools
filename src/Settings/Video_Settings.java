@@ -27,7 +27,6 @@ public class Video_Settings {
 			WriteToFile.writestuff("settings/", "video_settings" ,".ini", "window_size_x:" + window_size_x + ":\n" + "window_size_y:" + window_size_y + ":\n" + "mapsize:" + mapsize + ":");
 		}
 		else{
-			System.out.println("File alreadt exists!");
 			try {
 				/*BufferedReader reader = new BufferedReader(new FileReader(file));
 				String derp = "";
@@ -41,11 +40,11 @@ public class Video_Settings {
 				derp = derp.replaceAll("\\s+", "");
 				String[] derps = derp.split(":");
 				try {
-						window_size_x = Integer.parseInt(derps[1]);
-						window_size_y = Integer.parseInt(derps[3]);
-						mapsize = Integer.parseInt(derps[5]);
-						VSync = Boolean.parseBoolean(derps[7]);
-						framelimit = Integer.parseInt(derps[9]);
+					window_size_x = Integer.parseInt(derps[1]);
+					window_size_y = Integer.parseInt(derps[3]);
+					mapsize = Integer.parseInt(derps[5]);
+					VSync = Boolean.parseBoolean(derps[7]);
+					framelimit = Integer.parseInt(derps[9]);
 				}
 				catch(NumberFormatException e2){
 					System.out.println("NumberFormatException in config file.");
@@ -74,7 +73,6 @@ public class Video_Settings {
 	}
 	
 	public static void SaveConfig () {
-		System.out.println("Saving Config!");
 		File file = new File("settings/video_settings.ini");
 		file.delete();
 		WriteToFile.writestuff("settings/", "video_settings", ".ini", "Window_size_x:"+ window_size_x +":\nWindow_size_y:"+ window_size_y +":\nMapsize:"+ mapsize +":\nUseFramelimit:"+ VSync + ":\nFramelimit:" + framelimit + ":");

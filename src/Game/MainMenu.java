@@ -209,7 +209,6 @@ public class MainMenu extends JPanel{
 		mapsize.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//MapSize input
-				System.out.println("mapsize changed!");
 				try {
 					Video_Settings.mapsize = Integer.parseInt(mapsize.getText());
 					Video_Settings.SaveConfig();
@@ -251,12 +250,6 @@ public class MainMenu extends JPanel{
 			//That's the mainmenu texture broken.
 			System.out.println("Error in mainmenu texture: " + ex.getCause());
 		}
-		/*TimerTask update = new TimerTask () {
-			public void run () {
-				
-			}
-		};
-		update_.scheduleAtFixedRate(update, 10, 10);*/
 		f.repaint();
 	}
 }

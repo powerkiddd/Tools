@@ -32,9 +32,6 @@ public class Settings {
 	}
 	
 	public static void Changed () {
-		System.out.println("Settings have been changed.");
-		System.out.println("Fullscreen: " + fullscreen);
-		System.out.println("Chi: " + chi);
 		Save();
 	}
 	
