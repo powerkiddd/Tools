@@ -483,13 +483,15 @@ public class World2 extends JPanel {
 					}
 				}
 				
-				if (temprect.intersects(Player2.playerrect) && blockbackground[i] == false) {
-					Collision.testplayercol(i);
-				}
-				else {
-					if (NextFrame_Water == false) {
-						Player2.overridespeed = false;
-						Player2.isInWater = false;
+				if (isblockvisible && blockbackground[i] == false) {
+					if (temprect.intersects(Player2.playerrect)) {
+						Collision.testplayercol(i);
+					}
+					else {
+						if (NextFrame_Water == false) {
+							Player2.overridespeed = false;
+							Player2.isInWater = false;
+						}
 					}
 				}
 				temprect.x -= (int) camera_x;

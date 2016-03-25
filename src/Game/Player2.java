@@ -26,7 +26,7 @@ public class Player2 {
 	public static boolean isFalling = true;
 	public static boolean isJumping = false;
 	public static boolean isInWater = false;
-	public static boolean hasJetpack = true;
+	public static boolean hasJetpack = false;
 	public static boolean lookingatside = true;
 	public static Timer jumptimer = new Timer();
 	public static TimerTask jump;
