@@ -1,6 +1,12 @@
 # Tools
 A simple game made in Java
 
+# How can I help?
+There are many things in Tools which need to be done, especially bug fixes.
+If you're an programmer, you can take a look at the issues and submit a suggestion or a PR.
+If you're not, but you know how to compile the game, you can test the game for bugs and submit a issue.
+Suggestions are always welcome and you can freely submit a suggestion to the issue list.
+
 #About Tools
 This game is a blocky 2D sidescrolling game about making factories and poluting the world.
 Your choices on how you make your factories will depend how the game will progress.
