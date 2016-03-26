@@ -1,6 +1,8 @@
 package Game;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,6 +27,7 @@ import Main.Collision;
 import Main.Crash;
 import Main.Directory;
 import Main.Input;
+import Main.Lighting;
 import Main.Mouse;
 import Main.Players;
 import Main.Version;
@@ -96,6 +99,7 @@ public class World2 extends JPanel {
 			Inventory.main(null);
 			PauseMenu.main(null);
 			Mouse.main(null);
+			//Lighting.main(null);
 			//Server.main(null);
 			//Client.Connect("127.0.0.1", 8888);
 		} catch (IOException e) {
@@ -510,6 +514,7 @@ public class World2 extends JPanel {
 				if (Mouse.left == true) {
 					if (Mouse.gamecursorrect.intersects(temprect)) {
 						Build.Mine(i, true, false);
+						Collision.testplayercol(i);
 					}
 				}
 				if (Player2.collisionpos != null) {
@@ -543,6 +548,16 @@ public class World2 extends JPanel {
 			if (Settings.chi == true) {
 				g.drawImage(Chi.image, (int) Chi.chix, (int) Chi.chiy,28,67, null);
 			}
+			//Draw Lighting
+			/*Graphics2D g2d = (Graphics2D)g;
+			for (int i = 0; i < Video_Settings.window_size_y/Lighting.quality; i++) {
+				for (int j = 0; j < Video_Settings.window_size_x/Lighting.quality; j++) {
+					Composite translucent = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (Lighting.colors[i*j].getAlpha()/255f));
+					g2d.setComposite(translucent);
+					g2d.drawImage(Lighting.pixels[i*j], j*Lighting.quality, i*Lighting.quality, Lighting.quality, Lighting.quality, Lighting.colors[i*j], null);
+				}
+			}
+			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));*/
 			//Draw Hotbar
 			g.drawImage(invslot, f.getSize().width/2-116, 0, 29, 29, null);
 			g.drawImage(invslot, f.getSize().width/2-87, 0, 29, 29, null);
