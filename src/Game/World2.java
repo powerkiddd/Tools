@@ -550,13 +550,18 @@ public class World2 extends JPanel {
 			}
 			//Draw Lighting
 			/*Graphics2D g2d = (Graphics2D)g;
-			for (int i = 0; i < Video_Settings.window_size_y/Lighting.quality; i++) {
-				for (int j = 0; j < Video_Settings.window_size_x/Lighting.quality; j++) {
-					Composite translucent = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (Lighting.colors[i*j].getAlpha()/255f));
-					g2d.setComposite(translucent);
-					g2d.drawImage(Lighting.pixels[i*j], j*Lighting.quality, i*Lighting.quality, Lighting.quality, Lighting.quality, Lighting.colors[i*j], null);
-				}
+			Composite translucent = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (Lighting.daynight.getAlpha()/255f));
+			g2d.setComposite(translucent);
+			g2d.drawImage(Lighting.light, 0, 0, Video_Settings.window_size_x, Video_Settings.window_size_y, Lighting.daynight, null);
+			if (Lighting.daynight.getRed() > 0) {
+				Lighting.daynight = new Color(Lighting.daynight.getRed()-1, Lighting.daynight.getGreen()-1, Lighting.daynight.getBlue()-1, Lighting.daynight.getAlpha());
 			}
+			else if (Lighting.daynight.getAlpha() < 230) {
+				Lighting.daynight = new Color(0,0,0,Lighting.daynight.getAlpha()+1);
+			}
+			translucent = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (Lighting.torch.getAlpha()/255f));
+			g2d.setComposite(translucent);
+			g2d.drawImage(Lighting.light, 360, (int) (360-camera_y), 40, 40, Lighting.torch, null);
 			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));*/
 			//Draw Hotbar
 			g.drawImage(invslot, f.getSize().width/2-116, 0, 29, 29, null);
