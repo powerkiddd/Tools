@@ -1,5 +1,6 @@
 package Main;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,6 +26,10 @@ public class Directory {
 		}
 		
 		return allfiles;
+	}
+	
+	public static void CreateNewDirectory (String name) {
+		new File(name+"\\").mkdirs();
 	}
 	
 }

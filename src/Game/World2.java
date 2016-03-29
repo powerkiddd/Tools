@@ -30,6 +30,7 @@ import Main.Input;
 import Main.Lighting;
 import Main.Mouse;
 import Main.Players;
+import Main.SaveLoad;
 import Main.Version;
 import Mobs.Chi;
 import Settings.Settings;
@@ -88,6 +89,7 @@ public class World2 extends JPanel {
 	
 	public static void main(String[] args) {
 		Player2.playerspeed = 3;
+		SaveLoad.worldname = "EarlySaveGameTest";
 		try {
 			Video_Settings.main(null);
 			Settings.main(null);
@@ -285,37 +287,43 @@ public class World2 extends JPanel {
 		frametimer.scheduleAtFixedRate(updateFPS, 1000, 1000);
 		updatetimer.scheduleAtFixedRate(update, 10, 10);
 		vsynctimer.scheduleAtFixedRate(vsyncnxtframe, (long) (1000/Video_Settings.framelimit), (long) (1000/Video_Settings.framelimit));
-		for (int i = 75; i < world_x+Video_Settings.window_size_x-25; i++) {
-			Random rnd = new Random();
-			int kaas = rnd.nextInt(400);
-			if (kaas == 200) {
-				Build.Place("Tree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,75,175), true);
-			}
-		}
-		for (int i = 0; i < world_x+Video_Settings.window_size_x-25; i += 25) {
-			Build.Place("Grass", new Rectangle(i,f.getSize().height-f.getSize().height/4, 25 , 25), false);
-			for (int j = f.getSize().height-f.getSize().height/4+25; j < f.getSize().height-25; j += 25) {
-				Build.Place("Dirt", new Rectangle(i,j, 25 , 25),false);
-			}
-			for (int j = f.getSize().height-25; j < world_y+Video_Settings.window_size_y-25; j += 25) {
+		if (!SaveLoad.DoesSaveExist()) {
+			for (int i = 75; i < world_x+Video_Settings.window_size_x-25; i++) {
 				Random rnd = new Random();
-				int kaas = rnd.nextInt(15);
-				if (kaas >= 0 && kaas < 11) {
+				int kaas = rnd.nextInt(400);
+				if (kaas == 200) {
+					Build.Place("Tree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,75,175), true);
+				}
+			}
+			for (int i = 0; i < world_x+Video_Settings.window_size_x-25; i += 25) {
+				Build.Place("Grass", new Rectangle(i,f.getSize().height-f.getSize().height/4, 25 , 25), false);
+				for (int j = f.getSize().height-f.getSize().height/4+25; j < f.getSize().height-25; j += 25) {
 					Build.Place("Dirt", new Rectangle(i,j, 25 , 25),false);
 				}
-				else if (kaas == 11) {
-					Build.Place("Coal_ore", new Rectangle(i,j, 25 , 25),false);
-				}
-				else if (kaas == 12) {
-					Build.Place("Copper_ore", new Rectangle(i,j, 25 , 25),false);
-				}
-				else if (kaas == 13) {
-					Build.Place("Gold_ore", new Rectangle(i,j, 25 , 25),false);
-				}
-				else if (kaas == 14) {
-					Build.Place("Iron_ore", new Rectangle(i,j, 25 , 25),false);
+				for (int j = f.getSize().height-25; j < world_y+Video_Settings.window_size_y-25; j += 25) {
+					Random rnd = new Random();
+					int kaas = rnd.nextInt(15);
+					if (kaas >= 0 && kaas < 11) {
+						Build.Place("Dirt", new Rectangle(i,j, 25 , 25),false);
+					}
+					else if (kaas == 11) {
+						Build.Place("Coal_ore", new Rectangle(i,j, 25 , 25),false);
+					}
+					else if (kaas == 12) {
+						Build.Place("Copper_ore", new Rectangle(i,j, 25 , 25),false);
+					}
+					else if (kaas == 13) {
+						Build.Place("Gold_ore", new Rectangle(i,j, 25 , 25),false);
+					}
+					else if (kaas == 14) {
+						Build.Place("Iron_ore", new Rectangle(i,j, 25 , 25),false);
+					}
 				}
 			}
+			SaveLoad.SaveGame();
+		}
+		else {
+			SaveLoad.LoadGame();
 		}
 		DateFormat dateformat = new SimpleDateFormat("dd/MM");
 		Date date = new Date();
