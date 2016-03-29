@@ -85,6 +85,7 @@ public class World2 extends JPanel {
 	public static boolean NextFrame_Water = false;
 	public static byte hasitcrashed = 0;
 	public static boolean buildingworld = true;
+	public static boolean saveonce = false;
 	private static float rot = 0;
 	
 	public static void main(String[] args) {
@@ -624,6 +625,10 @@ public class World2 extends JPanel {
 			}
 			//Draw pausemenu
 			if (Input.escape) {
+				if (!saveonce) {
+					saveonce = true;
+					SaveLoad.SaveGame();
+				}
 				PauseMenu.PauseChanged();
 				g.drawImage(PauseMenu.mainmenubutton, PauseMenu.mainmenubuttonrect.x, PauseMenu.mainmenubuttonrect.y, null);
 				if (Mouse.left) {
@@ -633,6 +638,9 @@ public class World2 extends JPanel {
 						MainMenu.main(null);
 					}
 				}
+			}
+			else {
+				saveonce = false;
 			}
 			//Start Debugging Information
 			if (debug == true) {
