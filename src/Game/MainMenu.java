@@ -53,7 +53,7 @@ public class MainMenu extends JPanel{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		switch (rand.nextInt(3)) {
+		switch (rand.nextInt(4)) {
 		case 0:
 			maintext.setText("As suggested by Mees... MEES...");
 			break;
@@ -62,6 +62,9 @@ public class MainMenu extends JPanel{
 			break;
 		case 2:
 			maintext.setText("PHYSICS!!!!");
+			break;
+		case 3:
+			maintext.setText("Under the sea... Wait, what sea?");
 			break;
 		}
 		b3.setText("Fullscreen: " + Settings.fullscreen);
