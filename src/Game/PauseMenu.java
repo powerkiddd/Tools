@@ -15,7 +15,7 @@ public class PauseMenu {
 	public static BufferedImage mainmenubutton;
 	public static Rectangle mainmenubuttonrect;
 	
-	public static void main(String [] args) {	
+	public static void main(String [] args) {
 		try {
 			File file = new File("images\\mainmenu_button.png");
 			mainmenubutton = ImageIO.read(file);
