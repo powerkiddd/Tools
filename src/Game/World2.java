@@ -276,6 +276,14 @@ public class World2 extends JPanel {
 				else {
 					canplayermovey = true;
 				}
+				
+				if (Player2.health == 0) {
+					Music.GameOver();
+					Player2.health--;
+				}
+				else if (Player2.health > 0) {
+					Player2.health--;
+				}
 			}
 		};
 		TimerTask vsyncnxtframe = new TimerTask () {
@@ -602,6 +610,7 @@ public class World2 extends JPanel {
 			g.drawString("" + Inventory.count[7], f.getSize().width/2+92, 25);
 			g.drawString("" + Inventory.count[8], f.getSize().width/2+122, 25);
 			g.setColor(Color.BLACK);
+			g.drawString("Health: " + Player2.health, f.getSize().width/2, 50);
 			//Draw placeholder block
 			if (Build.selected != 0) {
 				if (Inventory.items[Build.selected-1] != "Empty") {

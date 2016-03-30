@@ -35,6 +35,9 @@ public class Player2 {
 	public static boolean collisiondown = false;
 	public static Rectangle collisionpos;
 	public static boolean overridespeed = false;
+	public static byte health = 100;
+	public static byte hunger = 100;
+	public static byte thirst = 100;
 	
 	public static void main(String[] args) {
 		try {
