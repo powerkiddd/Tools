@@ -1,14 +1,19 @@
 package Main;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import javax.imageio.ImageIO;
+
 public class Directory { 
 	
 	public static int i = 0;
 	public static String[] allfiles = new String[0];
+	public static BufferedImage[] allimages = new BufferedImage[0];
+	public static String[] identifiers = new String[0];
 	
 	public static String[] GetAllFilesFromDirectory (String dir) {
 		//allfiles = new String[0];
@@ -26,6 +31,36 @@ public class Directory {
 		}
 		
 		return allfiles;
+	}
+	
+	public static BufferedImage[] GetAllImagesFromDirectory (String dir) {
+		i = 0;
+		try {
+			allimages = new BufferedImage[(int) Files.walk(Paths.get(dir)).count()];
+			identifiers = new String[(int) Files.walk(Paths.get(dir)).count()];
+			Files.walk(Paths.get(dir)).forEach(filePath -> {
+			    if (Files.isReadable(filePath)) {
+			    	String splitthis = filePath.getFileName().toString();
+			    	if (splitthis.contains(".")) {
+				    	String[] derp = splitthis.split("\\.");
+				    	if (derp[1].equals("png") || derp[1].equals("jpg")) {
+					    	File file = new File(filePath.toString());
+							try {
+								allimages[i] = ImageIO.read(file);
+								identifiers[i] = derp[0];
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+					        i = i + 1;
+				    	}
+			    	}
+			    }
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return allimages;
 	}
 	
 	public static void CreateNewDirectory (String name) {

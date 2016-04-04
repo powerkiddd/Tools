@@ -559,6 +559,7 @@ public class World2 extends JPanel {
 			for (int i = 1; i < Players.playersinserver; i++) {
 				g.drawImage(playerimage, Players.playerx[i-1], Players.playery[i-1], null);
 			}
+			g.drawImage(Inventory.tools[0], (int) Player2.player_x+9, (int) Player2.player_y+25,25,25, null);
 			//Draw Chi
 			if (Settings.chi == true) {
 				g.drawImage(Chi.image, (int) Chi.chix, (int) Chi.chiy,28,67, null);

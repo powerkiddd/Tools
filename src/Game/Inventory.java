@@ -14,23 +14,15 @@ public class Inventory {
 	public static String[] items = {"Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"};
 	public static byte[] count = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 	public static BufferedImage[] blocks;
+	public static BufferedImage[] tools;
 	public static String[] identifier;
+	public static String[] toolidentifier;
 	
 	public static void main(String[] args) {
-		String[] allfiles = Directory.GetAllFilesFromDirectory("images\\blocks\\");
-		blocks = new BufferedImage[allfiles.length-1];
-		identifier = new String[allfiles.length-1];
-		try {
-			for (int i = 1; i < allfiles.length; i++) {
-				File newfile = new File("images\\blocks\\"+allfiles[i].substring(14));
-				blocks[i-1] = ImageIO.read(newfile);
-				String[] split = allfiles[i].substring(14).split("\\.");
-				identifier[i-1] = split[0];
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			Crash.cause = "Wut... Why did this crash? The only way it couuuuuld crash. Is if someone removed the folder blocks in images, OR all the images inside it.";
-		}
+		tools = Directory.GetAllImagesFromDirectory("images\\tools\\");
+		toolidentifier = Directory.identifiers;
+		blocks = Directory.GetAllImagesFromDirectory("images\\blocks\\");
+		identifier = Directory.identifiers;
 		
 		AddBlock("Dirt", (byte) 127);
 		AddBlock("Grass", (byte) 127);
