@@ -295,6 +295,12 @@ public class World2 extends JPanel {
 				if (kaas == 200) {
 					Build.Place("Tree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,75,175), true);
 				}
+				else if (kaas == 100) {
+					Build.Place("rock", new Rectangle(i,f.getSize().height-f.getSize().height/4-25,25,25), true);
+				}
+				else if (kaas == 101) {
+					Build.Place("rocks", new Rectangle(i,f.getSize().height-f.getSize().height/4-25,25,25), true);
+				}
 			}
 			for (int i = 0; i < world_x+Video_Settings.window_size_x-25; i += 25) {
 				Build.Place("Grass", new Rectangle(i,f.getSize().height-f.getSize().height/4, 25 , 25), false);
@@ -520,7 +526,7 @@ public class World2 extends JPanel {
 						g.drawImage(collider2, Mouse.gamecursorrect.x, Mouse.gamecursorrect.y, Mouse.gamecursorrect.width, Mouse.gamecursorrect.height, null);
 					}
 				}
-				if (Mouse.left == true) {
+				if (Mouse.left == true && blockbackground[i] == false) {
 					if (Mouse.gamecursorrect.intersects(temprect)) {
 						Collision.testplayercol(i);
 						Build.Mine(i, true, false);
