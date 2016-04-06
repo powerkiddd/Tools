@@ -70,10 +70,13 @@ public class Build {
 	}
 	
 	public static void Interact (int number, boolean giveplayerblock, boolean background) {
-		Mouse.right = false;
 		if (background) {
 			if (World2.blocks[number].equals("rock") || World2.blocks[number].equals("rocks")) {
 				Inventory.AddBlock("rock", (byte) 1);
+				Build.Mine(number,false,background);
+			}
+			if (World2.blocks[number].equals("Tree")) {
+				Inventory.AddBlock("wood", (byte) 4);
 				Build.Mine(number,false,background);
 			}
 		}
