@@ -26,6 +26,21 @@ public class Mouse {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
 				if (e.getButton() == 1) {
 					//left
 					gamecursorrect = Recalculate_Rect();
@@ -41,22 +56,6 @@ public class Mouse {
 						}
 					}
 				}
-				//System.out.println(e.getButton());
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				
 			}
 
 			@Override

@@ -69,6 +69,16 @@ public class Build {
 		UpdateBlocks(type, pos, location, background);
 	}
 	
+	public static void Interact (int number, boolean giveplayerblock, boolean background) {
+		Mouse.right = false;
+		if (background) {
+			if (World2.blocks[number].equals("rock") || World2.blocks[number].equals("rocks")) {
+				Inventory.AddBlock("rock", (byte) 1);
+				Build.Mine(number,false,background);
+			}
+		}
+	}
+	
 	public static void Mine (int number, boolean giveplayerblock, boolean background) {
 		String[] blocks_;
 		String[] blockposses_;
@@ -83,27 +93,23 @@ public class Build {
 		}
 		boolean foundnumber = false;
 		//Reset Blocks, blockposses and blockcollisions
-		if (background == false) {
-			World2.blocks = new String[World2.blocks.length-1];
-			World2.blockposses = new String[World2.blockposses.length-1];
-			World2.blockcollisions = new Rectangle[World2.blockcollisions.length-1];
-			World2.blockbackground = new Boolean[World2.blockbackground.length-1];
-		}
+		World2.blocks = new String[World2.blocks.length-1];
+		World2.blockposses = new String[World2.blockposses.length-1];
+		World2.blockcollisions = new Rectangle[World2.blockcollisions.length-1];
+		World2.blockbackground = new Boolean[World2.blockbackground.length-1];
 		for (int i=0; i < blocks_.length; i++) {
 			if (i != number) {
-				if (background == false) {
-					if (foundnumber == false) {
-						World2.blocks[i] = blocks_[i];
-						World2.blockposses[i] = blockposses_[i];
-						World2.blockcollisions[i] = blockcollisions_[i];
-						World2.blockbackground[i] = blockbackground_[i];
-					}
-					else {
-						World2.blocks[i-1] = blocks_[i];
-						World2.blockposses[i-1] = blockposses_[i];
-						World2.blockcollisions[i-1] = blockcollisions_[i];
-						World2.blockbackground[i-1] = blockbackground_[i];
-					}
+				if (foundnumber == false) {
+					World2.blocks[i] = blocks_[i];
+					World2.blockposses[i] = blockposses_[i];
+					World2.blockcollisions[i] = blockcollisions_[i];
+					World2.blockbackground[i] = blockbackground_[i];
+				}
+				else {
+					World2.blocks[i-1] = blocks_[i];
+					World2.blockposses[i-1] = blockposses_[i];
+					World2.blockcollisions[i-1] = blockcollisions_[i];
+					World2.blockbackground[i-1] = blockbackground_[i];
 				}
 			}
 			else {

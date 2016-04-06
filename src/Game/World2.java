@@ -538,6 +538,11 @@ public class World2 extends JPanel {
 						Build.Mine(i, true, false);
 					}
 				}
+				if (Mouse.right == true && blockbackground[i] == true) {
+					if (Mouse.gamecursorrect.intersects(temprect)) {
+						Build.Interact(i, true, true);
+					}
+				}
 				if (Player2.collisionpos != null) {
 					if (!Player2.playerrect.intersects(Player2.collisionpos)) {
 						Player2.collision = "";
