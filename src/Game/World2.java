@@ -86,6 +86,7 @@ public class World2 extends JPanel {
 	public static byte hasitcrashed = 0;
 	public static boolean buildingworld = true;
 	public static boolean saveonce = false;
+	public static boolean showinventory = false;
 	private static float rot = 0;
 	
 	public static void main(String[] args) {
@@ -203,6 +204,10 @@ public class World2 extends JPanel {
 		TimerTask update = new TimerTask () {
 			public void run () {
 				Player2.playerrect = new Rectangle((int) Player2.player_x,(short) Player2.player_y,19,67);
+				//Open inventory if I is pressed
+				if (Input.OnGetInput("i")) {
+					showinventory = !showinventory;
+				}
 				//Sprint if left shift is pressed
 				if (Input.GetInput("shift")) {
 					if (Player2.overridespeed == false) {
@@ -361,6 +366,7 @@ public class World2 extends JPanel {
 				}
 			}
 		}
+		Build.Place("steamengine", new Rectangle(500,Video_Settings.window_size_y-Video_Settings.window_size_y/3-118,274,184), true);
 		buildingworld = false;
 	}
 	
@@ -648,6 +654,20 @@ public class World2 extends JPanel {
 			}
 			else {
 				saveonce = false;
+			}
+			//Draw inventory
+			if (showinventory) {
+				short i = 0;
+				g.setColor(Color.WHITE);
+				for (int y = 0; y < 116; y += 29) {
+					for (int x = 0; x < 261; x += 29) {
+						g.drawImage(invslot,x,y,29,29,null);
+						g.drawImage(Inventory.slots[9+i/29],x+2,y+2,25,25,null);
+						g.drawString("" + Inventory.count[9+i/29], x+2, y+25);
+						i += 29;
+					}
+				}
+				g.setColor(Color.BLACK);
 			}
 			//Start Debugging Information
 			if (debug == true) {

@@ -10,6 +10,7 @@ public class Input {
 	
 	public static boolean a = false;
 	public static boolean d = false;
+	public static boolean i = false;
 	public static boolean shift = false;
 	public static boolean space = false;
 	public static boolean key0 = false;
@@ -26,6 +27,7 @@ public class Input {
 	public static boolean f4 = false;
 	public static boolean snap = true;
 	public static boolean escape = false;
+	public static String[] onces = new String[10];
 	
 	public static void main (String[] args) {
 		World2.f.addKeyListener(new KeyListener () {
@@ -40,6 +42,9 @@ public class Input {
 				}
 				if (e.getKeyCode() == 68) {
 					d = true;
+				}
+				if (e.getKeyCode() == 73) {
+					i = true;
 				}
 				if (e.getKeyCode() == 16) {
 					shift = true;
@@ -112,6 +117,9 @@ public class Input {
 				if (e.getKeyCode() == 68) {
 					d = false;
 				}
+				if (e.getKeyCode() == 73) {
+					i = false;
+				}
 				if (e.getKeyCode() == 32) {
 					space = false;
 				}
@@ -165,6 +173,32 @@ public class Input {
 		}
 		if (Key == "space") {
 			return space;
+		}
+		if (Key == "i") {
+			return i;
+		}
+		return false;
+	}
+	
+	public static boolean OnGetInput (String Key) {
+		if (Key.equals("i")) {
+			for (byte bi = 0; bi < onces.length; bi++) {
+				if (onces[bi] == "i") {
+					if (i == false) {
+						onces[bi] = null;
+						return false;
+					}
+					else {
+						return false;
+					}
+				}
+			}
+			for (byte bi = 0; bi < onces.length; bi++) {
+				if (onces[bi] == null && i == true) {
+					onces[bi] = "i";
+					return true;
+				}
+			}
 		}
 		return false;
 	}
