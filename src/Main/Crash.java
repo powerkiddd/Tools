@@ -15,6 +15,7 @@ public class Crash {
 				+ "\nBut for now, you crashed, the game.\n\nIf you would like to report this error, please send the following information to the creator of this game:"
 				+ "\nCause: " + cause;
 		JOptionPane.showMessageDialog(null, crashdialogue,"UH-OH", JOptionPane.ERROR_MESSAGE);
+		System.exit(0);
 	}
 	
 }
