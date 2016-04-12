@@ -20,6 +20,10 @@ public class Mouse {
 	public static boolean right = false;
 	public static boolean left = false;
 	public static Rectangle gamecursorrect;
+	public static int mouseposonscreenx;
+	public static int mouseposonscreeny;
+	public static int mouseposinworldx;
+	public static int mouseposinworldy;
 	
 	public static void main(String [] args) {
 		World2.f.addMouseListener(new MouseListener() {

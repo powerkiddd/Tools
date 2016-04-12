@@ -642,12 +642,18 @@ public class World2 extends JPanel {
 							g.drawImage(blockholder, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, 25,25,null);
 						}
 						else {
-							byte temp_x = (byte)Math.round((camera_x/25));
+							/*byte temp_x = (byte)Math.round((camera_x/25));
 							final_x = (byte)(camera_x-(25*temp_x));
 							byte temp_y = (byte)Math.round((camera_y/25));
 							final_y = (byte)(camera_y-(25*temp_y));
-							final_y = (byte) (final_y + 25);
-							g.drawImage(blockholder, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25)-(int) final_x) - f.getLocationOnScreen().x, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25)*25)-(int) final_y) - f.getLocationOnScreen().y, 25,25,null);
+							final_y = (byte) (final_y + 25);*/
+							Mouse.mouseposonscreenx = MouseInfo.getPointerInfo().getLocation().x;
+							Mouse.mouseposonscreeny = MouseInfo.getPointerInfo().getLocation().y;
+							Mouse.mouseposonscreenx = (int) (Math.floor(Mouse.mouseposonscreenx/25)*25-Math.floor((camera_x-(25*Math.floor(camera_x/25)))));
+							Mouse.mouseposonscreeny = (int) Math.floor(Mouse.mouseposonscreeny/25)*25-25;
+							Mouse.mouseposinworldx = (int) (Mouse.mouseposonscreenx+Math.floor(camera_x-(25*Math.floor(camera_x/25))));
+							Mouse.mouseposinworldy = Mouse.mouseposonscreenx+Math.round(camera_y);
+							g.drawImage(blockholder, Mouse.mouseposonscreenx, Mouse.mouseposonscreeny, 25,25,null);
 						}
 					}
 					else {
