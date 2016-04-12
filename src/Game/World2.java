@@ -292,7 +292,9 @@ public class World2 extends JPanel {
 		};
 		frametimer.scheduleAtFixedRate(updateFPS, 1000, 1000);
 		updatetimer.scheduleAtFixedRate(update, 10, 10);
-		vsynctimer.scheduleAtFixedRate(vsyncnxtframe, (long) (1000/Video_Settings.framelimit), (long) (1000/Video_Settings.framelimit));
+		if (Video_Settings.VSync) {
+			vsynctimer.scheduleAtFixedRate(vsyncnxtframe, (long) (1000/Video_Settings.framelimit), (long) (1000/Video_Settings.framelimit));
+		}
 		if (!SaveLoad.DoesSaveExist()) {
 			for (int i = 75; i < world_x+Video_Settings.window_size_x-25; i++) {
 				Random rnd = new Random();
@@ -416,7 +418,7 @@ public class World2 extends JPanel {
 						break;
 					}
 				}
-				if (blocks[i] == "Water") {
+				if (blocks[i].equals("Water")) {
 					if (y < -1500) {
 						removeblock = true;
 						Build.Place("Ice", new Rectangle(blockcollisions[i].x,blockcollisions[i].y,25,25),false);
@@ -427,8 +429,8 @@ public class World2 extends JPanel {
 							blockposses[i] = "" + x + "," + (y+1);
 							blockcollisions[i] = new Rectangle(x,y+1,25,25);
 						}
-						else if (blocks[hascolwith] != "Water") {
-							if (blocks[hascolwith] == "Grass" || blocks[hascolwith] == "Dirt") {
+						else if (!blocks[hascolwith].equals("Water")) {
+							if (blocks[hascolwith].equals("Grass") || blocks[hascolwith].equals("Dirt")) {
 								if (blockcollisions[i].height > 1) {
 									blockposses[i] = "" + (x-1) + "," + (y+1);
 									blockcollisions[i] = new Rectangle(x,y,blockcollisions[i].width+2,blockcollisions[i].height-1);
@@ -570,7 +572,12 @@ public class World2 extends JPanel {
 			for (int i = 1; i < Players.playersinserver; i++) {
 				g.drawImage(playerimage, Players.playerx[i-1], Players.playery[i-1], null);
 			}
-			g.drawImage(Inventory.tools[0], (int) Player2.player_x+9, (int) Player2.player_y+25,25,25, null);
+			if (Player2.lookingatside) {
+				g.drawImage(Inventory.tools[0], (int) Player2.player_x+9, (int) Player2.player_y+25,25,25, null);
+			}
+			else {
+				g.drawImage(Inventory.tools[0], (int) Player2.player_x+9, (int) Player2.player_y+25,-25,25, null);
+			}
 			//Draw Chi
 			if (Settings.chi == true) {
 				g.drawImage(Chi.image, (int) Chi.chix, (int) Chi.chiy,28,67, null);
@@ -676,6 +683,13 @@ public class World2 extends JPanel {
 						g.drawImage(invslot,x,y,29,29,null);
 						g.drawImage(Inventory.slots[9+i/29],x+2,y+2,25,25,null);
 						g.drawString("" + Inventory.count[9+i/29], x+2, y+25);
+						if (Mouse.left) {
+							if (MouseInfo.getPointerInfo().getLocation().x > x && MouseInfo.getPointerInfo().getLocation().x < x+29) {
+								if (MouseInfo.getPointerInfo().getLocation().y > y && MouseInfo.getPointerInfo().getLocation().y < y+29) {
+									Inventory.items[9+i/29] = "Empty";
+								}
+							}
+						}
 						i += 29;
 					}
 				}

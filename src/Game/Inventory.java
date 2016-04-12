@@ -35,7 +35,7 @@ public class Inventory {
 	
 	public static void AddBlock (String block, byte amount) {
 		for (int i = 0; i < 45; i++) {
-			if (items[i] == "Empty") {
+			if (items[i].equals("Empty")) {
 				for (int j = 0; j < identifier.length; j++) {
 					if (identifier[j].equalsIgnoreCase(block)) {
 						slots[i] = blocks[j];
@@ -61,6 +61,8 @@ public class Inventory {
 				}
 			}
 		}
+		//Block not been picked up
+		System.out.println("Block: " + block + ", not picked up!");
 	}
 	
 }
