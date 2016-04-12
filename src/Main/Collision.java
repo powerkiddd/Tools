@@ -82,10 +82,12 @@ public class Collision {
 			if (j == i) {
 				break;
 			}
-			temprect2 = (Rectangle) World2.blockcollisions[j].clone();
-			temprect2.x -= (int) World2.camera_x;
-			if (temprect.intersects(temprect2)) {
-				return j;
+			else if (World2.blockbackground[j] == false) {
+				temprect2 = (Rectangle) World2.blockcollisions[j].clone();
+				temprect2.x -= (int) World2.camera_x;
+				if (temprect.intersects(temprect2)) {
+					return j;
+				}
 			}
 		}
 		
@@ -100,7 +102,7 @@ public class Collision {
 		temprect.x -= (int) World2.camera_x;
 		
 		for (int j = 0; j < World2.blockcollisions.length; j++) {
-			if (j != i) {
+			if (j != i && World2.blockbackground[j] == false) {
 				temprect = (Rectangle) World2.blockcollisions[i].clone();
 				temprect.x -= (int) World2.camera_x;
 				temprect2 = (Rectangle) World2.blockcollisions[j].clone();
