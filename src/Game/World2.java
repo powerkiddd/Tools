@@ -91,8 +91,8 @@ public class World2 extends JPanel {
 	public static String[] consoleoutput = new String[100];
 	public static String consoleinput = "";
 	private static float rot = 0;
-	public static long[] milliseconds = new long[2]; //Background,Blocks
-	public static long[] lastmilliseconds = new long[2]; //Background,Blocks
+	public static long[] milliseconds = new long[5]; //Background,Blocks,Player,GUI,Debug Blocks
+	public static long[] lastmilliseconds = new long[5]; //Background,Blocks,Player,GUI,Debug Blocks
 	
 	public static void main(String[] args) {
 		Player2.playerspeed = 3;
@@ -204,6 +204,7 @@ public class World2 extends JPanel {
 				else {
 					hasitcrashed = 0;
 				}
+				milliseconds[1] -= milliseconds[4];
 				for (byte i = 0; i < milliseconds.length; i++) {
 					lastmilliseconds[i] = milliseconds[i];
 					milliseconds[i] = 0;
@@ -545,6 +546,7 @@ public class World2 extends JPanel {
 				}
 				temprect.x -= (int) camera_x;
 				temprect.y -= (int) camera_y;
+				long starttime2 = System.currentTimeMillis();
 				if (debug == true) {
 					if (blockbackground[i] == false && isblockvisible) {
 						g.drawImage(collider, temprect.x, temprect.y, temprect.width, temprect.height, null);
@@ -556,6 +558,8 @@ public class World2 extends JPanel {
 						g.drawImage(collider2, Mouse.gamecursorrect.x, Mouse.gamecursorrect.y, Mouse.gamecursorrect.width, Mouse.gamecursorrect.height, null);
 					}
 				}
+				long stoptime2 = System.currentTimeMillis();
+				milliseconds[4] = milliseconds[4] + (stoptime2-starttime2);
 				if (Mouse.left == true && blockbackground[i] == false) {
 					if (Mouse.gamecursorrect.intersects(temprect)) {
 						Collision.testplayercol(i);
@@ -583,6 +587,7 @@ public class World2 extends JPanel {
 			}
 			stoptime = System.currentTimeMillis();
 			milliseconds[1] = milliseconds[1] + (stoptime-starttime);
+			starttime = System.currentTimeMillis();
 			//Draw Player
 			g.drawImage(playerimage, (int) (Player2.player_x), (int) Player2.player_y, null);
 			if (Player2.hasJetpack) {
@@ -602,6 +607,8 @@ public class World2 extends JPanel {
 			else {
 				g.drawImage(Inventory.tools[0], (int) Player2.player_x+9, (int) Player2.player_y+25,-25,25, null);
 			}
+			stoptime = System.currentTimeMillis();
+			milliseconds[2] = milliseconds[2] + (stoptime-starttime);
 			//Draw Chi
 			if (Settings.chi == true) {
 				g.drawImage(Chi.image, (int) Chi.chix, (int) Chi.chiy,28,67, null);
@@ -628,6 +635,7 @@ public class World2 extends JPanel {
 				Crash.cause = "Someone forgot to initialize the lighting engine...";
 				Crash.main(null);
 			}*/
+			starttime = System.currentTimeMillis();
 			//Draw Hotbar
 			g.drawImage(invslot, f.getSize().width/2-116, 0, 29, 29, null);
 			g.drawImage(invslot, f.getSize().width/2-87, 0, 29, 29, null);
@@ -658,7 +666,10 @@ public class World2 extends JPanel {
 			g.drawString("" + Inventory.count[7], f.getSize().width/2+92, 25);
 			g.drawString("" + Inventory.count[8], f.getSize().width/2+122, 25);
 			g.setColor(Color.BLACK);
+			stoptime = System.currentTimeMillis();
+			milliseconds[3] = milliseconds[3] + (stoptime-starttime);
 			//Draw placeholder block
+			starttime = System.currentTimeMillis();
 			if (Build.selected != 0) {
 				if (Inventory.items[Build.selected-1] != "Empty") {
 					if (Input.snap) {
@@ -685,6 +696,9 @@ public class World2 extends JPanel {
 					}
 				}
 			}
+			stoptime = System.currentTimeMillis();
+			milliseconds[3] = milliseconds[3] + (stoptime-starttime);
+			starttime = System.currentTimeMillis();
 			//Draw pausemenu
 			if (Input.escape) {
 				if (!saveonce) {
@@ -704,6 +718,8 @@ public class World2 extends JPanel {
 			else {
 				saveonce = false;
 			}
+			stoptime = System.currentTimeMillis();
+			milliseconds[3] = milliseconds[3] + (stoptime-starttime);
 			//Draw inventory
 			if (showinventory) {
 				short i = 0;
@@ -760,12 +776,24 @@ public class World2 extends JPanel {
 				g.fillRect(f.getWidth()-250, 215, 200, 100);
 				g.setColor(Color.GREEN);
 				float derp = (float) ((float) (lastmilliseconds[0])/totalmilliseconds);
-				g.fillArc(f.getWidth()-250, 0, 200, 200, 0, (int) Math.ceil((360*derp)));
+				g.fillArc(f.getWidth()-250, 0, 200, 200, 0, (int) Math.ceil(360*derp));
 				g.drawString("Background render: " + lastmilliseconds[0] + "MS", f.getWidth()-250, 225);
 				g.setColor(Color.BLUE);
 				float derp2 = (float) ((float) (lastmilliseconds[1])/totalmilliseconds);
-				g.fillArc(f.getWidth()-250, 0, 200, 200, (int) Math.ceil((360*derp)), (int) Math.ceil((360*derp2)));
+				g.fillArc(f.getWidth()-250, 0, 200, 200, (int) Math.ceil(360*derp), (int) Math.ceil(360*derp2));
 				g.drawString("Blocks render: " + lastmilliseconds[1] + "MS", f.getWidth()-250, 240);
+				g.setColor(Color.ORANGE);
+				float derp3 = (float) ((float) (lastmilliseconds[2])/totalmilliseconds);
+				g.fillArc(f.getWidth()-250, 0, 200, 200, (int) Math.ceil(360*(derp+derp2)), (int) Math.ceil((360*derp3)));
+				g.drawString("Player render: " + lastmilliseconds[2] + "MS", f.getWidth()-250, 255);
+				g.setColor(Color.CYAN);
+				float derp4 = (float) ((float) (lastmilliseconds[3])/totalmilliseconds);
+				g.fillArc(f.getWidth()-250, 0, 200, 200, (int) Math.ceil(360*(derp+derp2+derp3)), (int) Math.ceil((360*derp4)));
+				g.drawString("GUI render: " + lastmilliseconds[3] + "MS", f.getWidth()-250, 270);
+				g.setColor(Color.MAGENTA);
+				float derp5 = (float) ((float) (lastmilliseconds[4])/totalmilliseconds);
+				g.fillArc(f.getWidth()-250, 0, 200, 200, (int) Math.ceil(360*(derp+derp2+derp3+derp4)), (int) Math.ceil(360*derp5));
+				g.drawString("Debug Blocks render: " + lastmilliseconds[4] + "MS", f.getWidth()-250, 285);
 				g.setColor(Color.BLACK);
 				g.drawString(String.valueOf(totalmilliseconds), f.getWidth()-160, 100);
 			}
