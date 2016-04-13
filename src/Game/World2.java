@@ -389,16 +389,20 @@ public class World2 extends JPanel {
 			//Draw Background
 			for (int i=0; i < f.getSize().height; i += backgroundy) {
 				for (int j=0; j < world_x+f.getSize().width; j += backgroundx) {
-					if (camera_y > -1500) {
-						g.drawImage(image, (int) ((int)j-camera_x), i, backgroundx, backgroundy,null);
-					}
-					else {
-						g.drawImage(space, (int) ((int)j-camera_x), i, backgroundx, backgroundy,null);
+					if (j > camera_x-backgroundx && j < camera_x+f.getSize().width && i > camera_y-backgroundy && i < camera_y+f.getSize().height-25) {
+						if (camera_y > -1500) {
+							g.drawImage(image, (int) ((int)j-camera_x), i, backgroundx, backgroundy,null);
+						}
+						else {
+							g.drawImage(space, (int) ((int)j-camera_x), i, backgroundx, backgroundy,null);
+						}
 					}
 				}
 			}
 			for (int i = 0; i < world_x+f.getSize().width; i += 640) {
-				g.drawImage(background_land, (int) (i-camera_x),(int) (f.getSize().height-f.getSize().height/4-380-camera_y), 640, 400,null);
+				if (i > camera_x-640 && i < camera_x+f.getSize().width) {
+					g.drawImage(background_land, (int) (i-camera_x),(int) (f.getSize().height-f.getSize().height/4-380-camera_y), 640, 400,null);
+				}
 			}
 			//Draw Blocks
 			for (int i=0; i < blocks.length; i++) {
