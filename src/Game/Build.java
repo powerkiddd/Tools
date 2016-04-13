@@ -147,14 +147,14 @@ public class Build {
 		World2.blockbackground[World2.blockbackground.length-1] = background;
 		if (selected != 0 && Inventory.slots[selected-1] != null) {
 			//Get index from inventory
-			World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y+(int)World2.camera_y-World2.final_y,Inventory.slots[selected-1].getWidth(),Inventory.slots[selected-1].getHeight());
+			World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(Mouse.mouseposinworldx,MousePos.y+(int)World2.camera_y-World2.final_y,Inventory.slots[selected-1].getWidth(),Inventory.slots[selected-1].getHeight());
 		}
 		else {
 			//Get index from world block collection
 			boolean found = false;
 			for (int j = 0; j < World2.allblocks.length; j++) {
 				if (type.equalsIgnoreCase(World2.blockidentifiers[j])) {
-					World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)World2.camera_x-World2.final_x,MousePos.y+(int)World2.camera_y-World2.final_y,World2.allblocks[j].getWidth(),World2.allblocks[j].getHeight());
+					World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(Mouse.mouseposinworldx,MousePos.y+(int)World2.camera_y-World2.final_y,World2.allblocks[j].getWidth(),World2.allblocks[j].getHeight());
 					found = true;
 					break;
 				}

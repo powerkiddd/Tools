@@ -3,6 +3,7 @@ package Game;
 import java.awt.image.BufferedImage;
 
 import Main.Directory;
+import Main.Input;
 
 public class Inventory {
 	
@@ -33,15 +34,15 @@ public class Inventory {
 		AddBlock("Stone", (byte) 127);
 	}
 	
-	public static void AddBlock (String block, byte amount) {
+	public static boolean AddBlock (String block, byte amount) {
 		for (int i = 0; i < 45; i++) {
 			if (items[i].equals("Empty")) {
-				for (int j = 0; j < identifier.length; j++) {
+				for (int j = 0; j < identifier.length-1; j++) {
 					if (identifier[j].equalsIgnoreCase(block)) {
 						slots[i] = blocks[j];
 						items[i] = block;
 						count[i] = amount;
-						return;
+						return true;
 					}
 				}
 			}
@@ -51,7 +52,7 @@ public class Inventory {
 						int total = count[i] + amount;
 						if (total <= 127) {
 							count[i] += amount;
-							return;
+							return true;
 						}
 						else {
 							amount = (byte) (amount-(amount-count[i]));
@@ -63,6 +64,7 @@ public class Inventory {
 		}
 		//Block not been picked up
 		System.out.println("Block: " + block + ", not picked up!");
+		return false;
 	}
 	
 }

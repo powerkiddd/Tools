@@ -38,9 +38,9 @@ import Settings.Video_Settings;
 
 public class World2 extends JPanel {
 	
-	private static BufferedImage image;
+	public static BufferedImage image;
 	private static BufferedImage space;
-	private static BufferedImage background_land;
+	public static BufferedImage background_land;
 	public static int backgroundx = 640;
 	public static int backgroundy = 400;
 	private static BufferedImage playerimage;
@@ -54,6 +54,7 @@ public class World2 extends JPanel {
 	private static BufferedImage grid;
 	private static BufferedImage loading;
 	private static BufferedImage loadingicon;
+	private static BufferedImage console;
 	private static int world_x = 2400;
 	private static int world_y = 1200;
 	public static boolean debug = false;
@@ -87,6 +88,8 @@ public class World2 extends JPanel {
 	public static boolean buildingworld = true;
 	public static boolean saveonce = false;
 	public static boolean showinventory = false;
+	public static String[] consoleoutput = new String[100];
+	public static String consoleinput = "";
 	private static float rot = 0;
 	
 	public static void main(String[] args) {
@@ -148,6 +151,7 @@ public class World2 extends JPanel {
 			File file13 = new File("images\\loading\\loading.png");
 			File file14 = new File("images\\loading\\loading_icon.png");
 			File file15 = new File("images\\skybox_space.jpg");
+			File file16 = new File("images\\console.png");
 			image = ImageIO.read(file);
 			playerimage = ImageIO.read(file2);
 			invslot = ImageIO.read(file5);
@@ -160,6 +164,7 @@ public class World2 extends JPanel {
 			loading = ImageIO.read(file13);
 			loadingicon = ImageIO.read(file14);
 			space = ImageIO.read(file15);
+			console = ImageIO.read(file16);
 		}
 		catch (IOException ex) {
 			ex.printStackTrace();
@@ -205,73 +210,75 @@ public class World2 extends JPanel {
 			public void run () {
 				Player2.playerrect = new Rectangle((int) Player2.player_x,(short) Player2.player_y,19,67);
 				//Open inventory if I is pressed
-				if (Input.OnGetInput("i")) {
-					showinventory = !showinventory;
-				}
-				//Sprint if left shift is pressed
-				if (Input.GetInput("shift")) {
-					if (Player2.overridespeed == false) {
-						Player2.playerspeed = 5;
+				if (Input.console == false) {
+					if (Input.OnGetInput("i")) {
+						showinventory = !showinventory;
 					}
-				}
-				else {
-					if (Player2.overridespeed == false) {
-						Player2.playerspeed = 3;
-					}
-				}
-				//Move left if a is pressed
-				if (Input.GetInput("a") && Player2.collision != "a") {
-					if (once == false) {
-						playerimage = Player2.changeimage((byte) 1);
-						once = true;
-					}
-					if (camera_x > 0 && Player2.player_x < (0+Video_Settings.window_size_x/3)) {
-						for (byte i = 0; i < 10; i++) {
-							camera_x -= (float)Player2.playerspeed/10;
-						}
-						Player2.atborder = true;
-						if (camera_x < 0) {
-							camera_x = 0;
+					//Sprint if left shift is pressed
+					if (Input.GetInput("shift")) {
+						if (Player2.overridespeed == false) {
+							Player2.playerspeed = 5;
 						}
 					}
 					else {
-						Player2.atborder = false;
-						for (byte i = 0; i < 10; i++) {
-							Player2.player_x -= (float)Player2.playerspeed/10;
+						if (Player2.overridespeed == false) {
+							Player2.playerspeed = 3;
 						}
 					}
-				}
-				else {
-					once = false;
-				}
-				//move right if d is pressed
-				if (Input.GetInput("d") && Player2.collision != "d") {
-					if (once == false) {
-						playerimage = Player2.changeimage((byte) 0);
-						once = true;
-					}
-					if (Player2.player_x > Video_Settings.window_size_x-Video_Settings.window_size_x/3 && camera_x < world_x) {
-						for (byte i = 0; i < 10; i++) {
-							camera_x += (float)Player2.playerspeed/10;
+					//Move left if a is pressed
+					if (Input.GetInput("a") && Player2.collision != "a") {
+						if (once == false) {
+							playerimage = Player2.changeimage((byte) 1);
+							once = true;
 						}
-						Player2.atborder = true;
-						if (camera_x > world_x) {
-							camera_x = world_x;
+						if (camera_x > 0 && Player2.player_x < (0+Video_Settings.window_size_x/3)) {
+							for (byte i = 0; i < 10; i++) {
+								camera_x -= (float)Player2.playerspeed/10;
+							}
+							Player2.atborder = true;
+							if (camera_x < 0) {
+								camera_x = 0;
+							}
+						}
+						else {
+							Player2.atborder = false;
+							for (byte i = 0; i < 10; i++) {
+								Player2.player_x -= (float)Player2.playerspeed/10;
+							}
 						}
 					}
 					else {
-						Player2.atborder = false;
-						for (byte i = 0; i < 10; i++) {
-							Player2.player_x += (float)Player2.playerspeed/10;
+						once = false;
+					}
+					//move right if d is pressed
+					if (Input.GetInput("d") && Player2.collision != "d") {
+						if (once == false) {
+							playerimage = Player2.changeimage((byte) 0);
+							once = true;
+						}
+						if (Player2.player_x > Video_Settings.window_size_x-Video_Settings.window_size_x/3 && camera_x < world_x) {
+							for (byte i = 0; i < 10; i++) {
+								camera_x += (float)Player2.playerspeed/10;
+							}
+							Player2.atborder = true;
+							if (camera_x > world_x) {
+								camera_x = world_x;
+							}
+						}
+						else {
+							Player2.atborder = false;
+							for (byte i = 0; i < 10; i++) {
+								Player2.player_x += (float)Player2.playerspeed/10;
+							}
 						}
 					}
-				}
-				else {
-					once = false;
-				}
-				if (Input.GetInput("space")) {
-					if (Player2.isJumping == false && Player2.isFalling == false) {
-						Player2.isJumping = true;
+					else {
+						once = false;
+					}
+					if (Input.GetInput("space")) {
+						if (Player2.isJumping == false && Player2.isFalling == false) {
+							Player2.isJumping = true;
+						}
 					}
 				}
 				if (Player2.player_y > Video_Settings.window_size_y-Video_Settings.window_size_y/3 && camera_y < world_y) {
@@ -370,6 +377,7 @@ public class World2 extends JPanel {
 		}
 		Build.Place("steamengine", new Rectangle(500,Video_Settings.window_size_y-Video_Settings.window_size_y/3-118,274,184), true);
 		buildingworld = false;
+		Input.RegisterInConsole("World" + SaveLoad.worldname + "loaded!");
 	}
 	
 	@Override
@@ -651,8 +659,8 @@ public class World2 extends JPanel {
 							Mouse.mouseposonscreeny = MouseInfo.getPointerInfo().getLocation().y;
 							Mouse.mouseposonscreenx = (int) (Math.floor(Mouse.mouseposonscreenx/25)*25-Math.floor((camera_x-(25*Math.floor(camera_x/25)))));
 							Mouse.mouseposonscreeny = (int) Math.floor(Mouse.mouseposonscreeny/25)*25-25;
-							Mouse.mouseposinworldx = (int) (Mouse.mouseposonscreenx+Math.floor(camera_x-(25*Math.floor(camera_x/25))));
-							Mouse.mouseposinworldy = Mouse.mouseposonscreenx+Math.round(camera_y);
+							Mouse.mouseposinworldx = (int) ((Mouse.mouseposonscreenx)+camera_x);
+							Mouse.mouseposinworldy = Mouse.mouseposonscreeny+Math.round(camera_y);
 							g.drawImage(blockholder, Mouse.mouseposonscreenx, Mouse.mouseposonscreeny, 25,25,null);
 						}
 					}
@@ -735,6 +743,22 @@ public class World2 extends JPanel {
 						g.drawImage(grid, gridx - (int) camera_x, gridy - (int) camera_y, 25, 25, null);
 					}
 				}
+			}
+			//DRAW CONSOLE
+			if (Input.console) {
+				g.drawImage(console, 0, 0, f.getWidth(), f.getHeight()/3, null);
+				g.setColor(Color.WHITE);
+				g.drawString(consoleinput, 0, 25);
+				int totalinconsole = 100;
+				for (int i = consoleoutput.length-1; i > 0; i--) {
+					if (consoleoutput[i] != null) {
+						g.drawString(consoleoutput[i], 75, (f.getHeight()/3-20-totalinconsole*20)+i*20);
+					}
+					else {
+						totalinconsole = i-1;
+					}
+				}
+				g.setColor(Color.BLACK);
 			}
 			//End Debugging Information
 		}
