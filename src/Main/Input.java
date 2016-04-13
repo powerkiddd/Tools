@@ -34,6 +34,7 @@ public class Input {
 	public static boolean escape = false;
 	public static boolean console = false;
 	public static String[] onces = new String[10];
+	public static String lastconsoleinput = "";
 	
 	public static void main (String[] args) {
 		World2.f.addKeyListener(new KeyListener () {
@@ -117,6 +118,7 @@ public class Input {
 					if (e.getKeyCode() == 10) {
 						RegisterInConsole(World2.consoleinput);
 						CheckConsoleCommand(World2.consoleinput);
+						lastconsoleinput = World2.consoleinput;
 						World2.consoleinput = "";
 					}
 					else if (e.getKeyCode() == 8) {
@@ -124,9 +126,11 @@ public class Input {
 					}
 					else if (e.getKeyCode() == 38) {
 						//arrow up
+						World2.consoleinput = lastconsoleinput;
 					}
 					else if (e.getKeyCode() == 40) {
 						//arrow down
+						World2.consoleinput = lastconsoleinput;
 					}
 					else if (e.getKeyCode() != 192 && e.getKeyCode() != 10 && e.getKeyCode() != 16 && e.getKeyCode() != 20 && e.getKeyCode() != 114 && e.getKeyCode() != 115 && e.getKeyCode() != 17 && e.getKeyCode() != 18 && e.getKeyCode() != 524 && e.getKeyCode() != 525 && e.getKeyCode() != 144 && e.getKeyCode() != 37 && e.getKeyCode() != 39) {
 						World2.consoleinput = World2.consoleinput + e.getKeyChar();
