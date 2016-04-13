@@ -699,8 +699,10 @@ public class World2 extends JPanel {
 						g.drawString("" + Inventory.count[9+i/29], x+2, y+25);
 						if (Mouse.left) {
 							if (MouseInfo.getPointerInfo().getLocation().x > x && MouseInfo.getPointerInfo().getLocation().x < x+29) {
-								if (MouseInfo.getPointerInfo().getLocation().y > y && MouseInfo.getPointerInfo().getLocation().y < y+29) {
+								if (MouseInfo.getPointerInfo().getLocation().y > y+29 && MouseInfo.getPointerInfo().getLocation().y < y+58) {
 									Inventory.items[9+i/29] = "Empty";
+									Inventory.slots[9+i/29] = null;
+									Inventory.count[9+i/29] = 0;
 								}
 							}
 						}

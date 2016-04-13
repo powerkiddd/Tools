@@ -55,8 +55,10 @@ public class SaveLoad {
 		World2.blockposses = new String[blocks_split.length];
 		World2.blockcollisions = new Rectangle[blocks_split.length];
 		World2.blockbackground = new Boolean[blocks_split.length];
-		Inventory.items = new String[inventory_split.length];
-		Inventory.count = new byte[inventorycount_split.length];
+		for (byte i = 0; i < 45; i++) {
+			Inventory.items[i] = "Empty";
+			Inventory.count[i] = 0;
+		}
 		for (int i = 0; i < blocks_split.length; i++) {
 			World2.blocks[i] = blocks_split[i];
 			World2.blockposses[i] = blockposses_split[i];
@@ -65,8 +67,7 @@ public class SaveLoad {
 			World2.blockbackground[i] = Boolean.parseBoolean(blockbackground_split[i]);
 		}
 		for (int i = 0; i < Inventory.items.length; i++) {
-			Inventory.items[i] = inventory_split[i];
-			Inventory.count[i] = Byte.parseByte(inventorycount_split[i]);
+			Inventory.AddBlock(inventory_split[i], Byte.parseByte(inventorycount_split[i]));
 		}
 	}
 	
