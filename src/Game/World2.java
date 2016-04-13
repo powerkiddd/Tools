@@ -91,6 +91,8 @@ public class World2 extends JPanel {
 	public static String[] consoleoutput = new String[100];
 	public static String consoleinput = "";
 	private static float rot = 0;
+	public static long[] milliseconds = new long[2]; //Background,Blocks
+	public static long[] lastmilliseconds = new long[2]; //Background,Blocks
 	
 	public static void main(String[] args) {
 		Player2.playerspeed = 3;
@@ -201,6 +203,10 @@ public class World2 extends JPanel {
 				}
 				else {
 					hasitcrashed = 0;
+				}
+				for (byte i = 0; i < milliseconds.length; i++) {
+					lastmilliseconds[i] = milliseconds[i];
+					milliseconds[i] = 0;
 				}
 				f.setTitle("Tools " + Version.version + " [FPS: " + lastFPS + "] " + special);
 				FPS = 0;
@@ -386,6 +392,7 @@ public class World2 extends JPanel {
 		NextFrame_Water = false;
 		FPS++;
 		if (World2.buildingworld == false) {
+			long starttime = System.currentTimeMillis();
 			//Draw Background
 			for (int i=0; i < f.getSize().height; i += backgroundy) {
 				for (int j=0; j < world_x+f.getSize().width; j += backgroundx) {
@@ -404,6 +411,9 @@ public class World2 extends JPanel {
 					g.drawImage(background_land, (int) (i-camera_x),(int) (f.getSize().height-f.getSize().height/4-380-camera_y), 640, 400,null);
 				}
 			}
+			long stoptime = System.currentTimeMillis();
+			milliseconds[0] = milliseconds[0] + (stoptime-starttime);
+			starttime = System.currentTimeMillis();
 			//Draw Blocks
 			for (int i=0; i < blocks.length; i++) {
 				String pos = blockposses[i];
@@ -571,6 +581,8 @@ public class World2 extends JPanel {
 					//BlockInfo.RemoveAllInfo(i);
 				}
 			}
+			stoptime = System.currentTimeMillis();
+			milliseconds[1] = milliseconds[1] + (stoptime-starttime);
 			//Draw Player
 			g.drawImage(playerimage, (int) (Player2.player_x), (int) Player2.player_y, null);
 			if (Player2.hasJetpack) {
@@ -741,6 +753,21 @@ public class World2 extends JPanel {
 				g.drawString("Using Graphics Device:" + Video_Settings.gd[0].getIDstring(), 0, 220);
 				g.drawString("IsJumping: " + Player2.isJumping + " , IsFalling: " + Player2.isFalling,0, 235);
 				g.drawString("Total CPU Cores available: " + processors, 0, 250);
+				long totalmilliseconds = 1;
+				for (byte i = 0; i < lastmilliseconds.length; i++) {
+					totalmilliseconds = totalmilliseconds + lastmilliseconds[i];
+				}
+				g.fillRect(f.getWidth()-250, 215, 200, 100);
+				g.setColor(Color.GREEN);
+				float derp = (float) ((float) (lastmilliseconds[0])/totalmilliseconds);
+				g.fillArc(f.getWidth()-250, 0, 200, 200, 0, (int) Math.ceil((360*derp)));
+				g.drawString("Background render: " + lastmilliseconds[0] + "MS", f.getWidth()-250, 225);
+				g.setColor(Color.BLUE);
+				float derp2 = (float) ((float) (lastmilliseconds[1])/totalmilliseconds);
+				g.fillArc(f.getWidth()-250, 0, 200, 200, (int) Math.ceil((360*derp)), (int) Math.ceil((360*derp2)));
+				g.drawString("Blocks render: " + lastmilliseconds[1] + "MS", f.getWidth()-250, 240);
+				g.setColor(Color.BLACK);
+				g.drawString(String.valueOf(totalmilliseconds), f.getWidth()-160, 100);
 			}
 			//DRAW GRID
 			if (debuggrid == true) {
