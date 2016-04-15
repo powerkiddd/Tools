@@ -59,6 +59,7 @@ public class World2 extends JPanel {
 	private static int world_y = 1200;
 	public static boolean debug = false;
 	public static boolean debuggrid = false;
+	public static boolean debugpie = false;
 	public static float camera_x = 0;
 	public static float camera_y = 0;
 	public static boolean canplayermovey = true;
@@ -91,8 +92,8 @@ public class World2 extends JPanel {
 	public static String[] consoleoutput = new String[100];
 	public static String consoleinput = "";
 	private static float rot = 0;
-	public static long[] milliseconds = new long[5]; //Background,Blocks,Player,GUI,Debug Blocks
-	public static long[] lastmilliseconds = new long[5]; //Background,Blocks,Player,GUI,Debug Blocks
+	public static long[] milliseconds = new long[6]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation
+	public static long[] lastmilliseconds = new long[6]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation
 	
 	public static void main(String[] args) {
 		Player2.playerspeed = 3;
@@ -205,6 +206,7 @@ public class World2 extends JPanel {
 					hasitcrashed = 0;
 				}
 				milliseconds[1] -= milliseconds[4];
+				milliseconds[1] -= milliseconds[5];
 				for (byte i = 0; i < milliseconds.length; i++) {
 					lastmilliseconds[i] = milliseconds[i];
 					milliseconds[i] = 0;
@@ -397,7 +399,7 @@ public class World2 extends JPanel {
 			//Draw Background
 			for (int i=0; i < f.getSize().height; i += backgroundy) {
 				for (int j=0; j < world_x+f.getSize().width; j += backgroundx) {
-					if (j > camera_x-backgroundx && j < camera_x+f.getSize().width && i > camera_y-backgroundy && i < camera_y+f.getSize().height-25) {
+					if (j > camera_x-backgroundx && j < camera_x+f.getSize().width) {
 						if (camera_y > -1500) {
 							g.drawImage(image, (int) ((int)j-camera_x), i, backgroundx, backgroundy,null);
 						}
@@ -434,6 +436,7 @@ public class World2 extends JPanel {
 						g.drawImage(allblocks[j], (int) (x-camera_x), (int) (y-camera_y), blockcollisions[i].width, blockcollisions[i].height, null);
 						if (blockbackground[i] == false) {
 							Collision.testplayercol(i);
+							milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
 						}
 						break;
 					}
@@ -448,6 +451,7 @@ public class World2 extends JPanel {
 					}
 					if (y < World2.f.getSize().height) {
 						int hascolwith = Collision.testblockcol(i);
+						milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
 						if (hascolwith == -1 || blockbackground[hascolwith] == true) {
 							blockposses[i] = "" + x + "," + (y+1);
 							blockcollisions[i] = new Rectangle(x,y+1,25,25);
@@ -461,10 +465,12 @@ public class World2 extends JPanel {
 								else {
 									blockcollisions[i] = new Rectangle(x+25,y,25,25);
 									if (!Collision.testblockcolside(i, "Left")) {
+										milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
 										//spawn water block left
 										Build.Place("Water", new Rectangle(blockcollisions[i].x-25,blockcollisions[i].y,25,25),false);
 									}
 									if (!Collision.testblockcolside(i, "Right")) {
+										milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
 										//spawn water block right
 										Build.Place("Water", new Rectangle(blockcollisions[i].x+25,blockcollisions[i].y,25,25),false);
 									}
@@ -480,12 +486,14 @@ public class World2 extends JPanel {
 								boolean left = false;
 								boolean right = false;
 								if (!Collision.testblockcolside(i, "Left")) {
+									milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
 									//spawn water block left
 									//Build.Place("Water", new Rectangle(blockcollisions[i].x-25,blockcollisions[i].y,25,25));
 									removeblock = true;
 									left = true;
 								}
 								if (!Collision.testblockcolside(i, "Right")) {
+									milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
 									//spawn water block right
 									//Build.Place("Water", new Rectangle(blockcollisions[i].x+25,blockcollisions[i].y,25,25));
 									removeblock = true;
@@ -536,6 +544,7 @@ public class World2 extends JPanel {
 				if (isblockvisible && blockbackground[i] == false) {
 					if (temprect.intersects(Player2.playerrect)) {
 						Collision.testplayercol(i);
+						milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
 					}
 					else {
 						if (NextFrame_Water == false) {
@@ -563,6 +572,7 @@ public class World2 extends JPanel {
 				if (Mouse.left == true && blockbackground[i] == false) {
 					if (Mouse.gamecursorrect.intersects(temprect)) {
 						Collision.testplayercol(i);
+						milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
 						Build.Mine(i, true, false);
 					}
 				}
@@ -769,6 +779,17 @@ public class World2 extends JPanel {
 				g.drawString("Using Graphics Device:" + Video_Settings.gd[0].getIDstring(), 0, 220);
 				g.drawString("IsJumping: " + Player2.isJumping + " , IsFalling: " + Player2.isFalling,0, 235);
 				g.drawString("Total CPU Cores available: " + processors, 0, 250);
+			}
+			//DRAW GRID
+			if (debuggrid == true) {
+				for (int gridx = 0; gridx < world_x; gridx += 25) {
+					for (int gridy = 0; gridy < f.getHeight(); gridy += 25) {
+						g.drawImage(grid, gridx - (int) camera_x, gridy - (int) camera_y, 25, 25, null);
+					}
+				}
+			}
+			//DRAW DEBUG PIE
+			if (debug || debugpie) {
 				long totalmilliseconds = 1;
 				for (byte i = 0; i < lastmilliseconds.length; i++) {
 					totalmilliseconds = totalmilliseconds + lastmilliseconds[i];
@@ -794,16 +815,12 @@ public class World2 extends JPanel {
 				float derp5 = (float) ((float) (lastmilliseconds[4])/totalmilliseconds);
 				g.fillArc(f.getWidth()-250, 0, 200, 200, (int) Math.ceil(360*(derp+derp2+derp3+derp4)), (int) Math.ceil(360*derp5));
 				g.drawString("Debug Blocks render: " + lastmilliseconds[4] + "MS", f.getWidth()-250, 285);
+				g.setColor(Color.PINK);
+				float derp6 = (float) ((float) (lastmilliseconds[5])/totalmilliseconds);
+				g.fillArc(f.getWidth()-250, 0, 200, 200, (int) Math.ceil(360*(derp+derp2+derp3+derp4+derp5)), (int) Math.ceil(360*derp6));
+				g.drawString("Collision Calculation: " + lastmilliseconds[5] + "MS", f.getWidth()-250, 300);
 				g.setColor(Color.BLACK);
 				g.drawString(String.valueOf(totalmilliseconds), f.getWidth()-160, 100);
-			}
-			//DRAW GRID
-			if (debuggrid == true) {
-				for (int gridx = 0; gridx < world_x; gridx += 25) {
-					for (int gridy = 0; gridy < f.getHeight(); gridy += 25) {
-						g.drawImage(grid, gridx - (int) camera_x, gridy - (int) camera_y, 25, 25, null);
-					}
-				}
 			}
 			//DRAW CONSOLE
 			if (Input.console) {

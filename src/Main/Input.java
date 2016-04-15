@@ -101,7 +101,12 @@ public class Input {
 				}
 				if (e.getKeyCode() == 114) {
 					f3 =! f3;
-					World2.debug = f3;
+					if (shift == false) {
+						World2.debug = f3;
+					}
+					else {
+						World2.debugpie = f3;
+					}
 				}
 				if (e.getKeyCode() == 115) {
 					f4 =! f4;

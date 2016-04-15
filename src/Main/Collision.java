@@ -8,10 +8,12 @@ import Game.World2;
 public class Collision {
 	
 	static boolean acol = false;
+	public static long starttime;
+	public static long stoptime;
 	
 	//Returns nothing, tests player collision with blocks
 	public static void testplayercol (int i) {
-		
+		starttime = System.currentTimeMillis();
 		Rectangle temprect = new Rectangle();
 		temprect = (Rectangle) World2.blockcollisions[i].clone();
 		temprect.x -= (int) World2.camera_x;
@@ -24,6 +26,7 @@ public class Collision {
 				Player2.playerspeed = 1;
 				World2.NextFrame_Water = true;
 				Player2.isInWater = true;
+				stoptime = System.currentTimeMillis();
 				return;
 			}
 			else if (World2.blocks.length-1 == i && Player2.isFalling == false && Player2.isJumping == false && acol == false) {
@@ -69,10 +72,12 @@ public class Collision {
 		else if (World2.blocks.length-1 == i && acol == true) {
 			acol = false;
 		}
+		stoptime = System.currentTimeMillis();
 	}
 	
 	//Returns the other block number if there is a collision
 	public static int testblockcol (int i) {
+		starttime = System.currentTimeMillis();
 		Rectangle temprect = new Rectangle();
 		Rectangle temprect2 = new Rectangle();
 		temprect = (Rectangle) World2.blockcollisions[i].clone();
@@ -86,16 +91,19 @@ public class Collision {
 				temprect2 = (Rectangle) World2.blockcollisions[j].clone();
 				temprect2.x -= (int) World2.camera_x;
 				if (temprect.intersects(temprect2)) {
+					stoptime = System.currentTimeMillis();
 					return j;
 				}
 			}
 		}
+		stoptime = System.currentTimeMillis();
 		
 		return -1;
 	}
 	
 	//Returns if collision on side has been detected (boolean)
 	public static boolean testblockcolside (int i, String side) {
+		starttime = System.currentTimeMillis();
 		Rectangle temprect = new Rectangle();
 		Rectangle temprect2 = new Rectangle();
 		temprect = (Rectangle) World2.blockcollisions[i].clone();
@@ -111,6 +119,7 @@ public class Collision {
 					temprect.x = temprect.x - 25;
 					temprect.y = temprect.y - 1;
 					if (temprect2.intersects(temprect)) {
+						stoptime = System.currentTimeMillis();
 						return true;
 					}
 				}
@@ -118,11 +127,13 @@ public class Collision {
 					temprect.x = temprect.x + 25;
 					temprect.y = temprect.y - 1;
 					if (temprect2.intersects(temprect)) {
+						stoptime = System.currentTimeMillis();
 						return true;
 					}
 				}
 			}
 		}
+		stoptime = System.currentTimeMillis();
 		
 		return false;
 	}
