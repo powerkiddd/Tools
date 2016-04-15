@@ -410,7 +410,7 @@ public class World2 extends JPanel {
 				}
 			}
 			for (int i = 0; i < world_x+f.getSize().width; i += 640) {
-				if (i > camera_x-640 && i < camera_x+f.getSize().width) {
+				if (i > camera_x-640 && i < camera_x+f.getSize().width && 610 > f.getSize().height-f.getSize().height/4-380-camera_y && -400 < f.getSize().height-f.getSize().height/4-380-camera_y) {
 					g.drawImage(background_land, (int) (i-camera_x),(int) (f.getSize().height-f.getSize().height/4-380-camera_y), 640, 400,null);
 				}
 			}
