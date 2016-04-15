@@ -696,7 +696,7 @@ public class World2 extends JPanel {
 							Mouse.mouseposonscreeny = MouseInfo.getPointerInfo().getLocation().y;
 							Mouse.mouseposonscreenx = (int) (Math.floor(Mouse.mouseposonscreenx/25)*25-Math.floor((camera_x-(25*Math.floor(camera_x/25)))));
 							Mouse.mouseposonscreeny = (int) Math.floor(Mouse.mouseposonscreeny/25)*25-25;
-							Mouse.mouseposinworldx = (int) ((Mouse.mouseposonscreenx)+camera_x);
+							Mouse.mouseposinworldx = (int) ((Mouse.mouseposonscreenx)-camera_x);
 							Mouse.mouseposinworldy = Mouse.mouseposonscreeny+Math.round(camera_y);
 							g.drawImage(blockholder, Mouse.mouseposonscreenx, Mouse.mouseposonscreeny, 25,25,null);
 						}
