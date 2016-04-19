@@ -10,7 +10,7 @@ public class Inventory {
 	public static BufferedImage[] slots = new BufferedImage[9];
 	public static String[] items = {"Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"};
 	public static byte[] count = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-	public static byte[] itemtype = {0, 0, 0, 0, 0, 0, 0, 0, 0}; //None, Block, Tool
+	public static byte[] itemtype = {0, 0, 0, 0, 0, 0, 0, 0, 0}; //None, Block, Tool, Material
 	public static BufferedImage[] blocks;
 	public static BufferedImage[] tools;
 	public static String[] identifier;
@@ -68,7 +68,7 @@ public class Inventory {
 			}
 			else {
 				if (type == 1) {
-					if (new String(items[i].toLowerCase().toString()).equals(name.toLowerCase().toString())) {
+					if (items[i].equalsIgnoreCase(name)) {
 						if (count[i] < 127) {
 							int total = count[i] + amount;
 							if (total <= 127) {
@@ -78,6 +78,23 @@ public class Inventory {
 							else {
 								amount = (byte) (amount-(amount-count[i]));
 								count[i] = 127;
+							}
+						}
+					}
+				}
+				else if (type == 2) {
+					if (items[i].equalsIgnoreCase(name)) {
+						if (name.equalsIgnoreCase("Stick")) {
+							if (count[i] < 127) {
+								int total = count[i] + amount;
+								if (total <= 127) {
+									count[i] += amount;
+									return true;
+								}
+								else {
+									amount = (byte) (amount-(amount-count[i]));
+									count[i] = 127;
+								}
 							}
 						}
 					}

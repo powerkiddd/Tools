@@ -76,8 +76,16 @@ public class Build {
 				Build.Mine(number,false,background);
 			}
 			if (World2.blocks[number].equals("Tree")) {
-				Inventory.AddItem("wood", (byte) 4, (byte) 1);
-				Build.Mine(number,false,background);
+				if (Build.selected-1 < 0) {
+					Inventory.AddItem("stick", (byte) 1, (byte) 2);
+				}
+				else if (Inventory.items[Build.selected-1].equalsIgnoreCase("empty")) {
+					Inventory.AddItem("stick", (byte) 1, (byte) 2);
+				}
+				else if (Inventory.items[Build.selected-1].equalsIgnoreCase("axe")) {
+					Inventory.AddItem("wood", (byte) 4, (byte) 1);
+					Build.Mine(number,false,background);
+				}
 			}
 		}
 	}
