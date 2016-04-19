@@ -72,11 +72,11 @@ public class Build {
 	public static void Interact (int number, boolean giveplayerblock, boolean background) {
 		if (background) {
 			if (World2.blocks[number].equals("rock") || World2.blocks[number].equals("rocks")) {
-				Inventory.AddBlock("rock", (byte) 1);
+				Inventory.AddItem("rock", (byte) 1, (byte) 1);
 				Build.Mine(number,false,background);
 			}
 			if (World2.blocks[number].equals("Tree")) {
-				Inventory.AddBlock("wood", (byte) 4);
+				Inventory.AddItem("wood", (byte) 4, (byte) 1);
 				Build.Mine(number,false,background);
 			}
 		}
@@ -92,7 +92,7 @@ public class Build {
 		blockcollisions_ = World2.blockcollisions.clone();
 		blockbackground_ = World2.blockbackground.clone();
 		if (giveplayerblock) {
-			Inventory.AddBlock(blocks_[number], (byte) 1);
+			Inventory.AddItem(blocks_[number], (byte) 1, (byte) 1);
 		}
 		boolean foundnumber = false;
 		//Reset Blocks, blockposses and blockcollisions

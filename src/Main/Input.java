@@ -35,6 +35,7 @@ public class Input {
 	public static boolean console = false;
 	public static String[] onces = new String[10];
 	public static String lastconsoleinput = "";
+	public static String[] itemtypes = {"Empty (not valid)", "Block", "Tool"};
 	
 	public static void main (String[] args) {
 		World2.f.addKeyListener(new KeyListener () {
@@ -245,13 +246,13 @@ public class Input {
 		String result = "Command not found.";
 		String[] splitinput = input.split(" ");
 		if (splitinput[0].equalsIgnoreCase("Give")) {
-			if (splitinput.length < 3) {
-				result = "Not enough arguments, execute command as: give *block* *amount*";
+			if (splitinput.length < 4) {
+				result = "Not enough arguments, execute command as: give *item* *amount* *type*";
 			}
 			else {
 				try {
-					if (Inventory.AddBlock(splitinput[1], Byte.parseByte(splitinput[2]))) {
-						result = "Giving " + splitinput[2] + " of " + splitinput[1];
+					if (Inventory.AddItem(splitinput[1], Byte.parseByte(splitinput[2]), Byte.parseByte(splitinput[3]))) {
+						result = "Giving " + splitinput[2] + " of " + splitinput[1] + " type: " + splitinput[3];
 					}
 					else {
 						result = "Failed to execute command, inventory is full or block not found!";
@@ -333,12 +334,34 @@ public class Input {
 				result = "This trew an error...";
 			}
 		}
+		if (splitinput[0].equalsIgnoreCase("Clear")) {
+			if (splitinput.length > 1) {
+				if (splitinput[1].equalsIgnoreCase("Console")) {
+					result = "NYI, i'm lazy.";
+				}
+				else if (splitinput[1].equalsIgnoreCase("Inventory")) {
+					for (byte i = 0; i < 45; i++) {
+						Inventory.slots[i] = null;
+						Inventory.items[i] = "Empty";
+						Inventory.count[i] = 0;
+						Inventory.itemtype[i] = 0;
+					}
+					result = "All items in Inventory cleared.";
+				}
+				else {
+					result = "Invalid argument: '" + splitinput[1] + "', valid arguments: Console,Inventory";
+				}
+			}
+			else {
+				result = "Not enough arguments, execute command as: Clear Console/Inventory";
+			}
+		}
 		RegisterInConsole(result);
 	}
 	
 	public static void ShowAllCommands() {
 		RegisterInConsole("Help/Commands - Shows all commands");
-		RegisterInConsole("Give *block* *amount* - Gives the amount of the specified block to the player.");
+		RegisterInConsole("Give *block* *amount* *type* - Gives the amount of the specified block to the player. (Types: 1-block 2-tool)");
 		RegisterInConsole("ListAllBlocks - Shows a list of all blocks in the game.");
 		RegisterInConsole("ToggleJetpack - Toggles jetpack on/off.");
 		RegisterInConsole("ToggleWorldState - Toggles the state of the world.");

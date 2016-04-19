@@ -55,6 +55,7 @@ public class World2 extends JPanel {
 	private static BufferedImage loading;
 	private static BufferedImage loadingicon;
 	private static BufferedImage console;
+	private static BufferedImage spacemen;
 	private static int world_x = 2400;
 	private static int world_y = 1200;
 	public static boolean debug = false;
@@ -91,9 +92,10 @@ public class World2 extends JPanel {
 	public static boolean showinventory = false;
 	public static String[] consoleoutput = new String[100];
 	public static String consoleinput = "";
-	private static float rot = 0;
+	private static float rot = 0; //Rotation for loading icon.
 	public static long[] milliseconds = new long[6]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation
 	public static long[] lastmilliseconds = new long[6]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation
+	public static byte holdingtool = 0;
 	
 	public static void main(String[] args) {
 		Player2.playerspeed = 3;
@@ -155,6 +157,7 @@ public class World2 extends JPanel {
 			File file14 = new File("images\\loading\\loading_icon.png");
 			File file15 = new File("images\\skybox_space.jpg");
 			File file16 = new File("images\\console.png");
+			File file17 = new File("images\\spaceman.png");
 			image = ImageIO.read(file);
 			playerimage = ImageIO.read(file2);
 			invslot = ImageIO.read(file5);
@@ -168,6 +171,7 @@ public class World2 extends JPanel {
 			loadingicon = ImageIO.read(file14);
 			space = ImageIO.read(file15);
 			console = ImageIO.read(file16);
+			spacemen = ImageIO.read(file17);
 		}
 		catch (IOException ex) {
 			ex.printStackTrace();
@@ -296,6 +300,9 @@ public class World2 extends JPanel {
 				}
 				else {
 					canplayermovey = true;
+					if (camera_y == world_y && Player2.player_y > Video_Settings.window_size_y-Video_Settings.window_size_y/3) {
+						canplayermovey = false;
+					}
 				}
 			}
 		};
@@ -612,10 +619,10 @@ public class World2 extends JPanel {
 				g.drawImage(playerimage, Players.playerx[i-1], Players.playery[i-1], null);
 			}
 			if (Player2.lookingatside) {
-				g.drawImage(Inventory.tools[0], (int) Player2.player_x+9, (int) Player2.player_y+25,25,25, null);
+				g.drawImage(Inventory.tools[holdingtool], (int) Player2.player_x+9, (int) Player2.player_y+25,25,25, null);
 			}
 			else {
-				g.drawImage(Inventory.tools[0], (int) Player2.player_x+9, (int) Player2.player_y+25,-25,25, null);
+				g.drawImage(Inventory.tools[holdingtool], (int) Player2.player_x+9, (int) Player2.player_y+25,-25,25, null);
 			}
 			stoptime = System.currentTimeMillis();
 			milliseconds[2] = milliseconds[2] + (stoptime-starttime);
@@ -623,6 +630,11 @@ public class World2 extends JPanel {
 			if (Settings.chi == true) {
 				g.drawImage(Chi.image, (int) Chi.chix, (int) Chi.chiy,28,67, null);
 			}
+			/*g.drawImage(spacemen, 0, 520,19,77,null);
+			g.setColor(Color.WHITE);
+			g.fillRect(0, 505, 400, 20);
+			g.setColor(Color.BLACK);
+			g.drawString("If you continue down this road, you're gonna have a bad time.", 0, 520);*/
 			//Draw Lighting
 			/*try {
 				Graphics2D g2d = (Graphics2D)g;
@@ -681,7 +693,7 @@ public class World2 extends JPanel {
 			//Draw placeholder block
 			starttime = System.currentTimeMillis();
 			if (Build.selected != 0) {
-				if (Inventory.items[Build.selected-1] != "Empty") {
+				if (!Inventory.items[Build.selected-1].equals("Empty") && Inventory.itemtype[Build.selected-1] == 1) {
 					if (Input.snap) {
 						if (camera_x/25==Math.floor(camera_x/25) && camera_y/25==Math.floor(camera_y/25)) {
 							g.drawImage(blockholder, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, 25,25,null);
@@ -704,6 +716,9 @@ public class World2 extends JPanel {
 					else {
 						g.drawImage(blockholder, MouseInfo.getPointerInfo().getLocation().x-13-f.getLocationOnScreen().x, MouseInfo.getPointerInfo().getLocation().y-37-f.getLocationOnScreen().y, 25,25,null);
 					}
+				}
+				else if (Inventory.itemtype[Build.selected-1] == 2) {
+					holdingtool = (byte) Inventory.GetItemID(Inventory.items[Build.selected-1], Inventory.itemtype[Build.selected-1]);
 				}
 			}
 			stoptime = System.currentTimeMillis();
@@ -764,7 +779,7 @@ public class World2 extends JPanel {
 				g.drawString("This is currently " + Version.version + "!", 0, 10);
 				g.drawString("DEBUGGING INFORMATION:",0,25);
 				g.drawString("Camera_x = " + camera_x,0,40);
-				g.drawString("Camera_y = " + camera_y + " | I = " + Player2.i + " | Collisiondown = " + Player2.collisiondown,0,55);
+				g.drawString("Camera_y = " + camera_y + " | I = " + Player2.i + " | Collisiondown = " + Player2.collisiondown + " | cpmy = " + canplayermovey,0,55);
 				g.drawString("Player_x = " + Player2.player_x + " | Player_y = " + Player2.player_y,0,70);
 				g.drawString("Playerspeed = " + Player2.playerspeed,0,85);
 				g.drawString("Mapsize = " + world_x,0,100);

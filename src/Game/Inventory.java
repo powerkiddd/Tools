@@ -10,6 +10,7 @@ public class Inventory {
 	public static BufferedImage[] slots = new BufferedImage[9];
 	public static String[] items = {"Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"};
 	public static byte[] count = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+	public static byte[] itemtype = {0, 0, 0, 0, 0, 0, 0, 0, 0}; //None, Block, Tool
 	public static BufferedImage[] blocks;
 	public static BufferedImage[] tools;
 	public static String[] identifier;
@@ -19,52 +20,94 @@ public class Inventory {
 		slots = new BufferedImage[45];
 		items = new String[45];
 		count = new byte[45];
+		itemtype = new byte[45];
 		for (byte i = 0; i < 45; i++) {
 			items[i] = "Empty";
 			count[i] = 0;
+			itemtype[i] = 0;
 		}
 		tools = Directory.GetAllImagesFromDirectory("images\\tools\\");
 		toolidentifier = Directory.identifiers;
 		blocks = Directory.GetAllImagesFromDirectory("images\\blocks\\");
 		identifier = Directory.identifiers;
 		
-		AddBlock("Dirt", (byte) 127);
-		AddBlock("Grass", (byte) 127);
-		AddBlock("Water", (byte) 127);
-		AddBlock("Stone", (byte) 127);
+		AddItem("Dirt", (byte) 127, (byte) 1);
+		AddItem("Grass", (byte) 127, (byte) 1);
+		AddItem("Water", (byte) 127, (byte) 1);
+		AddItem("Stone", (byte) 127, (byte) 1);
 	}
 	
-	public static boolean AddBlock (String block, byte amount) {
+	public static boolean AddItem (String name, byte amount, byte type) {
+		if (type == 0) {
+			return false;
+		}
 		for (int i = 0; i < 45; i++) {
 			if (items[i].equals("Empty")) {
-				for (int j = 0; j < identifier.length-1; j++) {
-					if (identifier[j].equalsIgnoreCase(block)) {
-						slots[i] = blocks[j];
-						items[i] = block;
-						count[i] = amount;
-						return true;
+				if (type == 1) {
+					for (int j = 0; j < identifier.length-1; j++) {
+						if (identifier[j].equalsIgnoreCase(name)) {
+							slots[i] = blocks[j];
+							items[i] = name;
+							count[i] = amount;
+							itemtype[i] = 1;
+							return true;
+						}
+					}
+				}
+				else if (type == 2) {
+					for (int j = 0; j < toolidentifier.length-1; j++) {
+						if (toolidentifier[j].equalsIgnoreCase(name)) {
+							slots[i] = tools[j];
+							items[i] = name;
+							count[i] = 1;
+							itemtype[i] = 2;
+							return true;
+						}
 					}
 				}
 			}
 			else {
-				if (new String(items[i].toLowerCase().toString()).equals(block.toLowerCase().toString())) {
-					if (count[i] < 127) {
-						int total = count[i] + amount;
-						if (total <= 127) {
-							count[i] += amount;
-							return true;
-						}
-						else {
-							amount = (byte) (amount-(amount-count[i]));
-							count[i] = 127;
+				if (type == 1) {
+					if (new String(items[i].toLowerCase().toString()).equals(name.toLowerCase().toString())) {
+						if (count[i] < 127) {
+							int total = count[i] + amount;
+							if (total <= 127) {
+								count[i] += amount;
+								return true;
+							}
+							else {
+								amount = (byte) (amount-(amount-count[i]));
+								count[i] = 127;
+							}
 						}
 					}
 				}
 			}
 		}
 		//Block not been picked up
-		System.out.println("Block: " + block + ", not picked up!");
+		System.out.println("Item: " + name + ", not picked up!");
 		return false;
+	}
+	
+	public static int GetItemID (String name, byte type) {
+		if (type == 0) {
+			return 0;
+		}
+		if (type == 1) {
+			for (int i = 0; i < identifier.length-1; i++) {
+				if (identifier[i].equalsIgnoreCase(name)) {
+					return i;
+				}
+			}
+		}
+		if (type == 2) {
+			for (int i = 0; i < toolidentifier.length-1; i++) {
+				if (toolidentifier[i].equalsIgnoreCase(name)) {
+					return i;
+				}
+			}
+		}
+		return 0;
 	}
 	
 }

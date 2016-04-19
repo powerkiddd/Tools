@@ -19,6 +19,7 @@ public class SaveLoad {
 		String blockbackground = "";
 		String inventory = "";
 		String inventorycount = "";
+		String inventorytypes = "";
 		for (int i = 0; i < World2.blocks.length; i++) {
 			blocks = blocks + World2.blocks[i] + ",";
 			blockposses = blockposses + World2.blockposses[i] + ":";
@@ -28,6 +29,7 @@ public class SaveLoad {
 		for (int i = 0; i < Inventory.items.length; i++) {
 			inventory = inventory + Inventory.items[i] + ",";
 			inventorycount = inventorycount + Inventory.count[i] + ",";
+			inventorytypes = inventorytypes + Inventory.itemtype[i] + ",";
 		}
 		WriteToFile.writestuff(worldname+ "\\", "blocks", ".tool", blocks);
 		WriteToFile.writestuff(worldname+ "\\", "blockposses", ".tool", blockposses);
@@ -35,6 +37,7 @@ public class SaveLoad {
 		WriteToFile.writestuff(worldname+ "\\", "blockbackground", ".tool", blockbackground);
 		WriteToFile.writestuff(worldname+ "\\", "inventory", ".tool", inventory);
 		WriteToFile.writestuff(worldname+ "\\", "inventorycount", ".tool", inventorycount);
+		WriteToFile.writestuff(worldname+ "\\", "inventorytypes", ".tool", inventorytypes);
 	}
 	
 	public static void LoadGame () {
@@ -45,12 +48,14 @@ public class SaveLoad {
 		String blockbackground = ReadFromFile.readstuff(worldname + "\\", "blockbackground.tool", "");
 		String inventory = ReadFromFile.readstuff(worldname + "\\", "inventory.tool", "");
 		String inventorycount = ReadFromFile.readstuff(worldname + "\\", "inventorycount.tool", "");
+		String inventorytypes = ReadFromFile.readstuff(worldname + "\\", "inventorytypes.tool", "");
 		String[] blocks_split = blocks.split(",");
 		String[] blockposses_split = blockposses.split(":");
 		String[] blockcollisions_split1 = blockcollisions.split(":");
 		String[] blockbackground_split = blockbackground.split(",");
 		String[] inventory_split = inventory.split(",");
 		String[] inventorycount_split = inventorycount.split(",");
+		String[] inventorytypes_split = inventorytypes.split(",");
 		World2.blocks = new String[blocks_split.length];
 		World2.blockposses = new String[blocks_split.length];
 		World2.blockcollisions = new Rectangle[blocks_split.length];
@@ -58,6 +63,7 @@ public class SaveLoad {
 		for (byte i = 0; i < 45; i++) {
 			Inventory.items[i] = "Empty";
 			Inventory.count[i] = 0;
+			Inventory.itemtype[i] = 0;
 		}
 		for (int i = 0; i < blocks_split.length; i++) {
 			World2.blocks[i] = blocks_split[i];
@@ -67,7 +73,7 @@ public class SaveLoad {
 			World2.blockbackground[i] = Boolean.parseBoolean(blockbackground_split[i]);
 		}
 		for (int i = 0; i < Inventory.items.length; i++) {
-			Inventory.AddBlock(inventory_split[i], Byte.parseByte(inventorycount_split[i]));
+			Inventory.AddItem(inventory_split[i], Byte.parseByte(inventorycount_split[i]), Byte.parseByte(inventorytypes_split[i]));
 		}
 	}
 	
