@@ -12,7 +12,8 @@ public class SaveLoad {
 	
 	public static void SaveGame () {
 		//Save all the information
-		Directory.CreateNewDirectory(worldname);
+		Directory.CreateNewDirectory("Saves");
+		Directory.CreateNewDirectory("Saves\\" + worldname);
 		String blocks = "";
 		String blockposses = "";
 		String blockcollisions = "";
@@ -31,24 +32,24 @@ public class SaveLoad {
 			inventorycount = inventorycount + Inventory.count[i] + ",";
 			inventorytypes = inventorytypes + Inventory.itemtype[i] + ",";
 		}
-		WriteToFile.writestuff(worldname+ "\\", "blocks", ".tool", blocks);
-		WriteToFile.writestuff(worldname+ "\\", "blockposses", ".tool", blockposses);
-		WriteToFile.writestuff(worldname+ "\\", "blockcollisions", ".tool", blockcollisions);
-		WriteToFile.writestuff(worldname+ "\\", "blockbackground", ".tool", blockbackground);
-		WriteToFile.writestuff(worldname+ "\\", "inventory", ".tool", inventory);
-		WriteToFile.writestuff(worldname+ "\\", "inventorycount", ".tool", inventorycount);
-		WriteToFile.writestuff(worldname+ "\\", "inventorytypes", ".tool", inventorytypes);
+		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "blocks", ".tool", blocks);
+		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "blockposses", ".tool", blockposses);
+		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "blockcollisions", ".tool", blockcollisions);
+		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "blockbackground", ".tool", blockbackground);
+		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "inventory", ".tool", inventory);
+		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "inventorycount", ".tool", inventorycount);
+		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "inventorytypes", ".tool", inventorytypes);
 	}
 	
 	public static void LoadGame () {
 		//Load all the information
-		String blocks = ReadFromFile.readstuff(worldname + "\\", "blocks.tool", "");
-		String blockposses = ReadFromFile.readstuff(worldname + "\\", "blockposses.tool", "");
-		String blockcollisions = ReadFromFile.readstuff(worldname + "\\", "blockcollisions.tool", "");
-		String blockbackground = ReadFromFile.readstuff(worldname + "\\", "blockbackground.tool", "");
-		String inventory = ReadFromFile.readstuff(worldname + "\\", "inventory.tool", "");
-		String inventorycount = ReadFromFile.readstuff(worldname + "\\", "inventorycount.tool", "");
-		String inventorytypes = ReadFromFile.readstuff(worldname + "\\", "inventorytypes.tool", "");
+		String blocks = ReadFromFile.readstuff("Saves\\" + worldname + "\\", "blocks.tool", "");
+		String blockposses = ReadFromFile.readstuff("Saves\\" + worldname + "\\", "blockposses.tool", "");
+		String blockcollisions = ReadFromFile.readstuff("Saves\\" + worldname + "\\", "blockcollisions.tool", "");
+		String blockbackground = ReadFromFile.readstuff("Saves\\" + worldname + "\\", "blockbackground.tool", "");
+		String inventory = ReadFromFile.readstuff("Saves\\" + worldname + "\\", "inventory.tool", "");
+		String inventorycount = ReadFromFile.readstuff("Saves\\" + worldname + "\\", "inventorycount.tool", "");
+		String inventorytypes = ReadFromFile.readstuff("Saves\\" + worldname + "\\", "inventorytypes.tool", "");
 		String[] blocks_split = blocks.split(",");
 		String[] blockposses_split = blockposses.split(":");
 		String[] blockcollisions_split1 = blockcollisions.split(":");
@@ -78,7 +79,7 @@ public class SaveLoad {
 	}
 	
 	public static boolean DoesSaveExist () {
-		return new File(worldname + "\\").exists();
+		return new File("Saves\\" + worldname + "\\").exists();
 	}
 	
 }
