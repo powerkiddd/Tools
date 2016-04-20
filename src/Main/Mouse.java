@@ -19,6 +19,8 @@ public class Mouse {
 	public static BufferedImage gamecursor;
 	public static boolean right = false;
 	public static boolean left = false;
+	public static boolean leftonce = false;
+	public static boolean rightonce = false;
 	public static Rectangle gamecursorrect;
 	public static int mouseposonscreenx;
 	public static int mouseposonscreeny;
@@ -67,10 +69,12 @@ public class Mouse {
 				if (e.getButton() == 1) {
 					//left
 					left = false;
+					leftonce = false;
 				}
 				if (e.getButton() == 3) {
 					//right
 					right = false;
+					rightonce = false;
 				}
 			}
 			

@@ -56,6 +56,7 @@ public class World2 extends JPanel {
 	private static BufferedImage loadingicon;
 	private static BufferedImage console;
 	private static BufferedImage spacemen;
+	private static BufferedImage highlight;
 	private static int world_x = 2400;
 	private static int world_y = 1200;
 	public static boolean debug = false;
@@ -95,7 +96,7 @@ public class World2 extends JPanel {
 	private static float rot = 0; //Rotation for loading icon.
 	public static long[] milliseconds = new long[6]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation
 	public static long[] lastmilliseconds = new long[6]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation
-	public static byte holdingtool = 0;
+	public static int holdingtool = 0;
 	
 	public static void main(String[] args) {
 		Player2.playerspeed = 3;
@@ -158,6 +159,7 @@ public class World2 extends JPanel {
 			File file15 = new File("images\\skybox_space.jpg");
 			File file16 = new File("images\\console.png");
 			File file17 = new File("images\\spaceman.png");
+			File file18 = new File("images\\highlight.png");
 			image = ImageIO.read(file);
 			playerimage = ImageIO.read(file2);
 			invslot = ImageIO.read(file5);
@@ -172,6 +174,7 @@ public class World2 extends JPanel {
 			space = ImageIO.read(file15);
 			console = ImageIO.read(file16);
 			spacemen = ImageIO.read(file17);
+			highlight = ImageIO.read(file18);
 		}
 		catch (IOException ex) {
 			ex.printStackTrace();
@@ -718,7 +721,7 @@ public class World2 extends JPanel {
 					}
 				}
 				else if (Inventory.itemtype[Build.selected-1] == 2) {
-					holdingtool = (byte) Inventory.GetItemID(Inventory.items[Build.selected-1], Inventory.itemtype[Build.selected-1]);
+					holdingtool = Inventory.GetItemID(Inventory.items[Build.selected-1], Inventory.itemtype[Build.selected-1]);
 				}
 			}
 			stoptime = System.currentTimeMillis();
@@ -753,13 +756,36 @@ public class World2 extends JPanel {
 					for (int x = 0; x < 261; x += 29) {
 						g.drawImage(invslot,x,y,29,29,null);
 						g.drawImage(Inventory.slots[9+i/29],x+2,y+2,25,25,null);
+						if ((9+i/29) == Inventory.selected) {
+							g.drawImage(highlight, x+2,y+2,25,25,null);
+						}
 						g.drawString("" + Inventory.count[9+i/29], x+2, y+25);
-						if (Mouse.left) {
+						if (Mouse.left && Mouse.leftonce == false) {
 							if (MouseInfo.getPointerInfo().getLocation().x > x && MouseInfo.getPointerInfo().getLocation().x < x+29) {
 								if (MouseInfo.getPointerInfo().getLocation().y > y+29 && MouseInfo.getPointerInfo().getLocation().y < y+58) {
-									Inventory.items[9+i/29] = "Empty";
-									Inventory.slots[9+i/29] = null;
-									Inventory.count[9+i/29] = 0;
+									if (Inventory.selected < 0) {
+										Inventory.selected = (byte) (9+i/29);
+										/*Inventory.items[9+i/29] = "Empty";
+										Inventory.slots[9+i/29] = null;
+										Inventory.count[9+i/29] = 0;*/
+									}
+									else if (Inventory.selected != (9+i/29)) {
+										//Switcheroo
+										String item = Inventory.items[9+i/29];
+										byte count = Inventory.count[9+i/29];
+										BufferedImage slot = Inventory.slots[9+i/29];
+										byte itemtype = Inventory.itemtype[9+i/29];
+										Inventory.items[9+i/29] = Inventory.items[Inventory.selected];
+										Inventory.count[9+i/29] = Inventory.count[Inventory.selected];
+										Inventory.slots[9+i/29] = Inventory.slots[Inventory.selected];
+										Inventory.itemtype[9+i/29] = Inventory.itemtype[Inventory.selected];
+										Inventory.items[Inventory.selected] = item;
+										Inventory.count[Inventory.selected] = count;
+										Inventory.slots[Inventory.selected] = slot;
+										Inventory.itemtype[Inventory.selected] = itemtype;
+										Inventory.selected = -1;
+									}
+									Mouse.leftonce = true;
 								}
 							}
 						}
