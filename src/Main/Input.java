@@ -36,71 +36,73 @@ public class Input {
 	public static String[] onces = new String[10];
 	public static String lastconsoleinput = "";
 	public static String[] itemtypes = {"Empty (not valid)", "Block", "Tool"};
+	public static String keytext = "";
 	
 	public static void main (String[] args) {
 		World2.f.addKeyListener(new KeyListener () {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == 17) {
+				keytext = KeyEvent.getKeyText(e.getKeyCode());
+				if (keytext.equalsIgnoreCase("Ctrl")) {
 					snap = !snap;
 				}
-				if (e.getKeyCode() == 65) {
+				if (e.getKeyChar() == 'a') {
 					a = true;
 				}
-				if (e.getKeyCode() == 68) {
+				if (e.getKeyChar() == 'd') {
 					d = true;
 				}
-				if (e.getKeyCode() == 73) {
+				if (e.getKeyChar() == 'i') {
 					i = true;
 				}
-				if (e.getKeyCode() == 16) {
+				if (keytext.equalsIgnoreCase("Shift")) {
 					shift = true;
 				}
-				if (e.getKeyCode() == 32) {
+				if (keytext.equalsIgnoreCase("Space")) {
 					space = true;
 				}
-				if (e.getKeyCode() == 48) {
+				if (e.getKeyChar() == '0') {
 					key0 = true;
 					Build.selected = 0;
 				}
-				if (e.getKeyCode() == 49) {
+				if (e.getKeyChar() == '1') {
 					key1 = true;
 					Build.selected = 1;
 				}
-				if (e.getKeyCode() == 50) {
+				if (e.getKeyChar() == '2') {
 					key2 = true;
 					Build.selected = 2;
 				}
-				if (e.getKeyCode() == 51) {
+				if (e.getKeyChar() == '3') {
 					key3 = true;
 					Build.selected = 3;
 				}
-				if (e.getKeyCode() == 52) {
+				if (e.getKeyChar() == '4') {
 					key4 = true;
 					Build.selected = 4;
 				}
-				if (e.getKeyCode() == 53) {
+				if (e.getKeyChar() == '5') {
 					key5 = true;
 					Build.selected = 5;
 				}
-				if (e.getKeyCode() == 54) {
+				if (e.getKeyChar() == '6') {
 					key6 = true;
 					Build.selected = 6;
 				}
-				if (e.getKeyCode() == 55) {
+				if (e.getKeyChar() == '7') {
 					key7 = true;
 					Build.selected = 7;
 				}
-				if (e.getKeyCode() == 56) {
+				if (e.getKeyChar() == '8') {
 					key8 = true;
 					Build.selected = 8;
 				}
-				if (e.getKeyCode() == 57) {
+				if (e.getKeyChar() == '9') {
 					key9 = true;
 					Build.selected = 9;
 				}
-				if (e.getKeyCode() == 114) {
+				if (keytext.equalsIgnoreCase("F3")) {
 					f3 =! f3;
 					if (shift == false) {
 						World2.debug = f3;
@@ -109,84 +111,86 @@ public class Input {
 						World2.debugpie = f3;
 					}
 				}
-				if (e.getKeyCode() == 115) {
+				if (keytext.equalsIgnoreCase("F4")) {
 					f4 =! f4;
 					World2.debuggrid = f4;
 				}
-				if (e.getKeyCode() == 27) {
+				if (keytext.equalsIgnoreCase("Escape")) {
 					escape =! escape;
 				}
-				if (e.getKeyCode() == 192) {
+				if (e.getKeyChar() == '`') {
 					console =! console;
 					World2.consoleinput = "";
 				}
 				if (console) {
-					if (e.getKeyCode() == 10) {
+					if (keytext.equalsIgnoreCase("Enter")) {
 						RegisterInConsole(World2.consoleinput);
 						CheckConsoleCommand(World2.consoleinput);
 						lastconsoleinput = World2.consoleinput;
 						World2.consoleinput = "";
 					}
-					else if (e.getKeyCode() == 8) {
+					else if (keytext.equalsIgnoreCase("Backspace")) {
 						World2.consoleinput = World2.consoleinput.substring(0, World2.consoleinput.length()-1);
 					}
-					else if (e.getKeyCode() == 38) {
+					else if (keytext.equalsIgnoreCase("Up")) {
 						//arrow up
 						World2.consoleinput = lastconsoleinput;
 					}
-					else if (e.getKeyCode() == 40) {
+					else if (keytext.equalsIgnoreCase("Down")) {
 						//arrow down
 						World2.consoleinput = lastconsoleinput;
 					}
-					else if (e.getKeyCode() != 192 && e.getKeyCode() != 10 && e.getKeyCode() != 16 && e.getKeyCode() != 20 && e.getKeyCode() != 114 && e.getKeyCode() != 115 && e.getKeyCode() != 17 && e.getKeyCode() != 18 && e.getKeyCode() != 524 && e.getKeyCode() != 525 && e.getKeyCode() != 144 && e.getKeyCode() != 37 && e.getKeyCode() != 39) {
+					else if (!e.isActionKey() && !keytext.equalsIgnoreCase("Ctrl") && !keytext.equalsIgnoreCase("Shift")) {
 						World2.consoleinput = World2.consoleinput + e.getKeyChar();
 					}
 				}
-				//System.out.println(e.getKeyCode());				
+				//System.out.println(e.getKeyChar());
+				//System.out.println(KeyEvent.getKeyText(e.getKeyCode()));
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (e.getKeyCode() == 16) {
+				keytext = KeyEvent.getKeyText(e.getKeyCode());
+				if (keytext.equalsIgnoreCase("Shift")) {
 					shift = false;
 				}
-				if (e.getKeyCode() == 65) {
+				if (e.getKeyChar() == 'a') {
 					a = false;
 				}
-				if (e.getKeyCode() == 68) {
+				if (e.getKeyChar() == 'd') {
 					d = false;
 				}
-				if (e.getKeyCode() == 73) {
+				if (e.getKeyCode() == 'i') {
 					i = false;
 				}
-				if (e.getKeyCode() == 32) {
+				if (keytext.equalsIgnoreCase("Space")) {
 					space = false;
 				}
-				if (e.getKeyCode() == 49) {
+				if (e.getKeyChar() == '1') {
 					key1 = false;
 				}
-				if (e.getKeyCode() == 50) {
+				if (e.getKeyChar() == '2') {
 					key2 = false;
 				}
-				if (e.getKeyCode() == 51) {
+				if (e.getKeyChar() == '3') {
 					key3 = false;
 				}
-				if (e.getKeyCode() == 52) {
+				if (e.getKeyChar() == '4') {
 					key4 = false;
 				}
-				if (e.getKeyCode() == 53) {
+				if (e.getKeyChar() == '5') {
 					key5 = false;
 				}
-				if (e.getKeyCode() == 54) {
+				if (e.getKeyChar() == '6') {
 					key6 = false;
 				}
-				if (e.getKeyCode() == 55) {
+				if (e.getKeyChar() == '7') {
 					key7 = false;
 				}
-				if (e.getKeyCode() == 56) {
+				if (e.getKeyChar() == '8') {
 					key8 = false;
 				}
-				if (e.getKeyCode() == 57) {
+				if (e.getKeyChar() == '9') {
 					key9 = false;
 				}
 			}
