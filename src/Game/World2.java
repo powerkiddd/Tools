@@ -550,6 +550,10 @@ public class World2 extends JPanel {
 						}
 					}
 				}
+				else if (blocks[i].contains("Balloon")) {
+					blockposses[i] = "" + (x) + "," + (y-1);
+					blockcollisions[i] = new Rectangle(x,y,blockcollisions[i].width,blockcollisions[i].height);
+				}
 				
 				if (isblockvisible && blockbackground[i] == false) {
 					if (temprect.intersects(Player2.playerrect)) {
