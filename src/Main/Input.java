@@ -116,7 +116,7 @@ public class Input {
 				if (e.getKeyCode() == 27) {
 					escape =! escape;
 				}
-				if (e.getKeyCode() == 192) {
+				if (e.getKeyCode() == 192 || e.getKeyCode() == 128) {
 					console =! console;
 					World2.consoleinput = "";
 				}
