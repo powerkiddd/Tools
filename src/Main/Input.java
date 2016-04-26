@@ -250,13 +250,16 @@ public class Input {
 		String result = "Command not found.";
 		String[] splitinput = input.split(" ");
 		if (splitinput[0].equalsIgnoreCase("Give")) {
-			if (splitinput.length < 4) {
-				result = "Not enough arguments, execute command as: give *item* *amount* *type*";
+			if (splitinput.length < 3) {
+				result = "Not enough arguments, execute command as: give *item* *amount*";
 			}
 			else {
 				try {
-					if (Inventory.AddItem(splitinput[1], Byte.parseByte(splitinput[2]), Byte.parseByte(splitinput[3]))) {
-						result = "Giving " + splitinput[2] + " of " + splitinput[1] + " type: " + splitinput[3];
+					if (Inventory.AddItem(splitinput[1], Byte.parseByte(splitinput[2]), (byte) 1)) {
+						result = "Giving " + splitinput[2] + " of " + splitinput[1];
+					}
+					else if (Inventory.AddItem(splitinput[1], Byte.parseByte(splitinput[2]), (byte) 2)) {
+						result = "Giving " + splitinput[2] + " of " + splitinput[1];
 					}
 					else {
 						result = "Failed to execute command, inventory is full or block not found!";
@@ -272,19 +275,19 @@ public class Input {
 				}
 			}
 		}
-		if (input.equalsIgnoreCase("ToggleJetpack")) {
+		else if (input.equalsIgnoreCase("ToggleJetpack")) {
 			Player2.hasJetpack = !Player2.hasJetpack;
 			result = "Jetpack enabled!";
 		}
-		if (input.equalsIgnoreCase("Help") || input.equalsIgnoreCase("Commands")) {
+		else if (input.equalsIgnoreCase("Help") || input.equalsIgnoreCase("Commands")) {
 			result = "Prepare your anus for a list of commands!";
 			ShowAllCommands();
 		}
-		if (input.equalsIgnoreCase("ListAllBlocks")) {
+		else if (input.equalsIgnoreCase("ListAllBlocks")) {
 			result = "Prepare your anus for a list of all blocks!";
 			ShowAllBlocks();
 		}
-		if (splitinput[0].equalsIgnoreCase("ToggleWorldState")) {
+		else if (splitinput[0].equalsIgnoreCase("ToggleWorldState")) {
 			try {
 				if (splitinput.length > 1) {
 					if (splitinput[1].equalsIgnoreCase("Normal")) {
@@ -338,7 +341,7 @@ public class Input {
 				result = "This trew an error...";
 			}
 		}
-		if (splitinput[0].equalsIgnoreCase("Clear")) {
+		else if (splitinput[0].equalsIgnoreCase("Clear")) {
 			if (splitinput.length > 1) {
 				if (splitinput[1].equalsIgnoreCase("Console")) {
 					result = "NYI, i'm lazy.";
