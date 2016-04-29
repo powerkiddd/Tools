@@ -45,7 +45,7 @@ public class Inventory {
 		for (int i = 0; i < 45; i++) {
 			if (items[i].equals("Empty")) {
 				if (type == 1) {
-					for (int j = 0; j < identifier.length-1; j++) {
+					for (int j = 0; j < identifier.length-2; j++) {
 						if (identifier[j].equalsIgnoreCase(name)) {
 							slots[i] = blocks[j];
 							items[i] = name;
