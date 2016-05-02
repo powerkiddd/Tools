@@ -111,14 +111,14 @@ public class Inventory {
 		if (type == 0) {
 			return 0;
 		}
-		if (type == 1) {
+		else if (type == 1) {
 			for (int i = 0; i < identifier.length-1; i++) {
 				if (identifier[i].equalsIgnoreCase(name)) {
 					return i;
 				}
 			}
 		}
-		if (type == 2) {
+		else if (type == 2) {
 			for (int i = 0; i < toolidentifier.length-1; i++) {
 				if (toolidentifier[i].equalsIgnoreCase(name)) {
 					return i;
