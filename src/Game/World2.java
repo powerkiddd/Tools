@@ -684,6 +684,39 @@ public class World2 extends JPanel {
 			g.drawImage(Inventory.slots[6], f.getSize().width/2+60, 2, 25, 25, null);
 			g.drawImage(Inventory.slots[7], f.getSize().width/2+89, 2, 25, 25, null);
 			g.drawImage(Inventory.slots[8], f.getSize().width/2+118, 2, 25, 25, null);
+			short i_hotbar = 0;
+			for (int x = f.getSize().width/2-116; x < f.getSize().width/2+135; x += 29) {
+				if ((i_hotbar/29) == Inventory.selected) {
+					g.drawImage(highlight, x+2,0+2,25,25,null);
+				}
+				if (Mouse.left && Mouse.leftonce == false) {
+					if (MouseInfo.getPointerInfo().getLocation().x > x && MouseInfo.getPointerInfo().getLocation().x < x+29) {
+						if (MouseInfo.getPointerInfo().getLocation().y > 0+29 && MouseInfo.getPointerInfo().getLocation().y < 0+58) {
+							if (Inventory.selected < 0) {
+								Inventory.selected = (byte) (i_hotbar/29);
+							}
+							else if (Inventory.selected != (i_hotbar/29)) {
+								//Switcheroo
+								String item = Inventory.items[i_hotbar/29];
+								byte count = Inventory.count[i_hotbar/29];
+								BufferedImage slot = Inventory.slots[i_hotbar/29];
+								byte itemtype = Inventory.itemtype[i_hotbar/29];
+								Inventory.items[i_hotbar/29] = Inventory.items[Inventory.selected];
+								Inventory.count[i_hotbar/29] = Inventory.count[Inventory.selected];
+								Inventory.slots[i_hotbar/29] = Inventory.slots[Inventory.selected];
+								Inventory.itemtype[i_hotbar/29] = Inventory.itemtype[Inventory.selected];
+								Inventory.items[Inventory.selected] = item;
+								Inventory.count[Inventory.selected] = count;
+								Inventory.slots[Inventory.selected] = slot;
+								Inventory.itemtype[Inventory.selected] = itemtype;
+								Inventory.selected = -1;
+							}
+							Mouse.leftonce = true;
+						}
+					}
+				}
+				i_hotbar += 29;
+			}
 			g.setColor(Color.WHITE);
 			g.drawString("" + Inventory.count[0], f.getSize().width/2-118, 25);
 			g.drawString("" + Inventory.count[1], f.getSize().width/2-88, 25);
