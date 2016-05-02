@@ -273,7 +273,7 @@ public class Input {
 					}
 				}
 				catch (Exception ex) {
-					ex.printStackTrace();
+					//ex.printStackTrace();
 					if (ex.getMessage().contains("Value out of range.")) {
 						result = "Failed to execute command, Argument 2 (" + splitinput[2] + ") Is to high or to low. (Range 0-127)";
 					}
