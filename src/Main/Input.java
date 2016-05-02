@@ -264,7 +264,12 @@ public class Input {
 						result = "Giving " + splitinput[2] + " of " + splitinput[1];
 					}
 					else {
-						result = "Failed to execute command, inventory is full or block not found!";
+						if (Inventory.IsInventoryFull(false)) {
+							result = "Failed to execute command, inventory is full!";
+						}
+						else {
+							result = "Failed to execute command, block not found!";
+						}
 					}
 				}
 				catch (Exception ex) {

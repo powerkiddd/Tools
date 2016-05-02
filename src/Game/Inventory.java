@@ -128,4 +128,17 @@ public class Inventory {
 		return 0;
 	}
 	
+	public static boolean IsInventoryFull (boolean DoesCountApply) {
+		for (int i = 0; i < items.length; i++) {
+			if (DoesCountApply) {
+				if (count[i] < 127) {
+					return false;
+				}
+			}
+			if (items[i].equalsIgnoreCase("Empty")) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
