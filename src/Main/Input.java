@@ -130,7 +130,9 @@ public class Input {
 						World2.consoleinput = "";
 					}
 					else if (keytext.equalsIgnoreCase("Backspace")) {
-						World2.consoleinput = World2.consoleinput.substring(0, World2.consoleinput.length()-1);
+						if (World2.consoleinput.length() > 0) {
+							World2.consoleinput = World2.consoleinput.substring(0, World2.consoleinput.length()-1);
+						}
 					}
 					else if (keytext.equalsIgnoreCase("Up")) {
 						//arrow up
@@ -140,7 +142,7 @@ public class Input {
 						//arrow down
 						World2.consoleinput = lastconsoleinput;
 					}
-					else if (!e.isActionKey() && !keytext.equalsIgnoreCase("Ctrl") && !keytext.equalsIgnoreCase("Shift")) {
+					else if (!e.isActionKey() && !keytext.equalsIgnoreCase("Ctrl") && !keytext.equalsIgnoreCase("Shift") && e.getKeyChar() != '`') {
 						World2.consoleinput = World2.consoleinput + e.getKeyChar();
 					}
 				}
@@ -369,10 +371,11 @@ public class Input {
 	
 	public static void ShowAllCommands() {
 		RegisterInConsole("Help/Commands - Shows all commands");
-		RegisterInConsole("Give *block* *amount* *type* - Gives the amount of the specified block to the player. (Types: 1-block 2-tool)");
+		RegisterInConsole("Give *block* *amount* - Gives the amount of the specified block to the player");
 		RegisterInConsole("ListAllBlocks - Shows a list of all blocks in the game.");
 		RegisterInConsole("ToggleJetpack - Toggles jetpack on/off.");
 		RegisterInConsole("ToggleWorldState - Toggles the state of the world.");
+		RegisterInConsole("Clear - Clears the specified thing (Console/Inventory)");
 	}
 	
 	public static void ShowAllBlocks() {
