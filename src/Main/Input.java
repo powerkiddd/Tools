@@ -280,7 +280,7 @@ public class Input {
 		}
 		else if (input.equalsIgnoreCase("ToggleJetpack")) {
 			Player2.hasJetpack = !Player2.hasJetpack;
-			result = "Jetpack enabled!";
+			result = "Toggled jetpack!";
 		}
 		else if (input.equalsIgnoreCase("Help") || input.equalsIgnoreCase("Commands")) {
 			result = "Prepare your anus for a list of commands!";
@@ -338,7 +338,7 @@ public class Input {
 					}
 				}
 				else {
-					result = "Not enough arguments, execute command as: ToggleWorldState *state*";
+					result = "Not enough arguments, execute command as: ToggleWorldState *state* (Normal,Industrialized)";
 				}
 			} catch (Exception ex) {
 				result = "This trew an error...";
@@ -374,8 +374,8 @@ public class Input {
 		RegisterInConsole("Give *block* *amount* - Gives the amount of the specified block to the player");
 		RegisterInConsole("ListAllBlocks - Shows a list of all blocks in the game.");
 		RegisterInConsole("ToggleJetpack - Toggles jetpack on/off.");
-		RegisterInConsole("ToggleWorldState - Toggles the state of the world.");
-		RegisterInConsole("Clear - Clears the specified thing (Console/Inventory)");
+		RegisterInConsole("ToggleWorldState Normal/Industrialized - Toggles the state of the world.");
+		RegisterInConsole("Clear Console/Inventory - Clears the specified thing");
 	}
 	
 	public static void ShowAllBlocks() {
