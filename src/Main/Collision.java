@@ -102,7 +102,7 @@ public class Collision {
 	}
 	
 	//Returns if collision on side has been detected (boolean)
-	public static boolean testblockcolside (int i, String side) {
+	public static boolean testblockcolside (int i, String side, boolean forcesameheight) {
 		starttime = System.currentTimeMillis();
 		Rectangle temprect = new Rectangle();
 		Rectangle temprect2 = new Rectangle();
@@ -111,24 +111,26 @@ public class Collision {
 		
 		for (int j = 0; j < World2.blockcollisions.length; j++) {
 			if (j != i && World2.blockbackground[j] == false) {
-				temprect = (Rectangle) World2.blockcollisions[i].clone();
-				temprect.x -= (int) World2.camera_x;
-				temprect2 = (Rectangle) World2.blockcollisions[j].clone();
-				temprect2.x -= (int) World2.camera_x;
-				if (side == "Left") {
-					temprect.x = temprect.x - 25;
-					temprect.y = temprect.y - 1;
-					if (temprect2.intersects(temprect)) {
-						stoptime = System.currentTimeMillis();
-						return true;
+				if (forcesameheight && temprect.y == temprect2.y || !forcesameheight) {
+					temprect = (Rectangle) World2.blockcollisions[i].clone();
+					temprect.x -= (int) World2.camera_x;
+					temprect2 = (Rectangle) World2.blockcollisions[j].clone();
+					temprect2.x -= (int) World2.camera_x;
+					if (side == "Left") {
+						temprect.x = temprect.x - 25;
+						temprect.y = temprect.y - 1;
+						if (temprect2.intersects(temprect)) {
+							stoptime = System.currentTimeMillis();
+							return true;
+						}
 					}
-				}
-				else if (side == "Right") {
-					temprect.x = temprect.x + 25;
-					temprect.y = temprect.y - 1;
-					if (temprect2.intersects(temprect)) {
-						stoptime = System.currentTimeMillis();
-						return true;
+					else if (side == "Right") {
+						temprect.x = temprect.x + 25;
+						temprect.y = temprect.y - 1;
+						if (temprect2.intersects(temprect)) {
+							stoptime = System.currentTimeMillis();
+							return true;
+						}
 					}
 				}
 			}
