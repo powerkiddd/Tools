@@ -162,7 +162,7 @@ public class Input {
 				if (e.getKeyChar() == 'd') {
 					d = false;
 				}
-				if (e.getKeyCode() == 'i') {
+				if (e.getKeyChar() == 'i') {
 					i = false;
 				}
 				if (keytext.equalsIgnoreCase("Space")) {
