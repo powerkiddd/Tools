@@ -111,11 +111,11 @@ public class Collision {
 		
 		for (int j = 0; j < World2.blockcollisions.length; j++) {
 			if (j != i && World2.blockbackground[j] == false) {
-				if (forcesameheight && temprect.y == temprect2.y || !forcesameheight) {
-					temprect = (Rectangle) World2.blockcollisions[i].clone();
-					temprect.x -= (int) World2.camera_x;
-					temprect2 = (Rectangle) World2.blockcollisions[j].clone();
-					temprect2.x -= (int) World2.camera_x;
+				temprect = (Rectangle) World2.blockcollisions[i].clone();
+				temprect.x -= (int) World2.camera_x;
+				temprect2 = (Rectangle) World2.blockcollisions[j].clone();
+				temprect2.x -= (int) World2.camera_x;
+				if (forcesameheight && temprect.y+25 > temprect2.y && temprect.y-25 < temprect2.y || !forcesameheight) {
 					if (side == "Left") {
 						temprect.x = temprect.x - 25;
 						temprect.y = temprect.y - 1;
