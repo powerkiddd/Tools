@@ -485,12 +485,12 @@ public class World2 extends JPanel {
 								}
 								else {
 									blockcollisions[i] = new Rectangle(x+25,y,25,25);
-									if (!Collision.testblockcolside(i, "Left")) {
+									if (!Collision.testblockcolside(i, "Left", true)) {
 										milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
 										//spawn water block left
 										Build.Place("Water", new Rectangle(blockcollisions[i].x-25,blockcollisions[i].y,25,25),false);
 									}
-									if (!Collision.testblockcolside(i, "Right")) {
+									if (!Collision.testblockcolside(i, "Right", true)) {
 										milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
 										//spawn water block right
 										Build.Place("Water", new Rectangle(blockcollisions[i].x+25,blockcollisions[i].y,25,25),false);
@@ -506,14 +506,14 @@ public class World2 extends JPanel {
 								byte finalside = (byte) rand.nextInt(2);
 								boolean left = false;
 								boolean right = false;
-								if (!Collision.testblockcolside(i, "Left")) {
+								if (!Collision.testblockcolside(i, "Left", true)) {
 									milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
 									//spawn water block left
 									//Build.Place("Water", new Rectangle(blockcollisions[i].x-25,blockcollisions[i].y,25,25));
 									removeblock = true;
 									left = true;
 								}
-								if (!Collision.testblockcolside(i, "Right")) {
+								if (!Collision.testblockcolside(i, "Right", true)) {
 									milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
 									//spawn water block right
 									//Build.Place("Water", new Rectangle(blockcollisions[i].x+25,blockcollisions[i].y,25,25));
