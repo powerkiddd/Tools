@@ -37,6 +37,7 @@ public class Input {
 	public static String lastconsoleinput = "";
 	public static String[] itemtypes = {"Empty (not valid)", "Block", "Tool"};
 	public static String keytext = "";
+	public static String keychar = "";
 	
 	public static void main (String[] args) {
 		World2.f.addKeyListener(new KeyListener () {
@@ -44,65 +45,66 @@ public class Input {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				keytext = KeyEvent.getKeyText(e.getKeyCode());
+				keychar = String.valueOf(e.getKeyChar());
 				if (keytext.equalsIgnoreCase("Ctrl")) {
 					snap = !snap;
 				}
-				if (e.getKeyChar() == 'a') {
+				else if (keychar.equalsIgnoreCase("a")) {
 					a = true;
 				}
-				if (e.getKeyChar() == 'd') {
+				else if (keychar.equalsIgnoreCase("d")) {
 					d = true;
 				}
-				if (e.getKeyChar() == 'i') {
+				else if (keychar.equalsIgnoreCase("i")) {
 					i = true;
 				}
-				if (keytext.equalsIgnoreCase("Shift")) {
+				else if (keytext.equalsIgnoreCase("Shift")) {
 					shift = true;
 				}
-				if (keytext.equalsIgnoreCase("Space")) {
+				else if (keytext.equalsIgnoreCase("Space")) {
 					space = true;
 				}
-				if (e.getKeyChar() == '0') {
+				else if (e.getKeyChar() == '0') {
 					key0 = true;
 					Build.selected = 0;
 				}
-				if (e.getKeyChar() == '1') {
+				else if (e.getKeyChar() == '1') {
 					key1 = true;
 					Build.selected = 1;
 				}
-				if (e.getKeyChar() == '2') {
+				else if (e.getKeyChar() == '2') {
 					key2 = true;
 					Build.selected = 2;
 				}
-				if (e.getKeyChar() == '3') {
+				else if (e.getKeyChar() == '3') {
 					key3 = true;
 					Build.selected = 3;
 				}
-				if (e.getKeyChar() == '4') {
+				else if (e.getKeyChar() == '4') {
 					key4 = true;
 					Build.selected = 4;
 				}
-				if (e.getKeyChar() == '5') {
+				else if (e.getKeyChar() == '5') {
 					key5 = true;
 					Build.selected = 5;
 				}
-				if (e.getKeyChar() == '6') {
+				else if (e.getKeyChar() == '6') {
 					key6 = true;
 					Build.selected = 6;
 				}
-				if (e.getKeyChar() == '7') {
+				else if (e.getKeyChar() == '7') {
 					key7 = true;
 					Build.selected = 7;
 				}
-				if (e.getKeyChar() == '8') {
+				else if (e.getKeyChar() == '8') {
 					key8 = true;
 					Build.selected = 8;
 				}
-				if (e.getKeyChar() == '9') {
+				else if (e.getKeyChar() == '9') {
 					key9 = true;
 					Build.selected = 9;
 				}
-				if (keytext.equalsIgnoreCase("F3")) {
+				else if (keytext.equalsIgnoreCase("F3")) {
 					f3 =! f3;
 					if (shift == false) {
 						World2.debug = f3;
@@ -111,14 +113,14 @@ public class Input {
 						World2.debugpie = f3;
 					}
 				}
-				if (keytext.equalsIgnoreCase("F4")) {
+				else if (keytext.equalsIgnoreCase("F4")) {
 					f4 =! f4;
 					World2.debuggrid = f4;
 				}
-				if (keytext.equalsIgnoreCase("Escape")) {
+				else if (keytext.equalsIgnoreCase("Escape")) {
 					escape =! escape;
 				}
-				if (e.getKeyChar() == '`') {
+				else if (e.getKeyChar() == '`') {
 					console =! console;
 					World2.consoleinput = "";
 				}
@@ -153,46 +155,50 @@ public class Input {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				keytext = KeyEvent.getKeyText(e.getKeyCode());
+				keychar = String.valueOf(e.getKeyChar());
 				if (keytext.equalsIgnoreCase("Shift")) {
 					shift = false;
 				}
-				if (e.getKeyChar() == 'a') {
+				else if (keychar.equalsIgnoreCase("a")) {
 					a = false;
 				}
-				if (e.getKeyChar() == 'd') {
+				else if (keychar.equalsIgnoreCase("d")) {
 					d = false;
 				}
-				if (e.getKeyChar() == 'i') {
+				else if (keychar.equalsIgnoreCase("i")) {
 					i = false;
 				}
-				if (keytext.equalsIgnoreCase("Space")) {
+				else if (keytext.equalsIgnoreCase("Space")) {
 					space = false;
 				}
-				if (e.getKeyChar() == '1') {
+				else if (e.getKeyChar() == '0') {
+					key0 = false;
+				}
+				else if (e.getKeyChar() == '1') {
 					key1 = false;
 				}
-				if (e.getKeyChar() == '2') {
+				else if (e.getKeyChar() == '2') {
 					key2 = false;
 				}
-				if (e.getKeyChar() == '3') {
+				else if (e.getKeyChar() == '3') {
 					key3 = false;
 				}
-				if (e.getKeyChar() == '4') {
+				else if (e.getKeyChar() == '4') {
 					key4 = false;
 				}
-				if (e.getKeyChar() == '5') {
+				else if (e.getKeyChar() == '5') {
 					key5 = false;
 				}
-				if (e.getKeyChar() == '6') {
+				else if (e.getKeyChar() == '6') {
 					key6 = false;
 				}
-				if (e.getKeyChar() == '7') {
+				else if (e.getKeyChar() == '7') {
 					key7 = false;
 				}
-				if (e.getKeyChar() == '8') {
+				else if (e.getKeyChar() == '8') {
 					key8 = false;
 				}
-				if (e.getKeyChar() == '9') {
+				else if (e.getKeyChar() == '9') {
 					key9 = false;
 				}
 			}
@@ -207,19 +213,19 @@ public class Input {
 	}
 	
 	public static boolean GetInput (String Key) {
-		if (Key == "a") {
+		if (Key.equalsIgnoreCase("a")) {
 			return a;
 		}
-		else if (Key == "d") {
+		else if (Key.equalsIgnoreCase("d")) {
 			return d;
 		}
-		else if (Key == "shift") {
+		else if (Key.equalsIgnoreCase("shift")) {
 			return shift;
 		}
-		else if (Key == "space") {
+		else if (Key.equalsIgnoreCase("space")) {
 			return space;
 		}
-		else if (Key == "i") {
+		else if (Key.equalsIgnoreCase("i")) {
 			return i;
 		}
 		return false;
