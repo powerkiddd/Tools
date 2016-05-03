@@ -10,6 +10,7 @@ import Game.Build;
 import Game.Inventory;
 import Game.Player2;
 import Game.World2;
+import Settings.KeyBindings;
 
 public class Input {
 	
@@ -46,22 +47,22 @@ public class Input {
 			public void keyPressed(KeyEvent e) {
 				keytext = KeyEvent.getKeyText(e.getKeyCode());
 				keychar = String.valueOf(e.getKeyChar());
-				if (keytext.equalsIgnoreCase("Ctrl")) {
+				if (keytext.equalsIgnoreCase(KeyBindings.snap)) {
 					snap = !snap;
 				}
-				else if (keychar.equalsIgnoreCase("a")) {
+				else if (keychar.equalsIgnoreCase(KeyBindings.walkleft)) {
 					a = true;
 				}
-				else if (keychar.equalsIgnoreCase("d")) {
+				else if (keychar.equalsIgnoreCase(KeyBindings.walkright)) {
 					d = true;
 				}
-				else if (keychar.equalsIgnoreCase("i")) {
+				else if (keychar.equalsIgnoreCase(KeyBindings.inventory)) {
 					i = true;
 				}
-				else if (keytext.equalsIgnoreCase("Shift")) {
+				else if (keytext.equalsIgnoreCase(KeyBindings.run)) {
 					shift = true;
 				}
-				else if (keytext.equalsIgnoreCase("Space")) {
+				else if (keytext.equalsIgnoreCase(KeyBindings.jump)) {
 					space = true;
 				}
 				else if (e.getKeyChar() == '0') {
@@ -156,19 +157,19 @@ public class Input {
 			public void keyReleased(KeyEvent e) {
 				keytext = KeyEvent.getKeyText(e.getKeyCode());
 				keychar = String.valueOf(e.getKeyChar());
-				if (keytext.equalsIgnoreCase("Shift")) {
+				if (keytext.equalsIgnoreCase(KeyBindings.run)) {
 					shift = false;
 				}
-				else if (keychar.equalsIgnoreCase("a")) {
+				else if (keychar.equalsIgnoreCase(KeyBindings.walkleft)) {
 					a = false;
 				}
-				else if (keychar.equalsIgnoreCase("d")) {
+				else if (keychar.equalsIgnoreCase(KeyBindings.walkright)) {
 					d = false;
 				}
-				else if (keychar.equalsIgnoreCase("i")) {
+				else if (keychar.equalsIgnoreCase(KeyBindings.inventory)) {
 					i = false;
 				}
-				else if (keytext.equalsIgnoreCase("Space")) {
+				else if (keytext.equalsIgnoreCase(KeyBindings.jump)) {
 					space = false;
 				}
 				else if (e.getKeyChar() == '0') {
