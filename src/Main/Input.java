@@ -226,9 +226,9 @@ public class Input {
 	}
 	
 	public static boolean OnGetInput (String Key) {
-		if (Key.equals("i")) {
-			for (byte bi = 0; bi < onces.length; bi++) {
-				if (onces[bi] == "i") {
+		for (byte bi = 0; bi < onces.length; bi++) {
+			if (onces[bi] != null && onces[bi].equalsIgnoreCase(Key)) {
+				if (Key.equalsIgnoreCase("i")) {
 					if (i == false) {
 						onces[bi] = null;
 						return false;
@@ -238,9 +238,11 @@ public class Input {
 					}
 				}
 			}
-			for (byte bi = 0; bi < onces.length; bi++) {
+		}
+		for (byte bi = 0; bi < onces.length; bi++) {
+			if (Key.equalsIgnoreCase("i")) {
 				if (onces[bi] == null && i == true) {
-					onces[bi] = "i";
+					onces[bi] = Key;
 					return true;
 				}
 			}
