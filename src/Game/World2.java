@@ -33,6 +33,7 @@ import Main.Players;
 import Main.SaveLoad;
 import Main.Version;
 import Mobs.Chi;
+import Settings.KeyBindings;
 import Settings.Settings;
 import Settings.Video_Settings;
 
@@ -115,6 +116,7 @@ public class World2 extends JPanel {
 			Inventory.main(null);
 			PauseMenu.main(null);
 			Mouse.main(null);
+			KeyBindings.main(null);
 			//Lighting.main(null);
 			//Server.main(null);
 			//Client.Connect("127.0.0.1", 8888);
