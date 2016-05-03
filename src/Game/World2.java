@@ -58,6 +58,8 @@ public class World2 extends JPanel {
 	private static BufferedImage spacemen;
 	private static BufferedImage highlight;
 	private static BufferedImage heart;
+	private static BufferedImage hunger;
+	private static BufferedImage thirst;
 	private static int world_x = 2400;
 	private static int world_y = 1200;
 	public static boolean debug = false;
@@ -162,6 +164,8 @@ public class World2 extends JPanel {
 			File file17 = new File("images\\spaceman.png");
 			File file18 = new File("images\\highlight.png");
 			File file19 = new File("images\\Heart.png");
+			File file20 = new File("images\\Hunger.png");
+			File file21 = new File("images\\Thirst.png");
 			image = ImageIO.read(file);
 			playerimage = ImageIO.read(file2);
 			invslot = ImageIO.read(file5);
@@ -178,6 +182,8 @@ public class World2 extends JPanel {
 			spacemen = ImageIO.read(file17);
 			highlight = ImageIO.read(file18);
 			heart = ImageIO.read(file19);
+			hunger = ImageIO.read(file20);
+			thirst = ImageIO.read(file21);
 		}
 		catch (IOException ex) {
 			ex.printStackTrace();
@@ -731,8 +737,11 @@ public class World2 extends JPanel {
 			g.drawString("" + Inventory.count[7], f.getSize().width/2+92, 25);
 			g.drawString("" + Inventory.count[8], f.getSize().width/2+122, 25);
 			g.setColor(Color.BLACK);
-			for (int x = 27; x < 19*10; x+= 19)
-			g.drawImage(heart, f.getSize().width-x, 0, 19, 17, null);
+			for (int x = 27; x < 19*10; x+= 19) {
+				g.drawImage(heart, f.getSize().width-x, 0, 19, 17, null);
+				g.drawImage(hunger, f.getSize().width-x, 17, 19, 17, null);
+				g.drawImage(thirst, f.getSize().width-x, 34, 19, 17, null);
+			}
 			stoptime = System.currentTimeMillis();
 			milliseconds[3] = milliseconds[3] + (stoptime-starttime);
 			//Draw placeholder block
