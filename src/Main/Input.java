@@ -210,16 +210,16 @@ public class Input {
 		if (Key == "a") {
 			return a;
 		}
-		if (Key == "d") {
+		else if (Key == "d") {
 			return d;
 		}
-		if (Key == "shift") {
+		else if (Key == "shift") {
 			return shift;
 		}
-		if (Key == "space") {
+		else if (Key == "space") {
 			return space;
 		}
-		if (Key == "i") {
+		else if (Key == "i") {
 			return i;
 		}
 		return false;
