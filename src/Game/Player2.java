@@ -15,7 +15,6 @@ import Main.Input;
 public class Player2 {
 	
 	public static BufferedImage right;
-	public static BufferedImage left;
 	public static BufferedImage jetpack;
 	public static float player_x = 0;
 	public static float player_y = 0;
@@ -43,10 +42,8 @@ public class Player2 {
 		try {
 			File file = new File("images\\player.png");
 			right = ImageIO.read(file);
-			File file2 = new File("images\\player_turned.png");
-			left = ImageIO.read(file2);
-			File file3 = new File("images\\jetpack.png");
-			jetpack = ImageIO.read(file3);
+			File file2 = new File("images\\jetpack.png");
+			jetpack = ImageIO.read(file2);
 		}
 		catch (IOException ex) {
 			ex.printStackTrace();
@@ -175,15 +172,12 @@ public class Player2 {
 		Player2.jumptimer.scheduleAtFixedRate(Player2.jump, 10, 10);
 	}
 	
-	public static BufferedImage changeimage(Byte type) {
+	public static void changeside(Byte type) {
 		if (type == 0) {
 			lookingatside = true;
-			return right;
 		}
-		if (type == 1) {
+		else if (type == 1) {
 			lookingatside = false;
-			return left;
 		}
-		return null;
 	}
 }

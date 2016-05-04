@@ -380,16 +380,38 @@ public class Input {
 				result = "Not enough arguments, execute command as: Clear Console/Inventory";
 			}
 		}
+		else if (splitinput[0].equalsIgnoreCase("ChangePlayer")) {
+			if (splitinput.length > 1) {
+				try {
+					File sprite = new File("images\\" + splitinput[1]);
+					World2.playerimage = ImageIO.read(sprite);
+					result = "Changed player image to: " + splitinput[1];
+				}
+				catch (Exception ex) {
+					if (ex.getMessage().contains("Can't read input file")) {
+						result = "Can not find file: " + splitinput[1] + ". Make sure the filename is correct and the extension. EX: Player.png";
+					}
+					else {
+						ex.printStackTrace();
+						result = "You made an unknown error! GJ";
+					}
+				}
+			}
+			else {
+				result = "Not enough arguments, execute command as: ChangePlayer *sprite*";
+			}
+		}
 		RegisterInConsole(result);
 	}
 	
 	public static void ShowAllCommands() {
-		RegisterInConsole("Help/Commands - Shows all commands");
-		RegisterInConsole("Give *block* *amount* - Gives the amount of the specified block to the player");
+		RegisterInConsole("Help/Commands - Shows all commands.");
+		RegisterInConsole("Give *block* *amount* - Gives the amount of the specified block to the player.");
 		RegisterInConsole("ListAllBlocks - Shows a list of all blocks in the game.");
 		RegisterInConsole("ToggleJetpack - Toggles jetpack on/off.");
 		RegisterInConsole("ToggleWorldState Normal/Industrialized - Toggles the state of the world.");
-		RegisterInConsole("Clear Console/Inventory - Clears the specified thing");
+		RegisterInConsole("Clear Console/Inventory - Clears the specified thing.");
+		RegisterInConsole("ChangePlayer *sprite* - Changes the player sprite.");
 	}
 	
 	public static void ShowAllBlocks() {

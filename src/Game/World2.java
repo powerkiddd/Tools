@@ -44,7 +44,7 @@ public class World2 extends JPanel {
 	public static BufferedImage background_land;
 	public static int backgroundx = 640;
 	public static int backgroundy = 400;
-	private static BufferedImage playerimage;
+	public static BufferedImage playerimage;
 	public static BufferedImage[] allblocks;
 	public static String[] blockidentifiers; //Names of blocks must align to pictures
 	private static BufferedImage invslot;
@@ -255,7 +255,7 @@ public class World2 extends JPanel {
 					//Move left if a is pressed
 					if (Input.GetInput("a") && Player2.collision != "a") {
 						if (once == false) {
-							playerimage = Player2.changeimage((byte) 1);
+							Player2.changeside((byte) 1);
 							once = true;
 						}
 						if (camera_x > 0 && Player2.player_x < (0+Video_Settings.window_size_x/3)) {
@@ -280,7 +280,7 @@ public class World2 extends JPanel {
 					//move right if d is pressed
 					if (Input.GetInput("d") && Player2.collision != "d") {
 						if (once == false) {
-							playerimage = Player2.changeimage((byte) 0);
+							Player2.changeside((byte) 0);
 							once = true;
 						}
 						if (Player2.player_x > Video_Settings.window_size_x-Video_Settings.window_size_x/3 && camera_x < world_x) {
@@ -624,7 +624,12 @@ public class World2 extends JPanel {
 			milliseconds[1] = milliseconds[1] + (stoptime-starttime);
 			starttime = System.currentTimeMillis();
 			//Draw Player
-			g.drawImage(playerimage, (int) (Player2.player_x), (int) Player2.player_y, null);
+			if (Player2.lookingatside) {
+				g.drawImage(playerimage, (int) (Player2.player_x), (int) Player2.player_y, playerimage.getWidth(), playerimage.getHeight(), null);
+			}
+			else {
+				g.drawImage(playerimage, (int) (Player2.player_x)+playerimage.getWidth(), (int) Player2.player_y, -playerimage.getWidth(), playerimage.getHeight(), null);
+			}
 			if (Player2.hasJetpack) {
 				if (Player2.lookingatside) {
 					g.drawImage(Player2.jetpack, (int) (Player2.player_x), (int) Player2.player_y,19,67, null);
