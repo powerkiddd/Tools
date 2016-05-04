@@ -626,26 +626,20 @@ public class World2 extends JPanel {
 			//Draw Player
 			if (Player2.lookingatside) {
 				g.drawImage(playerimage, (int) (Player2.player_x), (int) Player2.player_y, playerimage.getWidth(), playerimage.getHeight(), null);
+				g.drawImage(Inventory.tools[holdingtool], (int) Player2.player_x+9, (int) Player2.player_y+25,25,25, null);
+				if (Player2.hasJetpack) {
+					g.drawImage(Player2.jetpack, (int) (Player2.player_x), (int) Player2.player_y,19,67, null);
+				}
 			}
 			else {
 				g.drawImage(playerimage, (int) (Player2.player_x)+playerimage.getWidth(), (int) Player2.player_y, -playerimage.getWidth(), playerimage.getHeight(), null);
-			}
-			if (Player2.hasJetpack) {
-				if (Player2.lookingatside) {
-					g.drawImage(Player2.jetpack, (int) (Player2.player_x), (int) Player2.player_y,19,67, null);
-				}
-				else {
+				g.drawImage(Inventory.tools[holdingtool], (int) Player2.player_x+9, (int) Player2.player_y+25,-25,25, null);
+				if (Player2.hasJetpack) {
 					g.drawImage(Player2.jetpack, (int) (Player2.player_x+19), (int) Player2.player_y,-19,67, null);
 				}
 			}
 			for (int i = 1; i < Players.playersinserver; i++) {
 				g.drawImage(playerimage, Players.playerx[i-1], Players.playery[i-1], null);
-			}
-			if (Player2.lookingatside) {
-				g.drawImage(Inventory.tools[holdingtool], (int) Player2.player_x+9, (int) Player2.player_y+25,25,25, null);
-			}
-			else {
-				g.drawImage(Inventory.tools[holdingtool], (int) Player2.player_x+9, (int) Player2.player_y+25,-25,25, null);
 			}
 			stoptime = System.currentTimeMillis();
 			milliseconds[2] = milliseconds[2] + (stoptime-starttime);
