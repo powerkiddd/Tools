@@ -238,11 +238,11 @@ public class World2 extends JPanel {
 				Player2.playerrect = new Rectangle((int) Player2.player_x,(short) Player2.player_y,19,67);
 				//Open inventory if I is pressed
 				if (Input.console == false) {
-					if (Input.OnGetInput(KeyBindings.inventory)) {
+					if (Input.OnGetInput("i")) {
 						showinventory = !showinventory;
 					}
 					//Sprint if left shift is pressed
-					if (Input.GetInput(KeyBindings.run)) {
+					if (Input.GetInput("shift")) {
 						if (Player2.overridespeed == false) {
 							Player2.playerspeed = 5;
 						}
@@ -253,7 +253,7 @@ public class World2 extends JPanel {
 						}
 					}
 					//Move left if a is pressed
-					if (Input.GetInput(KeyBindings.walkleft) && Player2.collision != "a") {
+					if (Input.GetInput("a") && Player2.collision != "a") {
 						if (once == false) {
 							Player2.changeside((byte) 1);
 							once = true;
@@ -278,7 +278,7 @@ public class World2 extends JPanel {
 						once = false;
 					}
 					//move right if d is pressed
-					if (Input.GetInput(KeyBindings.walkright) && Player2.collision != "d") {
+					if (Input.GetInput("d") && Player2.collision != "d") {
 						if (once == false) {
 							Player2.changeside((byte) 0);
 							once = true;
@@ -302,7 +302,7 @@ public class World2 extends JPanel {
 					else {
 						once = false;
 					}
-					if (Input.GetInput(KeyBindings.jump)) {
+					if (Input.GetInput("space")) {
 						if (Player2.isJumping == false && Player2.isFalling == false) {
 							Player2.isJumping = true;
 						}
