@@ -238,8 +238,11 @@ public class World2 extends JPanel {
 				Player2.playerrect = new Rectangle((int) Player2.player_x,(short) Player2.player_y,19,67);
 				//Open inventory if I is pressed
 				if (Input.console == false) {
-					if (Input.OnGetInput("i")) {
-						showinventory = !showinventory;
+					if (Input.GetInput("i")) {
+						showinventory = true;
+					}
+					else {
+						showinventory = false;
 					}
 					//Sprint if left shift is pressed
 					if (Input.GetInput("shift")) {

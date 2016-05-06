@@ -17,6 +17,7 @@ public class Input {
 	public static boolean a = false;
 	public static boolean d = false;
 	public static boolean i = false;
+	public static boolean r = false;
 	public static boolean shift = false;
 	public static boolean space = false;
 	public static boolean key0 = false;
@@ -57,7 +58,10 @@ public class Input {
 					d = true;
 				}
 				else if (keychar.equalsIgnoreCase(KeyBindings.inventory)) {
-					i = true;
+					i = !i;
+				}
+				else if (keychar.equalsIgnoreCase(KeyBindings.crafting)) {
+					r = !r;
 				}
 				else if (keytext.equalsIgnoreCase(KeyBindings.run)) {
 					shift = true;
@@ -166,9 +170,6 @@ public class Input {
 				else if (keychar.equalsIgnoreCase(KeyBindings.walkright)) {
 					d = false;
 				}
-				else if (keychar.equalsIgnoreCase(KeyBindings.inventory)) {
-					i = false;
-				}
 				else if (keytext.equalsIgnoreCase(KeyBindings.jump)) {
 					space = false;
 				}
@@ -228,31 +229,6 @@ public class Input {
 		}
 		else if (Key.equalsIgnoreCase("i")) {
 			return i;
-		}
-		return false;
-	}
-	
-	public static boolean OnGetInput (String Key) {
-		for (byte bi = 0; bi < onces.length; bi++) {
-			if (onces[bi] != null && onces[bi].equalsIgnoreCase(Key)) {
-				if (Key.equalsIgnoreCase("i")) {
-					if (i == false) {
-						onces[bi] = null;
-						return false;
-					}
-					else {
-						return false;
-					}
-				}
-			}
-		}
-		for (byte bi = 0; bi < onces.length; bi++) {
-			if (Key.equalsIgnoreCase("i")) {
-				if (onces[bi] == null && i == true) {
-					onces[bi] = Key;
-					return true;
-				}
-			}
 		}
 		return false;
 	}
