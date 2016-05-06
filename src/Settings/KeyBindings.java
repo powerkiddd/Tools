@@ -12,6 +12,7 @@ public class KeyBindings {
 	public static String snap = "Ctrl";
 	public static String run = "Shift";
 	public static String jump = "Space";
+	public static String crafting = "r";
 	
 	public static void main(String[] args) {
 		File file = new File("settings/KeyBindings.ini");
@@ -29,6 +30,7 @@ public class KeyBindings {
 				snap = derps[7];
 				run = derps[9];
 				jump = derps[11];
+				crafting = derps[13];
 			}
 			catch (Exception ex) {
 				ex.printStackTrace();
@@ -52,7 +54,8 @@ public class KeyBindings {
 			text = text + "inventory: " + inventory + ":\n";
 			text = text + "snap: " + snap + ":\n";
 			text = text + "run: " + run + ":\n";
-			text = text + "jump: " + jump + ":";
+			text = text + "jump: " + jump + ":\n";
+			text = text + "crafting: " + crafting + ":";
 			WriteToFile.writestuff("settings/", "KeyBindings", ".ini", text);
 		}
 		catch (Exception ex) {

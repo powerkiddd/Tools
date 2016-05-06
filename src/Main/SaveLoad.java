@@ -62,6 +62,7 @@ public class SaveLoad {
 		World2.blockcollisions = new Rectangle[blocks_split.length];
 		World2.blockbackground = new Boolean[blocks_split.length];
 		for (byte i = 0; i < 45; i++) {
+			Inventory.slots[i] = null;
 			Inventory.items[i] = "Empty";
 			Inventory.count[i] = 0;
 			Inventory.itemtype[i] = 0;
