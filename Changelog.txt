@@ -1,0 +1,90 @@
+Alpha 0.0.1.1:
+	-Added tools: Chisel, Axe, hoe, pickaxe, stick
+	-Added campfire
+	-Added roast spit
+	-Added stone kettle
+	-Added hunger, thirst and health bars
+	-Added casting molds
+	-Added background interaction events for cutting wood and picking up stones
+	-Fixed tons of bugs
+	-Tons of optimisations and API changes
+
+Alpha 0.0.1.0:
+	-Added ores: Coal, Iron, Copper, Gold
+	-Added tools: Wrench, Hammer
+	-You can now move vertical in the world
+	-Added steamengine
+	-Added inventory
+	-Added interaction events
+	-Added experimental multiplayer
+	-Fixed world generation
+	-Fixed tons of bugs
+	-Tons of optimisations and API changes
+
+Alpha 0.0.0.9:
+	-Added trees, these spawn random and naturally (they can't be interacted with yet, this will come later.) (7-3-2016|15:00)
+	-Added crash detection and dialogue (7-3-2016|16:01)
+	-Added a background to give a bit more depth to the game (8-3-2016|11:07)
+	-Added a loading screen (11-3-2016|11:49)
+	-Updated a lot of textures (Thank you @ Menleader)
+	-Made the world mineable (8-3-2016|12:28)
+	-Fixed a crash that could occur if your inventory slot is empty (7-3-2016|16:59)
+	-Fixed a crash if you would go to debug mode without having clicked the screen once (7-3-2016|14:50)
+	-Yeah, don't... don't comment that. Fixed player not having collision when camera is higher than 0, caused by me being a derp (7-3-2016|15:20)
+	-Fixed chi in fullscreen (7-3-2016|15:35)
+	-Fixed random crash at startup (7-3-2016|16:27)
+	-Fixed mining underneath you doesn't make you fall down. (11-3-2016|15:00)
+	-Fixed mainmenu background scaling (It only took about 4 versions totally worth about ~6-7 months ;) )
+	
+Alpha 0.0.0.8:
+	-Better physics... dammit mees.
+	-Better performance when more blocks exist in the world.
+	-Better performance when mining
+	-Better performance when placing blocks and mining
+	-Under the hood changes which make my life much more easy, expect more content soon ;)
+	-Added water blocks (These have some water physics, they are not really that great yet, but it's a start)
+	-Added a blockinfo API, this API can store info in a block, like energy/durability and thus can be used for alot of new and cool stuff.
+	-Fixed game position on screen having impact on the location where shit will be build.
+	-Fixed camera position being able to become lower than 0 and higher than world bounds
+
+Alpha 0.0.0.7:
+	-Added building
+		--Placeholder blocks will help you see where you build
+		--Max limit for all blocks for now is 127
+		--You can snap your blocks to a grid (default), or place them freely, you can toggle between the two by pressing ctrl.
+			--Press f4 to toggle a showable grid, this is originally for debug purposes.
+	-Added mining
+		--Everything is destroyed in one click
+		--Can only mine placed blocks
+	-Added inventory slots
+	-Added jumping (higly requested by Mees)
+	-Added collisions and stuff. (Damn I need to make an game engine for this) (THE DAMN BUUUUUUUGS)
+	-Added sprinting (hold left shift)
+	-Added fullscreen support
+	-Added some stuff i don't remember
+	-Added Garbage Collection, this improves RAM and FPS in some places.
+	-Added more text thingys in the mainmenu.
+	-General settings now save.
+	-Made video_settings.ini more editable.
+	-Made debug toggable by f3
+		--The green box is where you last clicked
+		--The yellow boxes are the collision boxes
+	-Tweaked some shit with chi
+	-Fixed exit button not terminating the game
+	-Fixed most of the screen tearing
+
+Alpha 0.0.0.6:
+	-Put things in right places.
+	-Optimized some code.
+	-Cleaned up some old code and imports
+	-Renamed options menu in mainmenu to settings
+	-Renewed mainmenu
+		--(Note, scaling doesn't work right now, 1280 by 800 screen size recommended!)
+
+Alpha 0.0.0.5:
+	-Made Changelog.txt
+	-Fixed player height on bigger and smaller windows
+	-Fixed some other stuff i don't remember
+	-Changed video_settings file from .txt into .ini
+	-Made video_settings.ini more readable
+	-Chi is kawaii!
