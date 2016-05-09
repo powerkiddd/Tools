@@ -230,6 +230,9 @@ public class Input {
 		else if (Key.equalsIgnoreCase("i")) {
 			return i;
 		}
+		else if (Key.equalsIgnoreCase("r")) {
+			return r;
+		}
 		return false;
 	}
 	

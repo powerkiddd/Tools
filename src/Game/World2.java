@@ -95,6 +95,7 @@ public class World2 extends JPanel {
 	public static boolean buildingworld = true;
 	public static boolean saveonce = false;
 	public static boolean showinventory = false;
+	public static boolean showcraftingmenu = false;
 	public static String[] consoleoutput = new String[100];
 	public static String consoleinput = "";
 	private static float rot = 0; //Rotation for loading icon.
@@ -243,6 +244,12 @@ public class World2 extends JPanel {
 					}
 					else {
 						showinventory = false;
+					}
+					if (Input.GetInput("r")) {
+						showcraftingmenu = true;
+					}
+					else {
+						showcraftingmenu = false;
 					}
 					//Sprint if left shift is pressed
 					if (Input.GetInput("shift")) {
@@ -848,6 +855,10 @@ public class World2 extends JPanel {
 					}
 				}
 				g.setColor(Color.BLACK);
+			}
+			//Draw Crafting Menu
+			if (showcraftingmenu) {
+				g.drawString("Nope", 0, 15);
 			}
 			//Start Debugging Information
 			if (debug == true) {
