@@ -858,7 +858,15 @@ public class World2 extends JPanel {
 			}
 			//Draw Crafting Menu
 			if (showcraftingmenu) {
-				g.drawString("Nope", 0, 15);
+				double gridmultiplier = 1.5;
+				//Categories
+				g.drawImage(invslot, 0, 0, (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
+				g.drawImage(Inventory.tools[0], 1, 0, (int) (25*gridmultiplier), (int) (int) (25*gridmultiplier), null);
+				//Items in category
+				for (int i = 0; i < Inventory.tools.length-1; i++) {
+					g.drawImage(invslot, 0, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
+					g.drawImage(Inventory.tools[i], 1, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (25*gridmultiplier), (int) (25*gridmultiplier), null);
+				}
 			}
 			//Start Debugging Information
 			if (debug == true) {
