@@ -862,6 +862,8 @@ public class World2 extends JPanel {
 				//Categories
 				g.drawImage(invslot, 0, 0, (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
 				g.drawImage(Inventory.tools[0], 1, 0, (int) (25*gridmultiplier), (int) (int) (25*gridmultiplier), null);
+				g.drawImage(invslot, (int) (27*gridmultiplier), 0, (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
+				g.drawImage(Inventory.items2[0], (int) (28*gridmultiplier), 0, (int) (25*gridmultiplier), (int) (int) (25*gridmultiplier), null);
 				//Items in category
 				for (int i = 0; i < Inventory.tools.length-1; i++) {
 					g.drawImage(invslot, 0, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);

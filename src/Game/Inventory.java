@@ -14,8 +14,10 @@ public class Inventory {
 	public static byte[] itemtype = {0, 0, 0, 0, 0, 0, 0, 0, 0}; //None, Block, Tool, Material
 	public static BufferedImage[] blocks;
 	public static BufferedImage[] tools;
+	public static BufferedImage[] items2;
 	public static String[] identifier;
 	public static String[] toolidentifier;
+	public static String[] items2identifier;
 	
 	public static void main(String[] args) {
 		slots = new BufferedImage[45];
@@ -31,6 +33,8 @@ public class Inventory {
 		toolidentifier = Directory.identifiers;
 		blocks = Directory.GetAllImagesFromDirectory("images\\blocks\\");
 		identifier = Directory.identifiers;
+		items2 = Directory.GetAllImagesFromDirectory("images\\items\\");
+		items2identifier = Directory.identifiers;
 		
 		AddItem("Dirt", (byte) 127, (byte) 1);
 		AddItem("Grass", (byte) 127, (byte) 1);
