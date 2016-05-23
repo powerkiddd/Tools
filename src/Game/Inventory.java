@@ -8,6 +8,7 @@ import Main.Input;
 public class Inventory {
 	
 	public static byte selected = -1;
+	public static short craftingselected = -1;
 	public static BufferedImage[] slots = new BufferedImage[9];
 	public static String[] items = {"Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"};
 	public static byte[] count = {0, 0, 0, 0, 0, 0, 0, 0, 0};

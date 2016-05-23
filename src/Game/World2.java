@@ -858,6 +858,7 @@ public class World2 extends JPanel {
 			}
 			//Draw Crafting Menu
 			if (showcraftingmenu) {
+				short i_ = 0;
 				double gridmultiplier = 1.5;
 				//Categories
 				g.drawImage(invslot, 0, 0, (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
@@ -865,9 +866,28 @@ public class World2 extends JPanel {
 				g.drawImage(invslot, (int) (27*gridmultiplier), 0, (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
 				g.drawImage(Inventory.items2[0], (int) (28*gridmultiplier), 0, (int) (25*gridmultiplier), (int) (int) (25*gridmultiplier), null);
 				//Items in category
-				for (int i = 0; i < Inventory.tools.length-1; i++) {
-					g.drawImage(invslot, 0, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
-					g.drawImage(Inventory.tools[i], 1, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (25*gridmultiplier), (int) (25*gridmultiplier), null);
+				if (Inventory.craftingselected == 0) {
+					for (int i = 0; i < Inventory.tools.length-1; i++) {
+						g.drawImage(invslot, 0, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
+						g.drawImage(Inventory.tools[i], 1, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (25*gridmultiplier), (int) (25*gridmultiplier), null);
+					}
+				}
+				else if (Inventory.craftingselected == 1) {
+					for (int i = 0; i < Inventory.items2.length-1; i++) {
+						g.drawImage(invslot, 0, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
+						g.drawImage(Inventory.items2[i], 1, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (25*gridmultiplier), (int) (25*gridmultiplier), null);
+					}
+				}
+				int y = 0;
+				for (int x = 0; x < 27*gridmultiplier*2; x+=27*gridmultiplier) {
+					if (Mouse.left && Mouse.leftonce == false) {
+						if (MouseInfo.getPointerInfo().getLocation().x > x && MouseInfo.getPointerInfo().getLocation().x < x+27) {
+							if (MouseInfo.getPointerInfo().getLocation().y > y && MouseInfo.getPointerInfo().getLocation().y < y+54) {
+								Inventory.craftingselected = (short) (i_/27*gridmultiplier);
+							}
+						}
+					}
+					i_ += 27*gridmultiplier;
 				}
 			}
 			//Start Debugging Information
