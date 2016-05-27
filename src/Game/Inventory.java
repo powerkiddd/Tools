@@ -8,14 +8,17 @@ import Main.Input;
 public class Inventory {
 	
 	public static byte selected = -1;
+	public static short craftingselected = -1;
 	public static BufferedImage[] slots = new BufferedImage[9];
 	public static String[] items = {"Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"};
 	public static byte[] count = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 	public static byte[] itemtype = {0, 0, 0, 0, 0, 0, 0, 0, 0}; //None, Block, Tool, Material
 	public static BufferedImage[] blocks;
 	public static BufferedImage[] tools;
+	public static BufferedImage[] items2;
 	public static String[] identifier;
 	public static String[] toolidentifier;
+	public static String[] items2identifier;
 	
 	public static void main(String[] args) {
 		slots = new BufferedImage[45];
@@ -31,6 +34,8 @@ public class Inventory {
 		toolidentifier = Directory.identifiers;
 		blocks = Directory.GetAllImagesFromDirectory("images\\blocks\\");
 		identifier = Directory.identifiers;
+		items2 = Directory.GetAllImagesFromDirectory("images\\items\\");
+		items2identifier = Directory.identifiers;
 		
 		AddItem("Dirt", (byte) 127, (byte) 1);
 		AddItem("Grass", (byte) 127, (byte) 1);
@@ -40,6 +45,7 @@ public class Inventory {
 	
 	public static boolean AddItem (String name, byte amount, byte type) {
 		if (type == 0) {
+			System.out.println("INVALID TYPE");
 			return false;
 		}
 		for (int i = 0; i < 45; i++) {
@@ -102,7 +108,7 @@ public class Inventory {
 				}
 			}
 		}
-		//Block not been picked up
+		//Block/Item/Tool has not been picked up
 		System.out.println("Item: " + name + ", not picked up!");
 		return false;
 	}
