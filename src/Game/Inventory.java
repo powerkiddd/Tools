@@ -45,6 +45,7 @@ public class Inventory {
 	
 	public static boolean AddItem (String name, byte amount, byte type) {
 		if (type == 0) {
+			System.out.println("INVALID TYPE");
 			return false;
 		}
 		for (int i = 0; i < 45; i++) {
@@ -107,7 +108,7 @@ public class Inventory {
 				}
 			}
 		}
-		//Block not been picked up
+		//Block/Item/Tool has not been picked up
 		System.out.println("Item: " + name + ", not picked up!");
 		return false;
 	}

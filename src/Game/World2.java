@@ -866,18 +866,39 @@ public class World2 extends JPanel {
 				g.drawImage(invslot, (int) (27*gridmultiplier), 0, (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
 				g.drawImage(Inventory.items2[0], (int) (28*gridmultiplier), 0, (int) (25*gridmultiplier), (int) (int) (25*gridmultiplier), null);
 				//Items in category
+				int totalitems = 0;
 				if (Inventory.craftingselected == 0) {
+					totalitems = Inventory.tools.length;
 					for (int i = 0; i < Inventory.tools.length-1; i++) {
 						g.drawImage(invslot, 0, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
 						g.drawImage(Inventory.tools[i], 1, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (25*gridmultiplier), (int) (25*gridmultiplier), null);
 					}
 				}
 				else if (Inventory.craftingselected == 1) {
+					totalitems = Inventory.items2.length;
 					for (int i = 0; i < Inventory.items2.length-1; i++) {
 						g.drawImage(invslot, 0, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
 						g.drawImage(Inventory.items2[i], 1, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (25*gridmultiplier), (int) (25*gridmultiplier), null);
 					}
 				}
+				//System.out.println("uuhhmm:"+totalitems);
+				for (int i = 0; i < totalitems; i++) {
+					//System.out.println("ehhrrmmm..." + Mouse.left + "|" + Mouse.leftonce);
+					if (Mouse.left && Mouse.leftonce == false) {
+						//System.out.println("yeah");
+						if (MouseInfo.getPointerInfo().getLocation().x > 0 && MouseInfo.getPointerInfo().getLocation().x < 0+27*gridmultiplier) {
+							//System.out.println("derpherp1");
+							double topy = (27*gridmultiplier*3)+(i*(27*gridmultiplier))-23;
+							double boty = (27*gridmultiplier*3)+(i*(27*gridmultiplier))+(27*gridmultiplier)-23;
+							if (MouseInfo.getPointerInfo().getLocation().y > topy && MouseInfo.getPointerInfo().getLocation().y < boty) {
+								if (Inventory.craftingselected == 0) {
+									Inventory.AddItem(Inventory.toolidentifier[i], (byte) 1, (byte) 2);
+								}
+							}
+						}
+					}
+				}
+				//Left click on category
 				int y = 0;
 				for (int x = 0; x < 27*gridmultiplier*2; x+=27*gridmultiplier) {
 					if (Mouse.left && Mouse.leftonce == false) {
@@ -886,6 +907,7 @@ public class World2 extends JPanel {
 								Inventory.craftingselected = (short) (i_/27*gridmultiplier);
 							}
 						}
+						Mouse.leftonce = true;
 					}
 					i_ += 27*gridmultiplier;
 				}
