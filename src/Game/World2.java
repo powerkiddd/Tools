@@ -61,6 +61,7 @@ public class World2 extends JPanel {
 	private static BufferedImage heart;
 	private static BufferedImage hunger;
 	private static BufferedImage thirst;
+	private static BufferedImage rain;
 	private static int world_x = 2400;
 	private static int world_y = 1200;
 	public static boolean debug = false;
@@ -169,6 +170,7 @@ public class World2 extends JPanel {
 			File file19 = new File("images\\Heart.png");
 			File file20 = new File("images\\Hunger.png");
 			File file21 = new File("images\\Thirst.png");
+			File file22 = new File("images\\rain_particle.png");
 			image = ImageIO.read(file);
 			playerimage = ImageIO.read(file2);
 			invslot = ImageIO.read(file5);
@@ -187,6 +189,7 @@ public class World2 extends JPanel {
 			heart = ImageIO.read(file19);
 			hunger = ImageIO.read(file20);
 			thirst = ImageIO.read(file21);
+			rain = ImageIO.read(file22);
 		}
 		catch (IOException ex) {
 			ex.printStackTrace();
@@ -418,6 +421,7 @@ public class World2 extends JPanel {
 		Build.Place("steamengine", new Rectangle(500,Video_Settings.window_size_y-Video_Settings.window_size_y/3-118,274,184), true);
 		buildingworld = false;
 		Input.RegisterInConsole("World" + SaveLoad.worldname + "loaded!");
+		Weather.Rain();
 	}
 	
 	@Override
@@ -443,6 +447,14 @@ public class World2 extends JPanel {
 			for (int i = 0; i < world_x+f.getSize().width; i += 640) {
 				if (i > camera_x-640 && i < camera_x+f.getSize().width && 610 > f.getSize().height-f.getSize().height/4-380-camera_y && -400 < f.getSize().height-f.getSize().height/4-380-camera_y) {
 					g.drawImage(background_land, (int) (i-camera_x),(int) (f.getSize().height-f.getSize().height/4-380-camera_y), 640, 400,null);
+				}
+			}
+			if (Weather.isRaining) {
+				Random chance = new Random();
+				for (int i=0; i < f.getSize().height; i += chance.nextInt(400)) {
+					for (int j = 0; j < f.getSize().width; j += chance.nextInt(400)) {
+						g.drawImage(rain, (int) ((int)j-camera_x), i, 25, 25,null);
+					}
 				}
 			}
 			long stoptime = System.currentTimeMillis();
