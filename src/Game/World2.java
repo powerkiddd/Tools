@@ -629,6 +629,11 @@ public class World2 extends JPanel {
 					blockposses[i] = "" + (x) + "," + (y-1);
 					blockcollisions[i] = new Rectangle(x,y,blockcollisions[i].width,blockcollisions[i].height);
 				}
+				else if (blocks[i].contains("barrel")) {
+					if (Weather.isRaining) {
+						blocks[i] = "water_barrel";
+					}
+				}
 				
 				if (isblockvisible && blockbackground[i] == false) {
 					if (temprect.intersects(Player2.playerrect)) {
@@ -813,9 +818,20 @@ public class World2 extends JPanel {
 			starttime = System.currentTimeMillis();
 			if (Build.selected != 0) {
 				if (!Inventory.items[Build.selected-1].equals("Empty") && Inventory.itemtype[Build.selected-1] == 1) {
-					if (Input.snap) {
+					Composite translucent = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (0.7f));
+					int theblock = 0;
+					for (int i = 0; i < allblocks.length; i++) {
+						if (blockidentifiers[i].equalsIgnoreCase(Inventory.items[Build.selected-1])) {
+							theblock = i;
+						}
+					}
+					if (Input.snap) {						
 						if (camera_x/25==Math.floor(camera_x/25) && camera_y/25==Math.floor(camera_y/25)) {
-							g.drawImage(blockholder, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, 25,25,null);
+							g.drawImage(blockholder, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, 25, 25, null);
+							Graphics2D g2d = (Graphics2D) g;
+							g2d.setComposite(translucent);
+					        g2d.drawImage(allblocks[theblock], (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, allblocks[theblock].getWidth(), allblocks[theblock].getHeight(), null);
+					        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 						}
 						else {
 							/*byte temp_x = (byte)Math.round((camera_x/25));
@@ -830,10 +846,18 @@ public class World2 extends JPanel {
 							Mouse.mouseposinworldx = (int) ((Mouse.mouseposonscreenx)-camera_x);
 							Mouse.mouseposinworldy = Mouse.mouseposonscreeny+Math.round(camera_y);
 							g.drawImage(blockholder, Mouse.mouseposonscreenx, Mouse.mouseposonscreeny, 25,25,null);
+							Graphics2D g2d = (Graphics2D) g;
+							g2d.setComposite(translucent);
+					        g2d.drawImage(allblocks[theblock], Mouse.mouseposonscreenx, Mouse.mouseposonscreeny, allblocks[theblock].getWidth(), allblocks[theblock].getHeight(), null);
+					        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 						}
 					}
 					else {
 						g.drawImage(blockholder, MouseInfo.getPointerInfo().getLocation().x-13-f.getLocationOnScreen().x, MouseInfo.getPointerInfo().getLocation().y-37-f.getLocationOnScreen().y, 25,25,null);
+						Graphics2D g2d = (Graphics2D) g;
+						g2d.setComposite(translucent);
+				        g2d.drawImage(allblocks[theblock], MouseInfo.getPointerInfo().getLocation().x-13-f.getLocationOnScreen().x, MouseInfo.getPointerInfo().getLocation().y-37-f.getLocationOnScreen().y, allblocks[theblock].getWidth(), allblocks[theblock].getHeight(), null);
+				        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 					}
 				}
 				else if (Inventory.itemtype[Build.selected-1] == 2) {
