@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 import java.util.Timer;
@@ -30,6 +31,7 @@ import Main.Input;
 import Main.Lighting;
 import Main.Mouse;
 import Main.Players;
+import Main.SFX;
 import Main.SaveLoad;
 import Main.Version;
 import Mobs.Chi;
@@ -62,6 +64,8 @@ public class World2 extends JPanel {
 	private static BufferedImage hunger;
 	private static BufferedImage thirst;
 	private static BufferedImage rain;
+	public static ArrayList<Integer> RainX = new ArrayList<Integer>();
+	public static ArrayList<Integer> RainY = new ArrayList<Integer>();
 	private static int world_x = 2400;
 	private static int world_y = 1200;
 	public static boolean debug = false;
@@ -100,8 +104,8 @@ public class World2 extends JPanel {
 	public static String[] consoleoutput = new String[100];
 	public static String consoleinput = "";
 	private static float rot = 0; //Rotation for loading icon.
-	public static long[] milliseconds = new long[6]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation
-	public static long[] lastmilliseconds = new long[6]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation
+	public static long[] milliseconds = new long[7]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation,Weather
+	public static long[] lastmilliseconds = new long[7]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation,Weather
 	public static int holdingtool = 0;
 	
 	public static void main(String[] args) {
@@ -119,6 +123,7 @@ public class World2 extends JPanel {
 			PauseMenu.main(null);
 			Mouse.main(null);
 			KeyBindings.main(null);
+			SFX.main(null);
 			//Lighting.main(null);
 			//Server.main(null);
 			//Client.Connect("127.0.0.1", 8888);
@@ -431,6 +436,7 @@ public class World2 extends JPanel {
 		FPS++;
 		if (World2.buildingworld == false) {
 			long starttime = System.currentTimeMillis();
+			long stoptime;
 			//Draw Background
 			for (int i=0; i < f.getSize().height; i += backgroundy) {
 				for (int j=0; j < world_x+f.getSize().width; j += backgroundx) {
@@ -451,13 +457,49 @@ public class World2 extends JPanel {
 			}
 			if (Weather.isRaining) {
 				Random chance = new Random();
-				for (int i=0; i < f.getSize().height; i += chance.nextInt(400)) {
-					for (int j = 0; j < f.getSize().width; j += chance.nextInt(400)) {
-						g.drawImage(rain, (int) ((int)j-camera_x), i, 25, 25,null);
+				if (chance.nextInt(10000) == 1000) {
+					Weather.Clear();
+				}
+				if (chance.nextInt(10) == 0) {
+					for (int j = 0; j < f.getSize().width; j += chance.nextInt(1000)) {
+						if (j == 0 && chance.nextInt(100) == 0) {
+							RainX.add(j);
+							RainY.add(0);
+						}
+						else if (j != 0) {
+							RainX.add(j);
+							RainY.add(0);
+						}
+					}
+				}
+				for (int i = 0; i < RainY.size(); i++) {
+					RainY.set(i, RainY.get(i)+3);
+					if (RainX.get(i) > 0-25 && RainX.get(i) < f.getSize().width && RainY.get(i) > 0-25 && RainY.get(i) < f.getSize().height-25) {
+						if (!Collision.testraincol(RainX.get(i), RainY.get(i))) {
+							starttime = System.currentTimeMillis();
+							g.drawImage(rain, RainX.get(i), RainY.get(i), 25, 25,null);
+							stoptime = System.currentTimeMillis();
+							milliseconds[6] = milliseconds[6] + stoptime-starttime;
+							starttime = System.currentTimeMillis();
+							if (debug) {
+								g.drawImage(collider, RainX.get(i), RainY.get(i), 25, 25,null);
+							}
+							stoptime = System.currentTimeMillis();
+							milliseconds[4] = milliseconds[4] + stoptime-starttime;
+						}
+						else {
+							RainX.remove(i);
+							RainY.remove(i);
+						}
+						milliseconds[6] = milliseconds[6] + (Collision.stoptime-Collision.starttime);
+					}
+					else {
+						RainX.remove(i);
+						RainY.remove(i);
 					}
 				}
 			}
-			long stoptime = System.currentTimeMillis();
+			stoptime = System.currentTimeMillis();
 			milliseconds[0] = milliseconds[0] + (stoptime-starttime);
 			starttime = System.currentTimeMillis();
 			//Draw Blocks
@@ -990,6 +1032,10 @@ public class World2 extends JPanel {
 				float derp6 = (float) ((float) (lastmilliseconds[5])/totalmilliseconds);
 				g.fillArc(f.getWidth()-250, 0, 200, 200, (int) Math.ceil(360*(derp+derp2+derp3+derp4+derp5)), (int) Math.ceil(360*derp6));
 				g.drawString("Collision Calculation: " + lastmilliseconds[5] + "MS", f.getWidth()-250, 300);
+				g.setColor(Color.YELLOW);
+				float derp7 = (float) ((float) (lastmilliseconds[6])/totalmilliseconds);
+				g.fillArc(f.getWidth()-250, 0, 200, 200, (int) Math.ceil(360*(derp+derp2+derp3+derp4+derp5+derp6)), (int) Math.ceil(360*derp7));
+				g.drawString("Weather: " + lastmilliseconds[6] + "MS", f.getWidth()-250, 315);
 				g.setColor(Color.BLACK);
 				g.drawString(String.valueOf(totalmilliseconds), f.getWidth()-160, 100);
 			}

@@ -75,7 +75,7 @@ public class Collision {
 		stoptime = System.currentTimeMillis();
 	}
 	
-	//Returns the other block number if there is a collision
+	//Returns the other block number if there is a collision (blockId)
 	public static int testblockcol (int i) {
 		starttime = System.currentTimeMillis();
 		Rectangle temprect = new Rectangle();
@@ -132,6 +132,30 @@ public class Collision {
 							return true;
 						}
 					}
+				}
+			}
+		}
+		stoptime = System.currentTimeMillis();
+		
+		return false;
+	}
+	
+	//Returns if the rain particle has collision with a block (boolean)
+	public static boolean testraincol (int x, int y) {
+		starttime = System.currentTimeMillis();
+		Rectangle temprect = new Rectangle();
+		Rectangle temprect2 = new Rectangle();
+		temprect = new Rectangle(x,y,25,25);
+		/*temprect.x -= (int) World2.camera_x;
+		temprect.y -= (int) World2.camera_y;*/
+		
+		for (int j = 0; j < World2.blockcollisions.length; j++) {
+			if (World2.blockbackground[j] == false) {
+				temprect2 = (Rectangle) World2.blockcollisions[j].clone();
+				temprect2.x -= (int) World2.camera_x;
+				if (temprect.intersects(temprect2)) {
+					stoptime = System.currentTimeMillis();
+					return true;
 				}
 			}
 		}
