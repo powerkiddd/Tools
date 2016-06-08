@@ -521,17 +521,16 @@ public class World2 extends JPanel {
 				}
 				long stoptime_oc = System.currentTimeMillis();
 				milliseconds[7] = milliseconds[7] + (stoptime_oc-starttime_oc);
-				for (int j = 0; j < allblocks.length; j++) {
-					if (blockidentifiers[j].equalsIgnoreCase(blocks[i]) && isblockvisible) {
-						g.drawImage(allblocks[j], (int) (x-camera_x), (int) (y-camera_y), blockcollisions[i].width, blockcollisions[i].height, null);
-						if (blockbackground[i] == false) {
-							Collision.testplayercol(i);
-							milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
+				if (isblockvisible) {
+					for (int j = 0; j < allblocks.length; j++) {
+						if (blockidentifiers[j].equalsIgnoreCase(blocks[i])) {
+							g.drawImage(allblocks[j], (int) (x-camera_x), (int) (y-camera_y), blockcollisions[i].width, blockcollisions[i].height, null);
+							if (blockbackground[i] == false) {
+								Collision.testplayercol(i);
+								milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
+							}
+							break;
 						}
-						break;
-					}
-					else if (isblockvisible == false) {
-						break;
 					}
 				}
 				if (blocks[i].equals("Water")) {
