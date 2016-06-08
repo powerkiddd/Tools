@@ -104,8 +104,8 @@ public class World2 extends JPanel {
 	public static String[] consoleoutput = new String[100];
 	public static String consoleinput = "";
 	private static float rot = 0; //Rotation for loading icon.
-	public static long[] milliseconds = new long[7]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation,Weather
-	public static long[] lastmilliseconds = new long[7]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation,Weather
+	public static long[] milliseconds = new long[8]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation,Weather,Occlusion Culling
+	public static long[] lastmilliseconds = new long[8]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation,Weather,Occlusion Culling
 	public static int holdingtool = 0;
 	public static int theblock = 0;
 	
@@ -235,6 +235,7 @@ public class World2 extends JPanel {
 				}
 				milliseconds[1] -= milliseconds[4];
 				milliseconds[1] -= milliseconds[5];
+				milliseconds[1] -= milliseconds[7];
 				for (byte i = 0; i < milliseconds.length; i++) {
 					lastmilliseconds[i] = milliseconds[i];
 					milliseconds[i] = 0;
@@ -514,9 +515,12 @@ public class World2 extends JPanel {
 				boolean isblockvisible = false;
 				Rectangle temprect = new Rectangle();
 				temprect = (Rectangle) blockcollisions[i].clone();
+				long starttime_oc = System.currentTimeMillis();
 				if (x > camera_x-blockcollisions[i].width && x < camera_x+f.getSize().width && y > camera_y-blockcollisions[i].height && y < camera_y+f.getSize().height-25) {
 					isblockvisible = true;
 				}
+				long stoptime_oc = System.currentTimeMillis();
+				milliseconds[7] = milliseconds[7] + (stoptime_oc-starttime_oc);
 				for (int j = 0; j < allblocks.length; j++) {
 					if (blockidentifiers[j].equalsIgnoreCase(blocks[i]) && isblockvisible) {
 						g.drawImage(allblocks[j], (int) (x-camera_x), (int) (y-camera_y), blockcollisions[i].width, blockcollisions[i].height, null);
@@ -1026,7 +1030,7 @@ public class World2 extends JPanel {
 				for (byte i = 0; i < lastmilliseconds.length; i++) {
 					totalmilliseconds = totalmilliseconds + lastmilliseconds[i];
 				}
-				g.fillRect(f.getWidth()-250, 215, 200, 100);
+				g.fillRect(f.getWidth()-250, 215, 200, 115);
 				g.setColor(Color.GREEN);
 				float derp = (float) ((float) (lastmilliseconds[0])/totalmilliseconds);
 				g.fillArc(f.getWidth()-250, 0, 200, 200, 0, (int) Math.ceil(360*derp));
@@ -1055,6 +1059,10 @@ public class World2 extends JPanel {
 				float derp7 = (float) ((float) (lastmilliseconds[6])/totalmilliseconds);
 				g.fillArc(f.getWidth()-250, 0, 200, 200, (int) Math.ceil(360*(derp+derp2+derp3+derp4+derp5+derp6)), (int) Math.ceil(360*derp7));
 				g.drawString("Weather: " + lastmilliseconds[6] + "MS", f.getWidth()-250, 315);
+				g.setColor(Color.GRAY);
+				float derp8 = (float) ((float) (lastmilliseconds[7])/totalmilliseconds);
+				g.fillArc(f.getWidth()-250, 0, 200, 200, (int) Math.ceil(360*(derp+derp2+derp3+derp4+derp5+derp6+derp7)), (int) Math.ceil(360*derp8));
+				g.drawString("Occlusion Culling: " + lastmilliseconds[7] + "MS", f.getWidth()-250, 330);
 				g.setColor(Color.BLACK);
 				g.drawString(String.valueOf(totalmilliseconds), f.getWidth()-160, 100);
 			}
