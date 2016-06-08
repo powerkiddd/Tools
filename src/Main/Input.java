@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import Game.Build;
 import Game.Inventory;
 import Game.Player2;
+import Game.Weather;
 import Game.World2;
 import Settings.KeyBindings;
 
@@ -380,6 +381,24 @@ public class Input {
 				result = "Not enough arguments, execute command as: ChangePlayer *sprite*";
 			}
 		}
+		else if (splitinput[0].equalsIgnoreCase("Weather")) {
+			if (splitinput.length > 1) {
+				if (splitinput[1].equalsIgnoreCase("Clear")) {
+					Weather.Clear();
+					result = "Changing weather to clear weather.";
+				}
+				else if (splitinput[1].equalsIgnoreCase("Rain")) {
+					Weather.Rain();
+					result = "Changing weather to rain.";
+				}
+				else {
+					result = "Invalid argument: '" + splitinput[1] + "', valid arguments: Clear,Rain";
+				}
+			}
+			else {
+				result = "Not enough arguments, execute command as: Weather Clear/Rain";
+			}
+		}
 		RegisterInConsole(result);
 	}
 	
@@ -391,6 +410,7 @@ public class Input {
 		RegisterInConsole("ToggleWorldState Normal/Industrialized - Toggles the state of the world.");
 		RegisterInConsole("Clear Console/Inventory - Clears the specified thing.");
 		RegisterInConsole("ChangePlayer *sprite* - Changes the player sprite.");
+		RegisterInConsole("Weather Clear/Rain - Changes the weather.");
 	}
 	
 	public static void ShowAllBlocks() {
