@@ -82,17 +82,21 @@ public class Collision {
 		Rectangle temprect2 = new Rectangle();
 		temprect = (Rectangle) World2.blockcollisions[i].clone();
 		temprect.x -= (int) World2.camera_x;
+		temprect.x -= (int) World2.camera_y;
 		
 		for (int j = 0; j < World2.blockcollisions.length; j++) {
 			if (j == i) {
 				break;
 			}
 			else if (World2.blockbackground[j] == false) {
-				temprect2 = (Rectangle) World2.blockcollisions[j].clone();
-				temprect2.x -= (int) World2.camera_x;
-				if (temprect.intersects(temprect2)) {
-					stoptime = System.currentTimeMillis();
-					return j;
+				if (Math.abs(temprect.x - World2.blockcollisions[j].x) < World2.blockcollisions[j].width && Math.abs(temprect.y - World2.blockcollisions[j].y) < World2.blockcollisions[j].height) {
+					temprect2 = (Rectangle) World2.blockcollisions[j].clone();
+					temprect2.x -= (int) World2.camera_x;
+					temprect2.y -= (int) World2.camera_y;
+					if (temprect.intersects(temprect2)) {
+						stoptime = System.currentTimeMillis();
+						return j;
+					}
 				}
 			}
 		}
@@ -146,16 +150,19 @@ public class Collision {
 		Rectangle temprect = new Rectangle();
 		Rectangle temprect2 = new Rectangle();
 		temprect = new Rectangle(x,y,25,25);
-		/*temprect.x -= (int) World2.camera_x;
-		temprect.y -= (int) World2.camera_y;*/
+		/*temprect.x -= (int) World2.camera_x;*/
+		/*temprect.y -= (int) World2.camera_y;*/
 		
 		for (int j = 0; j < World2.blockcollisions.length; j++) {
 			if (World2.blockbackground[j] == false) {
-				temprect2 = (Rectangle) World2.blockcollisions[j].clone();
-				temprect2.x -= (int) World2.camera_x;
-				if (temprect.intersects(temprect2)) {
-					stoptime = System.currentTimeMillis();
-					return true;
+				if (Math.abs(temprect.x - (World2.blockcollisions[j].x - (int) World2.camera_x)) < World2.blockcollisions[j].width && Math.abs(temprect.y - (World2.blockcollisions[j].y - (int) World2.camera_y)) < World2.blockcollisions[j].height) {
+					temprect2 = (Rectangle) World2.blockcollisions[j].clone();
+					temprect2.x -= (int) World2.camera_x;
+					temprect2.y -= (int) World2.camera_y;
+					if (temprect.intersects(temprect2)) {
+						stoptime = System.currentTimeMillis();
+						return true;
+					}
 				}
 			}
 		}
