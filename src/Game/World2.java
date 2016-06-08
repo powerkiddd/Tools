@@ -457,6 +457,8 @@ public class World2 extends JPanel {
 					g.drawImage(background_land, (int) (i-camera_x),(int) (f.getSize().height-f.getSize().height/4-380-camera_y), 640, 400,null);
 				}
 			}
+			stoptime = System.currentTimeMillis();
+			milliseconds[0] = milliseconds[0] + (stoptime-starttime);
 			if (Weather.isRaining) {
 				Random chance = new Random();
 				if (chance.nextInt(10000) == 1000) {
@@ -501,8 +503,6 @@ public class World2 extends JPanel {
 					}
 				}
 			}
-			stoptime = System.currentTimeMillis();
-			milliseconds[0] = milliseconds[0] + (stoptime-starttime);
 			starttime = System.currentTimeMillis();
 			//Draw Blocks
 			for (int i=0; i < blocks.length; i++) {
@@ -533,7 +533,7 @@ public class World2 extends JPanel {
 						}
 					}
 				}
-				if (blocks[i].equals("Water")) {
+				if (blocks[i].equalsIgnoreCase("Water")) {
 					if (y < -1500) {
 						removeblock = true;
 						Build.Place("Ice", new Rectangle(blockcollisions[i].x,blockcollisions[i].y,25,25),false);
@@ -651,6 +651,7 @@ public class World2 extends JPanel {
 						}
 					}
 				}
+				
 				temprect.x -= (int) camera_x;
 				temprect.y -= (int) camera_y;
 				long starttime2 = System.currentTimeMillis();
