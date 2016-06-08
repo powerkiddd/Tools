@@ -71,43 +71,43 @@ public class Input {
 				}
 				else if (e.getKeyChar() == '0') {
 					key0 = true;
-					Build.selected = 0;
+					Build.setSelected((byte)0);
 				}
 				else if (e.getKeyChar() == '1') {
 					key1 = true;
-					Build.selected = 1;
+					Build.setSelected((byte)1);
 				}
 				else if (e.getKeyChar() == '2') {
 					key2 = true;
-					Build.selected = 2;
+					Build.setSelected((byte)2);
 				}
 				else if (e.getKeyChar() == '3') {
 					key3 = true;
-					Build.selected = 3;
+					Build.setSelected((byte)3);
 				}
 				else if (e.getKeyChar() == '4') {
 					key4 = true;
-					Build.selected = 4;
+					Build.setSelected((byte)4);
 				}
 				else if (e.getKeyChar() == '5') {
 					key5 = true;
-					Build.selected = 5;
+					Build.setSelected((byte)5);
 				}
 				else if (e.getKeyChar() == '6') {
 					key6 = true;
-					Build.selected = 6;
+					Build.setSelected((byte)6);
 				}
 				else if (e.getKeyChar() == '7') {
 					key7 = true;
-					Build.selected = 7;
+					Build.setSelected((byte)7);
 				}
 				else if (e.getKeyChar() == '8') {
 					key8 = true;
-					Build.selected = 8;
+					Build.setSelected((byte)8);
 				}
 				else if (e.getKeyChar() == '9') {
 					key9 = true;
-					Build.selected = 9;
+					Build.setSelected((byte)9);
 				}
 				else if (keytext.equalsIgnoreCase("F3")) {
 					f3 =! f3;

@@ -21,6 +21,17 @@ public class Build {
 		
 	}
 	
+	public static void setSelected (byte select) {
+		selected = select;
+		for (int i = 0; i < World2.allblocks.length; i++) {
+			if (selected != 0) {
+				if (World2.blockidentifiers[i].equalsIgnoreCase(Inventory.items[selected-1])) {
+					World2.theblock = i;
+				}
+			}
+		}
+	}
+	
 	public static void build () {
 		if (selected != 0) {
 			Rectangle CurrentMousePos = Mouse.Recalculate_Rect();

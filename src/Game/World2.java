@@ -107,6 +107,7 @@ public class World2 extends JPanel {
 	public static long[] milliseconds = new long[7]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation,Weather
 	public static long[] lastmilliseconds = new long[7]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation,Weather
 	public static int holdingtool = 0;
+	public static int theblock = 0;
 	
 	public static void main(String[] args) {
 		Player2.playerspeed = 3;
@@ -819,12 +820,6 @@ public class World2 extends JPanel {
 			if (Build.selected != 0) {
 				if (!Inventory.items[Build.selected-1].equals("Empty") && Inventory.itemtype[Build.selected-1] == 1) {
 					Composite translucent = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (0.7f));
-					int theblock = 0;
-					for (int i = 0; i < allblocks.length; i++) {
-						if (blockidentifiers[i].equalsIgnoreCase(Inventory.items[Build.selected-1])) {
-							theblock = i;
-						}
-					}
 					if (Input.snap) {						
 						if (camera_x/25==Math.floor(camera_x/25) && camera_y/25==Math.floor(camera_y/25)) {
 							g.drawImage(blockholder, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, 25, 25, null);
