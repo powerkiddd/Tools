@@ -60,6 +60,8 @@ public class Build {
 			}
 			CurrentMousePos.x -= World2.camera_x;
 			CurrentMousePos.y -= World2.camera_y;
+			CurrentMousePos.width = 0;
+			CurrentMousePos.height = 0;
 			UpdateBlocks(Inventory.items[selected-1], pos, CurrentMousePos, false);
 			Inventory.count[selected-1]--;
 			if (Inventory.count[selected-1] == 0) {
@@ -164,23 +166,28 @@ public class Build {
 		World2.blocks[World2.blocks.length-1] = type;
 		World2.blockposses[World2.blockposses.length-1] = pos;
 		World2.blockbackground[World2.blockbackground.length-1] = background;
-		if (selected != 0 && Inventory.slots[selected-1] != null) {
-			//Get index from inventory
-			World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)Math.ceil(World2.camera_x),MousePos.y+(int)Math.ceil(World2.camera_y),Inventory.slots[selected-1].getWidth(),Inventory.slots[selected-1].getHeight());
-		}
-		else {
-			//Get index from world block collection
-			boolean found = false;
-			for (int j = 0; j < World2.allblocks.length; j++) {
-				if (type.equalsIgnoreCase(World2.blockidentifiers[j])) {
-					World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)Math.ceil(World2.camera_x),MousePos.y+(int)Math.ceil(World2.camera_y),World2.allblocks[j].getWidth(),World2.allblocks[j].getHeight());
-					found = true;
-					break;
+		if (MousePos.width == 0 || MousePos.height == 0) {
+			if (selected != 0 && Inventory.slots[selected-1] != null) {
+				//Get index from inventory
+				World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)Math.ceil(World2.camera_x),MousePos.y+(int)Math.ceil(World2.camera_y),Inventory.slots[selected-1].getWidth(),Inventory.slots[selected-1].getHeight());
+			}
+			else {
+				//Get index from world block collection
+				boolean found = false;
+				for (int j = 0; j < World2.allblocks.length; j++) {
+					if (type.equalsIgnoreCase(World2.blockidentifiers[j])) {
+						World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)Math.ceil(World2.camera_x),MousePos.y+(int)Math.ceil(World2.camera_y),World2.allblocks[j].getWidth(),World2.allblocks[j].getHeight());
+						found = true;
+						break;
+					}
+				}
+				if (found == false) {
+					Crash.cause = "A block was trying to load his image wich couldn't be found.\nIt might be missing in your images directory or read protected.\nOr the developer fucked up.\nBlock name: " + type;
 				}
 			}
-			if (found == false) {
-				Crash.cause = "A block was trying to load his image wich couldn't be found.\nIt might be missing in your images directory or read protected.\nOr the developer fucked up.\nBlock name: " + type;
-			}
+		}
+		else {
+			World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)Math.ceil(World2.camera_x),MousePos.y+(int)Math.ceil(World2.camera_y),MousePos.width,MousePos.height);
 		}
 	}
 }

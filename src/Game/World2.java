@@ -357,13 +357,16 @@ public class World2 extends JPanel {
 				Random rnd = new Random();
 				int kaas = rnd.nextInt(400);
 				if (kaas == 200) {
-					Build.Place("Tree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,75,175), true);
+					Build.Place("Tree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,0,0), true);
 				}
 				else if (kaas == 100) {
-					Build.Place("rock", new Rectangle(i,f.getSize().height-f.getSize().height/4-25,25,25), true);
+					Build.Place("rock", new Rectangle(i,f.getSize().height-f.getSize().height/4-25,0,0), true);
 				}
 				else if (kaas == 101) {
-					Build.Place("rocks", new Rectangle(i,f.getSize().height-f.getSize().height/4-25,25,25), true);
+					Build.Place("rocks", new Rectangle(i,f.getSize().height-f.getSize().height/4-25,0,0), true);
+				}
+				else if (kaas == 300) {
+					Build.Place("camellia_sinesis", new Rectangle(i,f.getSize().height-f.getSize().height/4-51,32,51), true);
 				}
 			}
 			for (int i = 0; i < world_x+Video_Settings.window_size_x-25; i += 25) {
