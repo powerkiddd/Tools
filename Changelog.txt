@@ -1,3 +1,8 @@
+Alpha 0.0.1.2:
+	-Added things
+	-Fixed tons of bugs
+	-Tons of optimisations and API changes
+
 Alpha 0.0.1.1:
 	-Added tools: Chisel, Axe, hoe, pickaxe, stick
 	-Added campfire
