@@ -26,11 +26,11 @@ public class MainMenu extends JPanel{
 
 	private static BufferedImage bgr = new BufferedImage(Video_Settings.window_size_x, Video_Settings.window_size_y, BufferedImage.TYPE_INT_ARGB);
 	private static JFrame f = new JFrame("Tools " + Version.version);
-	static JButton b1 = new JButton("Settings");
-	static JButton b2 = new JButton("Apply");
-	static JButton b3 = new JButton("Fullscreen: " + Settings.fullscreen);
-	static JButton b4 = new JButton("Play Game");
-	static JButton b5 = new JButton("Chi: " + Settings.chi);
+	static JButton settings = new JButton("Settings");
+	static JButton applysettings = new JButton("Apply");
+	static JButton fullscreen = new JButton("Fullscreen: " + Settings.fullscreen);
+	static JButton play = new JButton("Play Game");
+	static JButton chi = new JButton("Chi: " + Settings.chi);
 	static JButton exit = new JButton("Exit Game");
 	static JButton invisible = new JButton("");
 	static JButton music = new JButton("Music: " + Settings.music);
@@ -67,17 +67,17 @@ public class MainMenu extends JPanel{
 			maintext.setText("Under the sea... Wait, what sea?");
 			break;
 		}
-		b3.setText("Fullscreen: " + Settings.fullscreen);
-		b5.setText("Chi: " + Settings.chi);
+		fullscreen.setText("Fullscreen: " + Settings.fullscreen);
+		chi.setText("Chi: " + Settings.chi);
 		music.setText("Music: " + Settings.music);
 		vsync.setText("Use framelimit: " + Video_Settings.VSync);
 		f.setLayout(null);
-		b1.setBounds(Video_Settings.window_size_x/4, 150, Video_Settings.window_size_x/2, 50);
-		b2.setBounds(Video_Settings.window_size_x/4, Video_Settings.window_size_y-100, Video_Settings.window_size_x/2, 50);
-		b3.setBounds(Video_Settings.window_size_x/4, 50, Video_Settings.window_size_x/2, 50);
-		b4.setBounds(Video_Settings.window_size_x/4, 50, Video_Settings.window_size_x/2, 50);
-		b5.setBounds(Video_Settings.window_size_x/4, 150, Video_Settings.window_size_x/2, 50);
-		b5.setToolTipText("(Chi is the cat, (Not a goat))");
+		settings.setBounds(Video_Settings.window_size_x/4, 150, Video_Settings.window_size_x/2, 50);
+		applysettings.setBounds(Video_Settings.window_size_x/4, Video_Settings.window_size_y-100, Video_Settings.window_size_x/2, 50);
+		fullscreen.setBounds(Video_Settings.window_size_x/4, 50, Video_Settings.window_size_x/2, 50);
+		play.setBounds(Video_Settings.window_size_x/4, 50, Video_Settings.window_size_x/2, 50);
+		chi.setBounds(Video_Settings.window_size_x/4, 150, Video_Settings.window_size_x/2, 50);
+		chi.setToolTipText("(Chi is the cat, (Not a goat))");
 		exit.setBounds(Video_Settings.window_size_x/4, Video_Settings.window_size_y-100, Video_Settings.window_size_x/2, 50);
 		mapsize.setBounds(Video_Settings.window_size_x/4, 250, Video_Settings.window_size_x/2, 50);
 		mapsize.setText(Integer.toString(Video_Settings.mapsize));
@@ -91,12 +91,12 @@ public class MainMenu extends JPanel{
 		framelimitlabel.setBounds(Video_Settings.window_size_x/4-65, 550, Video_Settings.window_size_x/2, 50);
 		framelimitlabel.setForeground(Color.CYAN);
 		f.add(new MainMenu());
-		b1.addActionListener(new ActionListener() {
+		settings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Options menu
-				f.add(b3, this);
-				f.add(b2, this);
-				f.add(b5, this);
+				f.add(fullscreen, this);
+				f.add(applysettings, this);
+				f.add(chi, this);
 				f.add(music, this);
 				f.add(mapsize);
 				f.add(mapsizelabel);
@@ -106,25 +106,25 @@ public class MainMenu extends JPanel{
 				f.remove(derp);
 				f.add(derp);
 				f.remove(exit);
-				f.remove(b4);
-				f.remove(b1);
+				f.remove(play);
+				f.remove(settings);
 				f.remove(maintext);
 				f.repaint();
 			}
 		});
-		b2.addActionListener(new ActionListener() {
+		applysettings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//MainMenu
-				f.remove(b3);
-				f.remove(b2);
-				f.remove(b5);
+				f.remove(fullscreen);
+				f.remove(applysettings);
+				f.remove(chi);
 				f.remove(music);
 				f.remove(mapsize);
 				f.remove(mapsizelabel);
 				Video_Settings.SaveConfig();
 				Settings.Save();
-				f.add(b1);
-				f.add(b4);
+				f.add(settings);
+				f.add(play);
 				f.add(exit);
 				f.remove(derp);
 				f.add(derp);
@@ -132,7 +132,7 @@ public class MainMenu extends JPanel{
 				f.repaint();
 			}
 		});
-		b3.addActionListener(new ActionListener() {
+		fullscreen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Fullscreen
 				Settings.fullscreen = !Settings.fullscreen;
@@ -148,12 +148,12 @@ public class MainMenu extends JPanel{
 					//Video_Settings.gs.setFullScreenWindow(null);
 				}
 				f.repaint();
-				b1.setBounds(f.getSize().width/4, 150, f.getSize().width/2, 50);
-				b2.setBounds(f.getSize().width/4, f.getSize().height-100, f.getSize().width/2, 50);
-				b3.setBounds(f.getSize().width/4, 50, f.getSize().width/2, 50);
-				b4.setBounds(f.getSize().width/4, 50, f.getSize().width/2, 50);
-				b5.setBounds(f.getSize().width/4, 150, f.getSize().width/2, 50);
-				b5.setToolTipText("(Chi is the cat, (Not a goat))");
+				settings.setBounds(f.getSize().width/4, 150, f.getSize().width/2, 50);
+				applysettings.setBounds(f.getSize().width/4, f.getSize().height-100, f.getSize().width/2, 50);
+				fullscreen.setBounds(f.getSize().width/4, 50, f.getSize().width/2, 50);
+				play.setBounds(f.getSize().width/4, 50, f.getSize().width/2, 50);
+				chi.setBounds(f.getSize().width/4, 150, f.getSize().width/2, 50);
+				chi.setToolTipText("(Chi is the cat, (Not a goat))");
 				exit.setBounds(f.getSize().width/4, f.getSize().height-100, f.getSize().width/2, 50);
 				mapsize.setBounds(f.getSize().width/4, 250, f.getSize().width/2, 50);
 				mapsize.setText(Integer.toString(Video_Settings.mapsize));
@@ -165,7 +165,7 @@ public class MainMenu extends JPanel{
 				f.repaint();
 			}
 		});
-		b4.addActionListener(new ActionListener() {
+		play.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Play Game
 				error = true;
@@ -176,13 +176,13 @@ public class MainMenu extends JPanel{
 				f.dispose();
 			}
 		});
-		b5.addActionListener(new ActionListener() {
+		chi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Chi
 				f.repaint();
 				Settings.chi =! Settings.chi;
 				Settings.Changed();
-				b5.setText("Chi: " + Settings.chi);
+				chi.setText("Chi: " + Settings.chi);
 				//new World().main(null);
 			}
 		});
@@ -232,8 +232,8 @@ public class MainMenu extends JPanel{
 				}
 			}
 		});
-		f.add(b1);
-		f.add(b4);
+		f.add(settings);
+		f.add(play);
 		f.add(exit);
 		f.add(maintext);
 		f.setSize(Video_Settings.window_size_x, Video_Settings.window_size_y);
