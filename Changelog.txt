@@ -1,5 +1,12 @@
 Alpha 0.0.1.2:
 	-Added things
+	-Added water barrel
+	-Added tea cup & tea bags
+	-Added bucket
+	-Added plant: camellia_sinensis
+	-Added animation (unused) for stone kettle
+	-Added weather system (rain & clear weather)
+	-Updated mainmenu
 	-Fixed tons of bugs
 	-Tons of optimisations and API changes
 
