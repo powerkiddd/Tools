@@ -111,7 +111,9 @@ public class World2 extends JPanel {
 	
 	public static void main(String[] args) {
 		Player2.playerspeed = 3;
-		SaveLoad.worldname = "EarlySaveGameTest";
+		if (SaveLoad.worldname == null || SaveLoad.worldname.isEmpty()) {
+			SaveLoad.worldname = "EarlySaveGameTest";
+		}
 		try {
 			Video_Settings.main(null);
 			Settings.main(null);

@@ -2,6 +2,7 @@ package Game;
 
 import java.awt.Color;
 import java.awt.Frame;
+import java.awt.MouseInfo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -18,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+import Main.Directory;
+import Main.SaveLoad;
 import Main.Version;
 import Settings.Settings;
 import Settings.Video_Settings;
@@ -35,15 +38,26 @@ public class MainMenu extends JPanel{
 	static JButton invisible = new JButton("");
 	static JButton music = new JButton("Music: " + Settings.music);
 	static JButton vsync = new JButton("Framelimit: " + Video_Settings.VSync);
+	static JButton back = new JButton("Back");
 	static JTextField mapsize = new JTextField("INPUT MAPSIZE HERE");
 	static JTextField framelimit = new JTextField("INPUT FRAMELIMIT HERE");
 	static JLabel mapsizelabel = new JLabel("Mapsize: ");
-	static JLabel derp;
+	static JLabel derp = new JLabel();;
 	static JLabel maintext = new JLabel("As suggested by Mees... MEES...");
 	static JLabel framelimitlabel = new JLabel("Framelimit: ");
+	static JButton[] worlds = new JButton[0];
 	static boolean error = false;
 	static Timer update_ = new Timer();
 	static Random rand = new Random();
+	static int j = 0;
+	
+	/*
+	 * f.remove(derp);
+	 * f.add(derp);
+	 * 
+	 * Use these between transitions, they clear out the background and add it again,
+	 * so that the new buttons/labels will display correctly!
+	 */
 	
 	public static void main(String [] args) {	
 		f.remove(World.f);
@@ -53,7 +67,7 @@ public class MainMenu extends JPanel{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		switch (rand.nextInt(4)) {
+		switch (rand.nextInt(6)) {
 		case 0:
 			maintext.setText("As suggested by Mees... MEES...");
 			break;
@@ -65,6 +79,12 @@ public class MainMenu extends JPanel{
 			break;
 		case 3:
 			maintext.setText("Under the sea... Wait, what sea?");
+			break;
+		case 4:
+			maintext.setText("It's raining... WHAT IS THIS, THE NETHERLANDS?");
+			break;
+		case 5:
+			maintext.setText("Filler texts gonna fill.");
 			break;
 		}
 		fullscreen.setText("Fullscreen: " + Settings.fullscreen);
@@ -84,12 +104,13 @@ public class MainMenu extends JPanel{
 		mapsizelabel.setBounds(Video_Settings.window_size_x/4-50, 250, Video_Settings.window_size_x/2, 50);
 		music.setBounds(Video_Settings.window_size_x/4, 350, Video_Settings.window_size_x/2, 50);
 		music.setToolTipText("Toggles music on and off.");
-		maintext.setBounds(Video_Settings.window_size_x - Video_Settings.window_size_x/4,100, 200, 50);
+		maintext.setBounds(Video_Settings.window_size_x - Video_Settings.window_size_x/4,100, 400, 50);
 		vsync.setBounds(Video_Settings.window_size_x/4, 450, Video_Settings.window_size_x/2, 50);
 		framelimit.setBounds(Video_Settings.window_size_x/4, 550, Video_Settings.window_size_x/2, 50);
 		framelimit.setText(Integer.toString(Video_Settings.framelimit));
 		framelimitlabel.setBounds(Video_Settings.window_size_x/4-65, 550, Video_Settings.window_size_x/2, 50);
 		framelimitlabel.setForeground(Color.CYAN);
+		back.setBounds(Video_Settings.window_size_x/4, Video_Settings.window_size_y-100, Video_Settings.window_size_x/2, 50);
 		f.add(new MainMenu());
 		settings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -121,14 +142,17 @@ public class MainMenu extends JPanel{
 				f.remove(music);
 				f.remove(mapsize);
 				f.remove(mapsizelabel);
+				f.remove(framelimit);
+				f.remove(framelimitlabel);
+				f.remove(vsync);
 				Video_Settings.SaveConfig();
 				Settings.Save();
 				f.add(settings);
 				f.add(play);
 				f.add(exit);
+				f.add(maintext);
 				f.remove(derp);
 				f.add(derp);
-				f.add(maintext);
 				f.repaint();
 			}
 		});
@@ -167,13 +191,35 @@ public class MainMenu extends JPanel{
 		});
 		play.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Play Game
-				error = true;
-				f.repaint();
-				World2.main(null);
+				//Play Game				
 				//new World().main(null);
-				error = false;
-				f.dispose();
+				f.repaint();
+				worlds = new JButton[Directory.GetAllDirectoriesFromDirectory("Saves").length-1];				
+				for (int i = 0; i < Directory.GetAllDirectoriesFromDirectory("Saves").length-1; i++) {
+					j = i;
+					worlds[i] = new JButton();
+					worlds[i].setText(Directory.alldirs[i]);
+					worlds[i].setBounds(Video_Settings.window_size_x/4, 50+(i*50), Video_Settings.window_size_x/2, 50);
+					worlds[i].addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							error = true;
+							System.out.println(Directory.alldirs[(int) Math.nextDown((MouseInfo.getPointerInfo().getLocation().y-80)/50)] + " | " + (MouseInfo.getPointerInfo().getLocation().y-80)/50);
+							SaveLoad.worldname = Directory.alldirs[(int) ((MouseInfo.getPointerInfo().getLocation().y-80)/50)];
+							World2.main(null);
+							error = false;
+							f.dispose();
+						}
+					});
+					f.add(worlds[i]);
+				}
+				f.add(back);
+				f.remove(derp);
+				f.add(derp);
+				f.remove(play);
+				f.remove(settings);
+				f.remove(exit);
+				f.remove(maintext);
+				f.repaint();
 			}
 		});
 		chi.addActionListener(new ActionListener() {
@@ -232,6 +278,21 @@ public class MainMenu extends JPanel{
 				}
 			}
 		});
+		back.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				f.repaint();
+				f.remove(back);
+				for (int i = 0; i < worlds.length; i++) {
+					f.remove(worlds[i]);
+				}
+				f.add(play);
+				f.add(settings);
+				f.add(exit);
+				f.add(maintext);
+				f.remove(derp);
+				f.add(derp);
+			}
+		});
 		f.add(settings);
 		f.add(play);
 		f.add(exit);
@@ -244,7 +305,6 @@ public class MainMenu extends JPanel{
 			File file = new File("images\\mainmenu.png");
 			bgr = ImageIO.read(file);
 			ImageIcon dimg = new ImageIcon(bgr.getScaledInstance(Video_Settings.window_size_x, Video_Settings.window_size_y, BufferedImage.SCALE_SMOOTH));
-			derp = new JLabel();
 			derp.setBounds(0, 0, f.getSize().width, f.getSize().height);
 			derp.setIcon(dimg);
 			f.add(derp);

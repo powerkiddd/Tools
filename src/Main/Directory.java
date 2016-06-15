@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
@@ -14,6 +15,7 @@ public class Directory {
 	public static String[] allfiles = new String[0];
 	public static BufferedImage[] allimages = new BufferedImage[0];
 	public static String[] identifiers = new String[0];
+	public static String[] alldirs;
 	
 	public static String[] GetAllFilesFromDirectory (String dir) {
 		//allfiles = new String[0];
@@ -31,6 +33,33 @@ public class Directory {
 		}
 		
 		return allfiles;
+	}
+	
+	public static String[] GetAllDirectoriesFromDirectory (String dir) {
+		i = 0;
+		try {
+			alldirs = new String[(int) Files.walk(Paths.get(dir)).count()];
+			Files.walk(Paths.get(dir)).forEach(filePath -> {
+			    if (Files.isReadable(filePath) && Files.isDirectory(filePath)) {
+					alldirs[i] = filePath.toString();
+			        i = i + 1;
+			    }
+			});			
+			String[] olddirs = alldirs;
+			alldirs = new String[i];
+			i = 0;
+			for (int j = 0; j < alldirs.length; j++) {
+				String[] split = olddirs[j].split("\\\\");
+				if (olddirs[j] != null && !olddirs[j].isEmpty() && split.length > 1 && !split[1].isEmpty()) {
+					alldirs[i] = split[1];
+					i = i + 1;
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return alldirs;
 	}
 	
 	public static BufferedImage[] GetAllImagesFromDirectory (String dir) {
