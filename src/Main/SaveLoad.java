@@ -39,6 +39,9 @@ public class SaveLoad {
 		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "inventory", ".tool", inventory);
 		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "inventorycount", ".tool", inventorycount);
 		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "inventorytypes", ".tool", inventorytypes);
+		if (!new File("Saves\\"+worldname+"\\version.tool").exists()) {
+			WriteToFile.writestuff("Saves\\" + worldname+ "\\", "version", ".tool", Main.Version.version);
+		}
 	}
 	
 	public static void LoadGame () {
@@ -81,6 +84,15 @@ public class SaveLoad {
 	
 	public static boolean DoesSaveExist () {
 		return new File("Saves\\" + worldname + "\\").exists();
+	}
+	
+	public static String GetVersion (String directory) {
+		if (!new File("Saves\\"+directory+"\\version.tool").exists()) {
+			return ReadFromFile.readstuff("Saves\\"+directory+"\\", "version.tool", "");
+		}
+		else {
+			return "Unknown";
+		}
 	}
 	
 }

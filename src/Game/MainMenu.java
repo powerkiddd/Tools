@@ -204,7 +204,7 @@ public class MainMenu extends JPanel{
 				for (int i = 0; i < Directory.GetAllDirectoriesFromDirectory("Saves").length-1; i++) {
 					j = i;
 					worlds[i] = new JButton();
-					worlds[i].setText(Directory.alldirs[i]);
+					worlds[i].setText(Directory.alldirs[i] + " | " + SaveLoad.GetVersion(Directory.alldirs[i]));
 					worlds[i].setBounds(Video_Settings.window_size_x/4, 50+(i*50), Video_Settings.window_size_x/2, 50);
 					worlds[i].addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
@@ -360,7 +360,7 @@ public class MainMenu extends JPanel{
 				for (int i = 0; i < Directory.GetAllDirectoriesFromDirectory("Saves").length-1; i++) {
 					j = i;
 					worlds[i] = new JButton();
-					worlds[i].setText(Directory.alldirs[i]);
+					worlds[i].setText(Directory.alldirs[i] + " | " + SaveLoad.GetVersion(Directory.alldirs[i]));
 					worlds[i].setBounds(Video_Settings.window_size_x/4, 50+(i*50), Video_Settings.window_size_x/2, 50);
 					worlds[i].addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
