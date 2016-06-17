@@ -11,7 +11,7 @@ From there, you will expand your operations and create a magnificant factory!
 # How can I help?
 There are many things in Tools which need to be done, especially bug fixes.
 If you're an programmer, you can take a look at the issues and submit a suggestion or a PR.
-If you're not, take a look trough the releases: https://github.com/powerkiddd/Tools/releases and test the game!
+If you're not, take a look trough the [releases](https://github.com/powerkiddd/Tools/releases) and test the game!
 Suggestions are always welcome and you can freely submit a suggestion to the issue list.
 
 #Contribution
