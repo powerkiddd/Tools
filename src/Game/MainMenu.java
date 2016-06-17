@@ -39,10 +39,13 @@ public class MainMenu extends JPanel{
 	static JButton music = new JButton("Music: " + Settings.music);
 	static JButton vsync = new JButton("Framelimit: " + Video_Settings.VSync);
 	static JButton back = new JButton("Back");
+	static JButton back2 = new JButton("Back");
+	static JButton createworld = new JButton("Create new world");
 	static JTextField mapsize = new JTextField("INPUT MAPSIZE HERE");
 	static JTextField framelimit = new JTextField("INPUT FRAMELIMIT HERE");
+	static JTextField worldname = new JTextField("INPUT WORLDNAME HERE");
 	static JLabel mapsizelabel = new JLabel("Mapsize: ");
-	static JLabel derp = new JLabel();;
+	static JLabel derp = new JLabel();
 	static JLabel maintext = new JLabel("As suggested by Mees... MEES...");
 	static JLabel framelimitlabel = new JLabel("Framelimit: ");
 	static JButton[] worlds = new JButton[0];
@@ -110,7 +113,10 @@ public class MainMenu extends JPanel{
 		framelimit.setText(Integer.toString(Video_Settings.framelimit));
 		framelimitlabel.setBounds(Video_Settings.window_size_x/4-65, 550, Video_Settings.window_size_x/2, 50);
 		framelimitlabel.setForeground(Color.CYAN);
+		worldname.setBounds(Video_Settings.window_size_x/4, 50, Video_Settings.window_size_x/2, 50);
+		createworld.setBounds(Video_Settings.window_size_x/4, Video_Settings.window_size_y-150, Video_Settings.window_size_x/2, 50);
 		back.setBounds(Video_Settings.window_size_x/4, Video_Settings.window_size_y-100, Video_Settings.window_size_x/2, 50);
+		back2.setBounds(Video_Settings.window_size_x/4, Video_Settings.window_size_y-100, Video_Settings.window_size_x/2, 50);
 		f.add(new MainMenu());
 		settings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -213,6 +219,7 @@ public class MainMenu extends JPanel{
 					f.add(worlds[i]);
 				}
 				f.add(back);
+				f.add(createworld);
 				f.remove(derp);
 				f.add(derp);
 				f.remove(play);
@@ -285,10 +292,91 @@ public class MainMenu extends JPanel{
 				for (int i = 0; i < worlds.length; i++) {
 					f.remove(worlds[i]);
 				}
+				f.remove(createworld);
 				f.add(play);
 				f.add(settings);
 				f.add(exit);
 				f.add(maintext);
+				f.remove(derp);
+				f.add(derp);
+			}
+		});
+		createworld.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				f.repaint();
+				for (int i = 0; i < worlds.length; i++) {
+					f.remove(worlds[i]);
+				}
+				createworld.removeActionListener(this);
+				createworld.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						error = true;
+						SaveLoad.worldname = worldname.getText();
+						World2.main(null);
+						error = false;
+						f.dispose();
+					}
+				});
+				createworld.setBounds(Video_Settings.window_size_x/4, 100, Video_Settings.window_size_x/2, 50);
+				f.add(worldname);
+				f.add(back2);
+				f.remove(back);
+				f.remove(derp);
+				f.add(derp);
+				f.repaint();
+			}
+		});
+		back2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				f.repaint();
+				createworld.setBounds(Video_Settings.window_size_x/4, Video_Settings.window_size_y-150, Video_Settings.window_size_x/2, 50);
+				createworld.removeActionListener(createworld.getActionListeners()[0]);
+				createworld.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						f.repaint();
+						for (int i = 0; i < worlds.length; i++) {
+							f.remove(worlds[i]);
+						}
+						createworld.removeActionListener(this);
+						createworld.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								error = true;
+								SaveLoad.worldname = worldname.getText();
+								World2.main(null);
+								error = false;
+								f.dispose();
+							}
+						});
+						createworld.setBounds(Video_Settings.window_size_x/4, 100, Video_Settings.window_size_x/2, 50);
+						f.add(worldname);
+						f.add(back2);
+						f.remove(back);
+						f.remove(derp);
+						f.add(derp);
+						f.repaint();
+					}
+				});
+				worlds = new JButton[Directory.GetAllDirectoriesFromDirectory("Saves").length-1];				
+				for (int i = 0; i < Directory.GetAllDirectoriesFromDirectory("Saves").length-1; i++) {
+					j = i;
+					worlds[i] = new JButton();
+					worlds[i].setText(Directory.alldirs[i]);
+					worlds[i].setBounds(Video_Settings.window_size_x/4, 50+(i*50), Video_Settings.window_size_x/2, 50);
+					worlds[i].addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							error = true;
+							System.out.println(Directory.alldirs[(int) Math.nextDown((MouseInfo.getPointerInfo().getLocation().y-80)/50)] + " | " + (MouseInfo.getPointerInfo().getLocation().y-80)/50);
+							SaveLoad.worldname = Directory.alldirs[(int) ((MouseInfo.getPointerInfo().getLocation().y-80)/50)];
+							World2.main(null);
+							error = false;
+							f.dispose();
+						}
+					});
+					f.add(worlds[i]);
+				}
+				f.add(back);
+				f.remove(worldname);
+				f.remove(back2);
 				f.remove(derp);
 				f.add(derp);
 			}
