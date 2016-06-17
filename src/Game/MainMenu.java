@@ -200,23 +200,25 @@ public class MainMenu extends JPanel{
 				//Play Game				
 				//new World().main(null);
 				f.repaint();
-				worlds = new JButton[Directory.GetAllDirectoriesFromDirectory("Saves").length-1];				
-				for (int i = 0; i < Directory.GetAllDirectoriesFromDirectory("Saves").length-1; i++) {
-					j = i;
-					worlds[i] = new JButton();
-					worlds[i].setText(Directory.alldirs[i] + " | " + SaveLoad.GetVersion(Directory.alldirs[i]));
-					worlds[i].setBounds(Video_Settings.window_size_x/4, 50+(i*50), Video_Settings.window_size_x/2, 50);
-					worlds[i].addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							error = true;
-							System.out.println(Directory.alldirs[(int) Math.nextDown((MouseInfo.getPointerInfo().getLocation().y-80)/50)] + " | " + (MouseInfo.getPointerInfo().getLocation().y-80)/50);
-							SaveLoad.worldname = Directory.alldirs[(int) ((MouseInfo.getPointerInfo().getLocation().y-80)/50)];
-							World2.main(null);
-							error = false;
-							f.dispose();
-						}
-					});
-					f.add(worlds[i]);
+				if (Directory.Exists("Saves")) {
+					worlds = new JButton[Directory.GetAllDirectoriesFromDirectory("Saves").length-1];				
+					for (int i = 0; i < Directory.GetAllDirectoriesFromDirectory("Saves").length-1; i++) {
+						j = i;
+						worlds[i] = new JButton();
+						worlds[i].setText(Directory.alldirs[i] + " | " + SaveLoad.GetVersion(Directory.alldirs[i]));
+						worlds[i].setBounds(Video_Settings.window_size_x/4, 50+(i*50), Video_Settings.window_size_x/2, 50);
+						worlds[i].addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								error = true;
+								System.out.println(Directory.alldirs[(int) Math.nextDown((MouseInfo.getPointerInfo().getLocation().y-80)/50)] + " | " + (MouseInfo.getPointerInfo().getLocation().y-80)/50);
+								SaveLoad.worldname = Directory.alldirs[(int) ((MouseInfo.getPointerInfo().getLocation().y-80)/50)];
+								World2.main(null);
+								error = false;
+								f.dispose();
+							}
+						});
+						f.add(worlds[i]);
+					}
 				}
 				f.add(back);
 				f.add(createworld);
@@ -356,23 +358,25 @@ public class MainMenu extends JPanel{
 						f.repaint();
 					}
 				});
-				worlds = new JButton[Directory.GetAllDirectoriesFromDirectory("Saves").length-1];				
-				for (int i = 0; i < Directory.GetAllDirectoriesFromDirectory("Saves").length-1; i++) {
-					j = i;
-					worlds[i] = new JButton();
-					worlds[i].setText(Directory.alldirs[i] + " | " + SaveLoad.GetVersion(Directory.alldirs[i]));
-					worlds[i].setBounds(Video_Settings.window_size_x/4, 50+(i*50), Video_Settings.window_size_x/2, 50);
-					worlds[i].addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							error = true;
-							System.out.println(Directory.alldirs[(int) Math.nextDown((MouseInfo.getPointerInfo().getLocation().y-80)/50)] + " | " + (MouseInfo.getPointerInfo().getLocation().y-80)/50);
-							SaveLoad.worldname = Directory.alldirs[(int) ((MouseInfo.getPointerInfo().getLocation().y-80)/50)];
-							World2.main(null);
-							error = false;
-							f.dispose();
-						}
-					});
-					f.add(worlds[i]);
+				if (Directory.Exists("Saves")) {
+					worlds = new JButton[Directory.GetAllDirectoriesFromDirectory("Saves").length-1];				
+					for (int i = 0; i < Directory.GetAllDirectoriesFromDirectory("Saves").length-1; i++) {
+						j = i;
+						worlds[i] = new JButton();
+						worlds[i].setText(Directory.alldirs[i] + " | " + SaveLoad.GetVersion(Directory.alldirs[i]));
+						worlds[i].setBounds(Video_Settings.window_size_x/4, 50+(i*50), Video_Settings.window_size_x/2, 50);
+						worlds[i].addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								error = true;
+								System.out.println(Directory.alldirs[(int) Math.nextDown((MouseInfo.getPointerInfo().getLocation().y-80)/50)] + " | " + (MouseInfo.getPointerInfo().getLocation().y-80)/50);
+								SaveLoad.worldname = Directory.alldirs[(int) ((MouseInfo.getPointerInfo().getLocation().y-80)/50)];
+								World2.main(null);
+								error = false;
+								f.dispose();
+							}
+						});
+						f.add(worlds[i]);
+					}
 				}
 				f.add(back);
 				f.remove(worldname);

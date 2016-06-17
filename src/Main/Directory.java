@@ -96,4 +96,8 @@ public class Directory {
 		new File(name+"\\").mkdirs();
 	}
 	
+	public static boolean Exists (String name) {
+		return new File(name).exists();
+	}
+	
 }
