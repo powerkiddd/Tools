@@ -87,7 +87,7 @@ public class SaveLoad {
 	}
 	
 	public static String GetVersion (String directory) {
-		if (!new File("Saves\\"+directory+"\\version.tool").exists()) {
+		if (new File("Saves\\"+directory+"\\version.tool").exists()) {
 			return ReadFromFile.readstuff("Saves\\"+directory+"\\", "version.tool", "");
 		}
 		else {
