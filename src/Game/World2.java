@@ -676,6 +676,8 @@ public class World2 extends JPanel {
 				if (Mouse.left == true && blockbackground[i] == false) {
 					if (Mouse.gamecursorrect.intersects(temprect)) {
 						Collision.testplayercol(i);
+						Player2.collisiondown = false;
+						Player2.isFalling = true;
 						milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
 						Build.Mine(i, true, false);
 					}
