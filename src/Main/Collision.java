@@ -85,17 +85,16 @@ public class Collision {
 		//temprect.y -= (int) World2.camera_y;
 		
 		for (int j = 0; j < World2.blockcollisions.length; j++) {
-			if (j == i) {
-				break;
-			}
-			else if (World2.blockbackground[j] == false) {
-				if (Math.abs(temprect.x - World2.blockcollisions[j].x) < World2.blockcollisions[j].width && Math.abs(temprect.y - World2.blockcollisions[j].y) < World2.blockcollisions[j].height) {
-					temprect2 = (Rectangle) World2.blockcollisions[j].clone();
-					//temprect2.x -= (int) World2.camera_x;
-					//temprect2.y -= (int) World2.camera_y;
-					if (temprect.intersects(temprect2)) {
-						stoptime = System.currentTimeMillis();
-						return j;
+			if (j != i) {
+				if (World2.blockbackground[j] == false) {
+					if (Math.abs(temprect.x - World2.blockcollisions[j].x) < World2.blockcollisions[j].width && Math.abs(temprect.y - World2.blockcollisions[j].y) < World2.blockcollisions[j].height) {
+						temprect2 = (Rectangle) World2.blockcollisions[j].clone();
+						//temprect2.x -= (int) World2.camera_x;
+						//temprect2.y -= (int) World2.camera_y;
+						if (temprect.intersects(temprect2)) {
+							stoptime = System.currentTimeMillis();
+							return j;
+						}
 					}
 				}
 			}
