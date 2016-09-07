@@ -98,6 +98,10 @@ public class World2 extends JPanel {
 	public static boolean NextFrame_Water = false;
 	public static byte hasitcrashed = 0;
 	public static boolean buildingworld = true;
+	public static boolean generatelake = false;
+	public static byte lakedepth = 1;
+	public static byte lakewidth = 10;
+	public static byte curlakewidth = 0;
 	public static boolean saveonce = false;
 	public static boolean showinventory = false;
 	public static boolean showcraftingmenu = false;
@@ -372,27 +376,79 @@ public class World2 extends JPanel {
 				}
 			}
 			for (int i = 0; i < world_x+Video_Settings.window_size_x-25; i += 25) {
-				Build.Place("Grass", new Rectangle(i,f.getSize().height-f.getSize().height/4, 25 , 25), false);
-				for (int j = f.getSize().height-f.getSize().height/4+25; j < f.getSize().height-25; j += 25) {
-					Build.Place("Dirt", new Rectangle(i,j, 25 , 25),false);
+				Random rnd = new Random();
+				if (rnd.nextInt(100) == 50) {
+					//generatelake = true;
+					lakewidth = (byte) rnd.nextInt(50);
+					if (lakewidth < 10) {
+						lakewidth = 10;
+					}
 				}
-				for (int j = f.getSize().height-25; j < world_y+Video_Settings.window_size_y-25; j += 25) {
-					Random rnd = new Random();
+				int j = f.getSize().height-f.getSize().height/4;
+				if (generatelake == false) {
+					Build.Place("Grass", new Rectangle(i, j, 25 , 25), false);
+				}
+				else {
+					Build.Place("Water", new Rectangle(i, j, 25, 25), false);
+				}
+				byte d = 0;
+				for (j += 25; j < f.getSize().height-25; j += 25) {
+					if (generatelake == false) {
+						Build.Place("Dirt", new Rectangle(i, j, 25 , 25),false);
+					}
+					else {
+						d++;
+						if (lakedepth < d) {
+							Build.Place("Water", new Rectangle(i, j, 25 , 25),false);
+						}
+						else {
+							Build.Place("Stone", new Rectangle(i, j, 25 , 25),false);
+						}
+						if (rnd.nextInt(2) == 0) {
+							if (lakedepth > 1 && curlakewidth < lakewidth) {
+								lakedepth--;
+							}
+							else if (lakedepth == 1 && curlakewidth < lakewidth) {
+								lakedepth++;
+							}
+							else if (curlakewidth > lakewidth) {
+								lakedepth--;
+								if (lakedepth == 0) {
+									generatelake = false;
+									lakedepth = 1;
+								}
+							}
+						}
+						else {
+							if (curlakewidth < lakewidth) {
+								lakedepth++;
+							}
+							else {
+								lakedepth--;
+								if (lakedepth == 0) {
+									generatelake = false;
+									lakedepth = 1;
+								}
+							}
+						}
+					}
+				}
+				for (j = f.getSize().height-25; j < world_y+Video_Settings.window_size_y-25; j += 25) {
 					int kaas = rnd.nextInt(15);
 					if (kaas >= 0 && kaas < 11) {
-						Build.Place("Dirt", new Rectangle(i,j, 25 , 25),false);
+						Build.Place("Dirt", new Rectangle(i, j, 25 , 25),false);
 					}
 					else if (kaas == 11) {
-						Build.Place("Coal_ore", new Rectangle(i,j, 25 , 25),false);
+						Build.Place("Coal_ore", new Rectangle(i, j, 25 , 25),false);
 					}
 					else if (kaas == 12) {
-						Build.Place("Copper_ore", new Rectangle(i,j, 25 , 25),false);
+						Build.Place("Copper_ore", new Rectangle(i, j, 25 , 25),false);
 					}
 					else if (kaas == 13) {
-						Build.Place("Gold_ore", new Rectangle(i,j, 25 , 25),false);
+						Build.Place("Gold_ore", new Rectangle(i, j, 25 , 25),false);
 					}
 					else if (kaas == 14) {
-						Build.Place("Iron_ore", new Rectangle(i,j, 25 , 25),false);
+						Build.Place("Iron_ore", new Rectangle(i, j, 25 , 25),false);
 					}
 				}
 			}
@@ -538,7 +594,7 @@ public class World2 extends JPanel {
 					}
 				}
 				if (blocks[i].equalsIgnoreCase("Water")) {
-					if (y < -1500) {
+					/*if (y < -1500) {
 						removeblock = true;
 						Build.Place("Ice", new Rectangle(blockcollisions[i].x,blockcollisions[i].y,25,25),false);
 					}
@@ -574,7 +630,7 @@ public class World2 extends JPanel {
 								/*if (BlockInfo.GetBlockInfo(i) == null) {
 									BlockInfo.SetBlockInfo(i, new String[]{"false"});
 								}*/
-								Random rand = new Random();
+								/*Random rand = new Random();
 								byte finalside = (byte) rand.nextInt(2);
 								boolean left = false;
 								boolean right = false;
@@ -631,7 +687,7 @@ public class World2 extends JPanel {
 						else {
 							removeblock = true;
 						}
-					}
+					}*/
 				}
 				else if (blocks[i].contains("Balloon")) {
 					blockposses[i] = "" + (x) + "," + (y-1);
@@ -672,13 +728,15 @@ public class World2 extends JPanel {
 				}
 				long stoptime2 = System.currentTimeMillis();
 				milliseconds[4] = milliseconds[4] + (stoptime2-starttime2);
-				if (Mouse.left == true && blockbackground[i] == false) {
-					if (Mouse.gamecursorrect.intersects(temprect)) {
-						Collision.testplayercol(i);
-						Player2.collisiondown = false;
-						Player2.isFalling = true;
-						milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
-						Build.Mine(i, true, false);
+				if (isblockvisible) {
+					if (Mouse.left == true && blockbackground[i] == false) {
+						if (Mouse.gamecursorrect.intersects(temprect)) {
+							Collision.testplayercol(i);
+							Player2.collisiondown = false;
+							Player2.isFalling = true;
+							milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
+							Build.Mine(i, true, false);
+						}
 					}
 				}
 				if (Mouse.right == true && blockbackground[i] == true) {
