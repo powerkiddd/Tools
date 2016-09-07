@@ -433,7 +433,6 @@ public class World2 extends JPanel {
 		Build.Place("steamengine", new Rectangle(500,Video_Settings.window_size_y-Video_Settings.window_size_y/3-118,274,184), true);
 		buildingworld = false;
 		Input.RegisterInConsole("World" + SaveLoad.worldname + "loaded!");
-		Weather.Rain();
 	}
 	
 	@Override
