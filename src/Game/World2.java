@@ -131,6 +131,7 @@ public class World2 extends JPanel {
 			Mouse.main(null);
 			KeyBindings.main(null);
 			SFX.main(null);
+			Recipes.main(null);
 			//Lighting.main(null);
 			//Server.main(null);
 			//Client.Connect("127.0.0.1", 8888);
@@ -363,7 +364,19 @@ public class World2 extends JPanel {
 				Random rnd = new Random();
 				int kaas = rnd.nextInt(400);
 				if (kaas == 200) {
-					Build.Place("Tree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,0,0), true);
+					kaas = rnd.nextInt(200);
+					if (kaas < 50) {
+						Build.Place("Tree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,0,0), true);
+					}
+					else if (kaas >= 50 && kaas < 100) {
+						Build.Place("MahoganyTree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,0,0), true);
+					}
+					else if (kaas >= 100 && kaas < 150) {
+						Build.Place("MapleTree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,0,0), true);
+					}
+					else if (kaas >= 150 && kaas < 200) {
+						Build.Place("WalnutTree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,0,0), true);
+					}
 				}
 				else if (kaas == 100) {
 					Build.Place("rock", new Rectangle(i,f.getSize().height-f.getSize().height/4-25,0,0), true);
@@ -594,7 +607,7 @@ public class World2 extends JPanel {
 					}
 				}
 				if (blocks[i].equalsIgnoreCase("Water")) {
-					/*if (y < -1500) {
+					if (y < -1500) {
 						removeblock = true;
 						Build.Place("Ice", new Rectangle(blockcollisions[i].x,blockcollisions[i].y,25,25),false);
 					}
@@ -606,7 +619,7 @@ public class World2 extends JPanel {
 							blockcollisions[i] = new Rectangle(x,y+1,25,25);
 						}
 						else if (!blocks[hascolwith].equals("Water")) {
-							if (blocks[hascolwith].equals("Grass") || blocks[hascolwith].equals("Dirt")) {
+							/*if (blocks[hascolwith].equals("Grass") || blocks[hascolwith].equals("Dirt")) {
 								if (blockcollisions[i].height > 1) {
 									blockposses[i] = "" + (x-1) + "," + (y+1);
 									blockcollisions[i] = new Rectangle(x,y,blockcollisions[i].width+2,blockcollisions[i].height-1);
@@ -627,10 +640,10 @@ public class World2 extends JPanel {
 								}
 							}
 							else {
-								/*if (BlockInfo.GetBlockInfo(i) == null) {
-									BlockInfo.SetBlockInfo(i, new String[]{"false"});
-								}*/
-								/*Random rand = new Random();
+								//if (BlockInfo.GetBlockInfo(i) == null) {
+								//	BlockInfo.SetBlockInfo(i, new String[]{"false"});
+								//}
+								Random rand = new Random();
 								byte finalside = (byte) rand.nextInt(2);
 								boolean left = false;
 								boolean right = false;
@@ -676,7 +689,7 @@ public class World2 extends JPanel {
 										//BlockInfo.ReplaceBlockInfo(i, "false", "true");
 									//}
 								}
-							}
+							}*/
 						}
 					}
 					else {
@@ -687,7 +700,7 @@ public class World2 extends JPanel {
 						else {
 							removeblock = true;
 						}
-					}*/
+					}
 				}
 				else if (blocks[i].contains("Balloon")) {
 					blockposses[i] = "" + (x) + "," + (y-1);

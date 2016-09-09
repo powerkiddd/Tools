@@ -84,20 +84,14 @@ public class Build {
 	
 	public static void Interact (int number, boolean giveplayerblock, boolean background) {
 		if (background) {
-			if (World2.blocks[number].equals("rock") || World2.blocks[number].equals("rocks")) {
-				Inventory.AddItem("rock", (byte) 1, (byte) 1);
-				Build.Mine(number,false,background);
+			if (Build.selected-1 < 0) {
+				if (Recipes.CheckRecipe(World2.blocks[number], "Empty")) {
+					Build.Mine(number, false, background);
+				}
 			}
-			if (World2.blocks[number].equals("Tree")) {
-				if (Build.selected-1 < 0) {
-					Inventory.AddItem("stick", (byte) 1, (byte) 2);
-				}
-				else if (Inventory.items[Build.selected-1].equalsIgnoreCase("empty")) {
-					Inventory.AddItem("stick", (byte) 1, (byte) 2);
-				}
-				else if (Inventory.items[Build.selected-1].equalsIgnoreCase("axe")) {
-					Inventory.AddItem("wood", (byte) 4, (byte) 1);
-					Build.Mine(number,false,background);
+			else {
+				if (Recipes.CheckRecipe(World2.blocks[number], Inventory.items[Build.selected-1])) {
+					Build.Mine(number, false, background);
 				}
 			}
 		}

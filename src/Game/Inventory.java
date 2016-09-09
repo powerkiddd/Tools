@@ -51,24 +51,28 @@ public class Inventory {
 		for (int i = 0; i < 45; i++) {
 			if (items[i].equals("Empty")) {
 				if (type == 1) {
-					for (int j = 0; j < identifier.length-2; j++) {
-						if (identifier[j].equalsIgnoreCase(name)) {
-							slots[i] = blocks[j];
-							items[i] = name;
-							count[i] = amount;
-							itemtype[i] = 1;
-							return true;
+					for (int j = 0; j < identifier.length; j++) {
+						if (identifier[j] != null) {
+							if (identifier[j].equalsIgnoreCase(name)) {
+								slots[i] = blocks[j];
+								items[i] = name;
+								count[i] = amount;
+								itemtype[i] = 1;
+								return true;
+							}
 						}
 					}
 				}
 				else if (type == 2) {
-					for (int j = 0; j < toolidentifier.length-1; j++) {
-						if (toolidentifier[j].equalsIgnoreCase(name)) {
-							slots[i] = tools[j];
-							items[i] = name;
-							count[i] = 1;
-							itemtype[i] = 2;
-							return true;
+					for (int j = 0; j < toolidentifier.length; j++) {
+						if (toolidentifier[j] != null) {
+							if (toolidentifier[j].equalsIgnoreCase(name)) {
+								slots[i] = tools[j];
+								items[i] = name;
+								count[i] = 1;
+								itemtype[i] = 2;
+								return true;
+							}
 						}
 					}
 				}
