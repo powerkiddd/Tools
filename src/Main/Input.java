@@ -58,10 +58,10 @@ public class Input {
 				else if (keychar.equalsIgnoreCase(KeyBindings.walkright)) {
 					d = true;
 				}
-				else if (keychar.equalsIgnoreCase(KeyBindings.inventory)) {
+				else if (keychar.equalsIgnoreCase(KeyBindings.inventory) && !console) {
 					i = !i;
 				}
-				else if (keychar.equalsIgnoreCase(KeyBindings.crafting)) {
+				else if (keychar.equalsIgnoreCase(KeyBindings.crafting) && !console) {
 					r = !r;
 				}
 				else if (keytext.equalsIgnoreCase(KeyBindings.run)) {
