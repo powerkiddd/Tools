@@ -222,6 +222,7 @@ public class World2 extends JPanel {
 		}
 		Chi.chiy = f.getSize().height-f.getSize().height/4-67;
 		Player2.player_y = f.getSize().height-(f.getSize().height/4)-67;
+		camera_y = -(f.getSize().height-f.getSize().height/4);
 		System.out.println("This is currently beta " + Version.version);
 		TimerTask updateFPS = new TimerTask() {
 			public void run () {
@@ -366,26 +367,26 @@ public class World2 extends JPanel {
 				if (kaas == 200) {
 					kaas = rnd.nextInt(200);
 					if (kaas < 50) {
-						Build.Place("Tree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,0,0), true);
+						Build.Place("Tree", new Rectangle(i,0-175,0,0), true);
 					}
 					else if (kaas >= 50 && kaas < 100) {
-						Build.Place("MahoganyTree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,0,0), true);
+						Build.Place("MahoganyTree", new Rectangle(i,0-175,0,0), true);
 					}
 					else if (kaas >= 100 && kaas < 150) {
-						Build.Place("MapleTree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,0,0), true);
+						Build.Place("MapleTree", new Rectangle(i,0-175,0,0), true);
 					}
 					else if (kaas >= 150 && kaas < 200) {
-						Build.Place("WalnutTree", new Rectangle(i,f.getSize().height-f.getSize().height/4-175,0,0), true);
+						Build.Place("WalnutTree", new Rectangle(i,0-175,0,0), true);
 					}
 				}
 				else if (kaas == 100) {
-					Build.Place("rock", new Rectangle(i,f.getSize().height-f.getSize().height/4-25,0,0), true);
+					Build.Place("rock", new Rectangle(i,0-25,0,0), true);
 				}
 				else if (kaas == 101) {
-					Build.Place("rocks", new Rectangle(i,f.getSize().height-f.getSize().height/4-25,0,0), true);
+					Build.Place("rocks", new Rectangle(i,0-25,0,0), true);
 				}
 				else if (kaas == 300) {
-					Build.Place("camellia_sinesis", new Rectangle(i,f.getSize().height-f.getSize().height/4-51,32,51), true);
+					Build.Place("camellia_sinesis", new Rectangle(i,0-51,32,51), true);
 				}
 			}
 			for (int i = 0; i < world_x+Video_Settings.window_size_x-25; i += 25) {
@@ -397,7 +398,7 @@ public class World2 extends JPanel {
 						lakewidth = 10;
 					}
 				}
-				int j = f.getSize().height-f.getSize().height/4;
+				int j = 0;
 				if (generatelake == false) {
 					Build.Place("Grass", new Rectangle(i, j, 25 , 25), false);
 				}
@@ -405,7 +406,7 @@ public class World2 extends JPanel {
 					Build.Place("Water", new Rectangle(i, j, 25, 25), false);
 				}
 				byte d = 0;
-				for (j += 25; j < f.getSize().height-25; j += 25) {
+				for (j += 25; j < 150; j += 25) {
 					if (generatelake == false) {
 						Build.Place("Dirt", new Rectangle(i, j, 25 , 25),false);
 					}
@@ -446,7 +447,7 @@ public class World2 extends JPanel {
 						}
 					}
 				}
-				for (j = f.getSize().height-25; j < world_y+Video_Settings.window_size_y-25; j += 25) {
+				for (j = 150; j < world_y+Video_Settings.window_size_y-25; j += 25) {
 					int kaas = rnd.nextInt(15);
 					if (kaas >= 0 && kaas < 11) {
 						Build.Place("Dirt", new Rectangle(i, j, 25 , 25),false);
@@ -499,7 +500,7 @@ public class World2 extends JPanel {
 				}
 			}
 		}
-		Build.Place("steamengine", new Rectangle(500,Video_Settings.window_size_y-Video_Settings.window_size_y/3-118,274,184), true);
+		Build.Place("steamengine", new Rectangle(500,-184,274,184), true);
 		buildingworld = false;
 		Input.RegisterInConsole("World" + SaveLoad.worldname + "loaded!");
 	}
@@ -526,8 +527,8 @@ public class World2 extends JPanel {
 				}
 			}
 			for (int i = 0; i < world_x+f.getSize().width; i += 640) {
-				if (i > camera_x-640 && i < camera_x+f.getSize().width && 610 > f.getSize().height-f.getSize().height/4-380-camera_y && -400 < f.getSize().height-f.getSize().height/4-380-camera_y) {
-					g.drawImage(background_land, (int) (i-camera_x),(int) (f.getSize().height-f.getSize().height/4-380-camera_y), 640, 400,null);
+				if (i > camera_x-640 && i < camera_x+f.getSize().width && 610 > -(f.getSize().height-f.getSize().height/4)-380-camera_y && -400 < -(f.getSize().height-f.getSize().height/4-380)-camera_y) {
+					g.drawImage(background_land, (int) (i-camera_x),(int) -(0-camera_y), 640, 400,null);
 				}
 			}
 			stoptime = System.currentTimeMillis();
