@@ -10,7 +10,7 @@ public class SaveLoad {
 	
 	public static String worldname;
 	
-	public static void SaveGame () {
+	public static boolean SaveGame () {
 		//Save all the information
 		Directory.CreateNewDirectory("Saves");
 		Directory.CreateNewDirectory("Saves\\" + worldname);
@@ -32,16 +32,24 @@ public class SaveLoad {
 			inventorycount = inventorycount + Inventory.count[i] + ",";
 			inventorytypes = inventorytypes + Inventory.itemtype[i] + ",";
 		}
-		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "blocks", ".tool", blocks);
-		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "blockposses", ".tool", blockposses);
-		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "blockcollisions", ".tool", blockcollisions);
-		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "blockbackground", ".tool", blockbackground);
-		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "inventory", ".tool", inventory);
-		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "inventorycount", ".tool", inventorycount);
-		WriteToFile.writestuff("Saves\\" + worldname+ "\\", "inventorytypes", ".tool", inventorytypes);
+		if (!blocks.startsWith(" ") && !blockposses.startsWith(" ") && !blockcollisions.startsWith(" ") && !blockbackground.startsWith(" ")
+				&& !blocks.isEmpty() && !blockposses.isEmpty() && !blockcollisions.isEmpty() && !blockbackground.isEmpty()) {
+			WriteToFile.writestuff("Saves\\" + worldname+ "\\", "blocks", ".tool", blocks);
+			WriteToFile.writestuff("Saves\\" + worldname+ "\\", "blockposses", ".tool", blockposses);
+			WriteToFile.writestuff("Saves\\" + worldname+ "\\", "blockcollisions", ".tool", blockcollisions);
+			WriteToFile.writestuff("Saves\\" + worldname+ "\\", "blockbackground", ".tool", blockbackground);
+			WriteToFile.writestuff("Saves\\" + worldname+ "\\", "inventory", ".tool", inventory);
+			WriteToFile.writestuff("Saves\\" + worldname+ "\\", "inventorycount", ".tool", inventorycount);
+			WriteToFile.writestuff("Saves\\" + worldname+ "\\", "inventorytypes", ".tool", inventorytypes);
+		}
+		else {
+			System.out.println("Tried to save world with empty data!");
+			return false;
+		}
 		if (!new File("Saves\\"+worldname+"\\version.tool").exists()) {
 			WriteToFile.writestuff("Saves\\" + worldname+ "\\", "version", ".tool", Main.Version.version);
 		}
+		return true;
 	}
 	
 	public static void LoadGame () {

@@ -10,8 +10,9 @@ public class Crash {
 		SaveLoad.worldname = "CrashSaveBackup";
 		boolean hasSaved = false;
 		try {
-			SaveLoad.SaveGame();
-			hasSaved = true;
+			if (SaveLoad.SaveGame()) {
+				hasSaved = true;
+			}
 		}catch (Exception ex) {
 			cause = cause + "\n\nAlso, we couldn't backup your save, reason: " + ex.getMessage();
 		}
