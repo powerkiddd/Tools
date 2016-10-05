@@ -3,6 +3,9 @@ package Game;
 import java.util.ArrayList;
 import java.util.List;
 
+import Main.Crash;
+import Main.ReadFromFile;
+
 public class Recipes {
 	
 	public static List<String> Block = new ArrayList<String>(); //The block that has been clicked
@@ -13,7 +16,11 @@ public class Recipes {
 	public static List<Boolean> DestroyBlock = new ArrayList<Boolean>(); //Should the block be destroyed after interacting?
 	
 	public static void main(String[] args) {
-		AddRecipe("Rock", "Empty", "Rock", 1, 1, true);
+		if (!LoadRecipeList()) {
+			Crash.cause = "Failed to load recipe list, recovery not available.";
+			Crash.main(null);
+		}
+		/*AddRecipe("Rock", "Empty", "Rock", 1, 1, true);
 		AddRecipe("Rocks", "Empty", "Rock", 1, 1, true);
 		AddRecipe("Tree", "Empty", "Stick", 1, 2, false);
 		AddRecipe("Tree", "Axe", "Wood", 1, 1, true);
@@ -22,7 +29,20 @@ public class Recipes {
 		AddRecipe("MapleTree", "Empty", "Stick", 1, 2, false);
 		AddRecipe("MapleTree", "Axe", "MapleWood", 1, 1, true);
 		AddRecipe("WalnutTree", "Empty", "Stick", 1, 2, false);
-		AddRecipe("WalnutTree", "Axe", "WalnutWood", 1, 1, true);
+		AddRecipe("WalnutTree", "Axe", "WalnutWood", 1, 1, true);*/
+	}
+	
+	public static boolean LoadRecipeList () {
+		String recipes = ReadFromFile.readstuff("settings\\", "Recipelist.tool", "");
+		if (recipes != null) {
+			String[] split = recipes.split(":");
+			for (int i = 0; i < split.length; i++) {
+				String[] args = split[i].split(",");
+				AddRecipe(args[0], args[1], args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]), Boolean.parseBoolean(args[5]));
+			}
+			return true;
+		}
+		return false;
 	}
 	
 	public static boolean CheckRecipe (String block, String item) {
