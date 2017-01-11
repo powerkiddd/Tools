@@ -252,6 +252,9 @@ public class Input {
 					else if (Inventory.AddItem(splitinput[1], Byte.parseByte(splitinput[2]), (byte) 2)) {
 						result = "Giving " + splitinput[2] + " of " + splitinput[1];
 					}
+					else if (Inventory.AddItem(splitinput[1], Byte.parseByte(splitinput[2]), (byte) 3)) {
+						result = "Giving " + splitinput[2] + " of " + splitinput[1];
+					}
 					else {
 						if (Inventory.IsInventoryFull(false)) {
 							result = "Failed to execute command, inventory is full!";

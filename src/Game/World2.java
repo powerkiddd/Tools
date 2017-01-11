@@ -1,6 +1,7 @@
 package Game;
 
 import java.awt.AlphaComposite;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Frame;
@@ -8,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -66,8 +68,8 @@ public class World2 extends JPanel {
 	private static BufferedImage rain;
 	public static ArrayList<Integer> RainX = new ArrayList<Integer>();
 	public static ArrayList<Integer> RainY = new ArrayList<Integer>();
-	private static int world_x = 2400;
-	private static int world_y = 1200;
+	public static int world_x = 2400;
+	public static int world_y = 1200;
 	public static boolean debug = false;
 	public static boolean debuggrid = false;
 	public static boolean debugpie = false;
@@ -208,6 +210,7 @@ public class World2 extends JPanel {
 			ex.printStackTrace();
 			Crash.cause = "Could not find one of the images. Are they read protected or are there files missing?";
 		}
+		Toolkit.getDefaultToolkit().sync();
 		f.setSize(Video_Settings.window_size_x, Video_Settings.window_size_y);
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -221,7 +224,7 @@ public class World2 extends JPanel {
 			//Video_Settings.gs.setFullScreenWindow(f);
 		}
 		Chi.chiy = f.getSize().height-f.getSize().height/4-67;
-		Player2.player_y = f.getSize().height-(f.getSize().height/4)-67;
+		Player2.player_y = -67;
 		camera_y = -(f.getSize().height-f.getSize().height/4);
 		System.out.println("This is currently beta " + Version.version);
 		TimerTask updateFPS = new TimerTask() {
@@ -254,7 +257,6 @@ public class World2 extends JPanel {
 		};
 		TimerTask update = new TimerTask () {
 			public void run () {
-				Player2.playerrect = new Rectangle((int) Player2.player_x,(short) Player2.player_y,19,67);
 				//Open inventory if I is pressed
 				if (Input.console == false) {
 					if (Input.GetInput("i")) {
@@ -286,19 +288,19 @@ public class World2 extends JPanel {
 							Player2.changeside((byte) 1);
 							once = true;
 						}
-						if (camera_x > 0 && Player2.player_x < (0+Video_Settings.window_size_x/3)) {
+						for (byte i = 0; i < 10; i++) {
+							Player2.player_x -= (float)Player2.playerspeed/10;
+						}
+						if (camera_x > 0) {
 							for (byte i = 0; i < 10; i++) {
-								camera_x -= (float)Player2.playerspeed/10;
+								camera_x = Player2.player_x - Video_Settings.window_size_x/2;
 							}
 							Player2.atborder = true;
 							if (camera_x < 0) {
 								camera_x = 0;
 							}
-						}
-						else {
-							Player2.atborder = false;
-							for (byte i = 0; i < 10; i++) {
-								Player2.player_x -= (float)Player2.playerspeed/10;
+							else if (camera_x > world_x) {
+								camera_x = world_x;
 							}
 						}
 					}
@@ -311,19 +313,19 @@ public class World2 extends JPanel {
 							Player2.changeside((byte) 0);
 							once = true;
 						}
-						if (Player2.player_x > Video_Settings.window_size_x-Video_Settings.window_size_x/3 && camera_x < world_x) {
+						for (byte i = 0; i < 10; i++) {
+							Player2.player_x += (float)Player2.playerspeed/10;
+						}
+						if (camera_x < world_x) {
 							for (byte i = 0; i < 10; i++) {
-								camera_x += (float)Player2.playerspeed/10;
+								camera_x = Player2.player_x - Video_Settings.window_size_x/2;
 							}
 							Player2.atborder = true;
 							if (camera_x > world_x) {
 								camera_x = world_x;
 							}
-						}
-						else {
-							Player2.atborder = false;
-							for (byte i = 0; i < 10; i++) {
-								Player2.player_x += (float)Player2.playerspeed/10;
+							else if (camera_x < 0) {
+								camera_x = 0;
 							}
 						}
 					}
@@ -336,6 +338,8 @@ public class World2 extends JPanel {
 						}
 					}
 				}
+				Player2.playerrect = new Rectangle((int) Player2.player_x,(short) (Player2.player_y),19,67);
+				
 				if (Player2.player_y > Video_Settings.window_size_y-Video_Settings.window_size_y/3 && camera_y < world_y) {
 					//camera_y = Player2.player_y-Video_Settings.window_size_y+Video_Settings.window_size_y/3;
 					canplayermovey = false;
@@ -447,7 +451,7 @@ public class World2 extends JPanel {
 						}
 					}
 				}
-				for (j = 150; j < world_y+Video_Settings.window_size_y-25; j += 25) {
+				for (j = 150; j < world_y; j += 25) {
 					int kaas = rnd.nextInt(15);
 					if (kaas >= 0 && kaas < 11) {
 						Build.Place("Dirt", new Rectangle(i, j, 25 , 25),false);
@@ -500,6 +504,10 @@ public class World2 extends JPanel {
 				}
 			}
 		}
+		/*for (int i = 0; i < World2.blockcollisions.length; i++) {
+			System.out.println("X: " + World2.blockcollisions[i].x + " | Y: " + World2.blockcollisions[i].y);
+			System.out.println("W: " + World2.blockcollisions[i].width + " | H: " + World2.blockcollisions[i].height);
+		}*/
 		Build.Place("steamengine", new Rectangle(500,-184,274,184), true);
 		buildingworld = false;
 		Input.RegisterInConsole("World" + SaveLoad.worldname + "loaded!");
@@ -508,6 +516,7 @@ public class World2 extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;
 		NextFrame_Water = false;
 		FPS++;
 		if (World2.buildingworld == false) {
@@ -518,49 +527,34 @@ public class World2 extends JPanel {
 				for (int j=0; j < world_x+f.getSize().width; j += backgroundx) {
 					if (j > camera_x-backgroundx && j < camera_x+f.getSize().width) {
 						if (camera_y > -1500) {
-							g.drawImage(image, (int) ((int)j-camera_x), i, backgroundx, backgroundy,null);
+							g2d.drawImage(image, (int) ((int)j-camera_x), i, backgroundx, backgroundy, null);
 						}
 						else {
-							g.drawImage(space, (int) ((int)j-camera_x), i, backgroundx, backgroundy,null);
+							g2d.drawImage(space, (int) ((int)j-camera_x), i, backgroundx, backgroundy, null);
 						}
 					}
 				}
 			}
 			for (int i = 0; i < world_x+f.getSize().width; i += 640) {
 				if (i > camera_x-640 && i < camera_x+f.getSize().width && 610 > -(f.getSize().height-f.getSize().height/4)-380-camera_y && -400 < -(f.getSize().height-f.getSize().height/4-380)-camera_y) {
-					g.drawImage(background_land, (int) (i-camera_x),(int) (-400-camera_y), 640, 400,null);
+					g2d.drawImage(background_land, (int) (i-camera_x),(int) (-400-camera_y), 640, 400, null);
 				}
 			}
 			stoptime = System.currentTimeMillis();
 			milliseconds[0] = milliseconds[0] + (stoptime-starttime);
 			if (Weather.isRaining) {
-				Random chance = new Random();
-				if (chance.nextInt(10000) == 1000) {
-					Weather.Clear();
-				}
-				if (chance.nextInt(10) == 0) {
-					for (int j = 0; j < f.getSize().width; j += chance.nextInt(1000)) {
-						if (j == 0 && chance.nextInt(100) == 0) {
-							RainX.add(j);
-							RainY.add(0);
-						}
-						else if (j != 0) {
-							RainX.add(j);
-							RainY.add(0);
-						}
-					}
-				}
+				Weather.rainChance();
 				for (int i = 0; i < RainY.size(); i++) {
 					RainY.set(i, RainY.get(i)+3);
 					if (RainX.get(i) > 0-25 && RainX.get(i) < f.getSize().width && RainY.get(i) > 0-25 && RainY.get(i) < f.getSize().height-25) {
 						if (!Collision.testraincol(RainX.get(i), RainY.get(i))) {
 							starttime = System.currentTimeMillis();
-							g.drawImage(rain, RainX.get(i), RainY.get(i), 25, 25,null);
+							g2d.drawImage(rain, RainX.get(i), RainY.get(i), 25, 25, null);
 							stoptime = System.currentTimeMillis();
 							milliseconds[6] = milliseconds[6] + stoptime-starttime;
 							starttime = System.currentTimeMillis();
 							if (debug) {
-								g.drawImage(collider, RainX.get(i), RainY.get(i), 25, 25,null);
+								g2d.drawImage(collider, RainX.get(i), RainY.get(i), 25, 25, null);
 							}
 							stoptime = System.currentTimeMillis();
 							milliseconds[4] = milliseconds[4] + stoptime-starttime;
@@ -577,7 +571,11 @@ public class World2 extends JPanel {
 					}
 				}
 			}
+			else {
+				Weather.rainChance();
+			}
 			starttime = System.currentTimeMillis();
+			
 			//Draw Blocks
 			for (int i=0; i < blocks.length; i++) {
 				String pos = blockposses[i];
@@ -590,7 +588,7 @@ public class World2 extends JPanel {
 				Rectangle temprect = new Rectangle();
 				temprect = (Rectangle) blockcollisions[i].clone();
 				long starttime_oc = System.currentTimeMillis();
-				if (x > camera_x-blockcollisions[i].width && x < camera_x+f.getSize().width && y > camera_y-blockcollisions[i].height && y < camera_y+f.getSize().height-25) {
+				if (x > camera_x-blockcollisions[i].width && x < camera_x+f.getSize().width && y > camera_y-blockcollisions[i].height && y < camera_y+600+f.getSize().height-25) {
 					isblockvisible = true;
 				}
 				long stoptime_oc = System.currentTimeMillis();
@@ -598,7 +596,7 @@ public class World2 extends JPanel {
 				if (isblockvisible) {
 					for (int j = 0; j < allblocks.length; j++) {
 						if (blockidentifiers[j].equalsIgnoreCase(blocks[i])) {
-							g.drawImage(allblocks[j], (int) (x-camera_x), (int) (y-camera_y), blockcollisions[i].width, blockcollisions[i].height, null);
+							g2d.drawImage(allblocks[j], (int) (x-Math.floor(camera_x)), (int) (y-camera_y), blockcollisions[i].width, blockcollisions[i].height, null);
 							if (blockbackground[i] == false) {
 								Collision.testplayercol(i);
 								milliseconds[5] = milliseconds[5] + (Collision.stoptime-Collision.starttime);
@@ -727,17 +725,18 @@ public class World2 extends JPanel {
 				}
 				
 				temprect.x -= (int) camera_x;
+				//temprect.y -= (int) camera_y-(Video_Settings.window_size_y-Video_Settings.window_size_y/4);
 				temprect.y -= (int) camera_y;
 				long starttime2 = System.currentTimeMillis();
 				if (debug == true) {
 					if (blockbackground[i] == false && isblockvisible) {
-						g.drawImage(collider, temprect.x, temprect.y, temprect.width, temprect.height, null);
+						g2d.drawImage(collider, temprect.x, temprect.y, temprect.width, temprect.height, null);
 					}
 					else if (isblockvisible) {
-						g.drawImage(collider3, temprect.x, temprect.y, temprect.width, temprect.height, null);
+						g2d.drawImage(collider3, temprect.x, temprect.y, temprect.width, temprect.height, null);
 					}
 					if (Mouse.gamecursorrect != null) {
-						g.drawImage(collider2, Mouse.gamecursorrect.x, Mouse.gamecursorrect.y, Mouse.gamecursorrect.width, Mouse.gamecursorrect.height, null);
+						g2d.drawImage(collider2, Mouse.gamecursorrect.x, Mouse.gamecursorrect.y, Mouse.gamecursorrect.width, Mouse.gamecursorrect.height, null);
 					}
 				}
 				long stoptime2 = System.currentTimeMillis();
@@ -774,36 +773,40 @@ public class World2 extends JPanel {
 			}
 			stoptime = System.currentTimeMillis();
 			milliseconds[1] = milliseconds[1] + (stoptime-starttime);
+			//End of drawing blocks
+			
 			starttime = System.currentTimeMillis();
 			//Draw Player
 			if (Player2.lookingatside) {
-				g.drawImage(playerimage, (int) (Player2.player_x), (int) Player2.player_y, playerimage.getWidth(), playerimage.getHeight(), null);
-				g.drawImage(Inventory.tools[holdingtool], (int) Player2.player_x+9, (int) Player2.player_y+25,25,25, null);
+				g2d.drawImage(playerimage, (int) (Player2.player_x - camera_x), (int) (Player2.player_y - camera_y), playerimage.getWidth(), playerimage.getHeight(), null);
+				g2d.drawImage(Inventory.tools[holdingtool], (int) (Player2.player_x+9 - camera_x), (int) (Player2.player_y+25 - camera_y),25,25, null);
 				if (Player2.hasJetpack) {
-					g.drawImage(Player2.jetpack, (int) (Player2.player_x), (int) Player2.player_y,19,67, null);
+					g2d.drawImage(Player2.jetpack, (int) (Player2.player_x - camera_x), (int) (Player2.player_y - camera_y),19,67, null);
 				}
 			}
 			else {
-				g.drawImage(playerimage, (int) (Player2.player_x)+playerimage.getWidth(), (int) Player2.player_y, -playerimage.getWidth(), playerimage.getHeight(), null);
-				g.drawImage(Inventory.tools[holdingtool], (int) Player2.player_x+9, (int) Player2.player_y+25,-25,25, null);
+				g2d.drawImage(playerimage, (int) (Player2.player_x - camera_x)+playerimage.getWidth(), (int) (Player2.player_y - camera_y), -playerimage.getWidth(), playerimage.getHeight(), null);
+				g2d.drawImage(Inventory.tools[holdingtool], (int) (Player2.player_x+9 - camera_x), (int) (Player2.player_y+25 - camera_y),-25,25, null);
 				if (Player2.hasJetpack) {
-					g.drawImage(Player2.jetpack, (int) (Player2.player_x+19), (int) Player2.player_y,-19,67, null);
+					g2d.drawImage(Player2.jetpack, (int) (Player2.player_x+19 - camera_x), (int) (Player2.player_y - camera_y),-19,67, null);
 				}
 			}
 			for (int i = 1; i < Players.playersinserver; i++) {
-				g.drawImage(playerimage, Players.playerx[i-1], Players.playery[i-1], null);
+				g2d.drawImage(playerimage, Players.playerx[i-1], Players.playery[i-1], null);
 			}
 			stoptime = System.currentTimeMillis();
 			milliseconds[2] = milliseconds[2] + (stoptime-starttime);
 			//Draw Chi
 			if (Settings.chi == true) {
-				g.drawImage(Chi.image, (int) Chi.chix, (int) Chi.chiy,28,67, null);
+				g2d.drawImage(Chi.image, (int) Chi.chix, (int) Chi.chiy,28,67, null);
 			}
-			/*g.drawImage(spacemen, 0, 520,19,77,null);
+			
+			/*g2d.drawImage(spacemen, 0, 520,19,77,null);
 			g.setColor(Color.WHITE);
 			g.fillRect(0, 505, 400, 20);
 			g.setColor(Color.BLACK);
 			g.drawString("If you continue down this road, you're gonna have a bad time.", 0, 520);*/
+			
 			//Draw Lighting
 			/*try {
 				Graphics2D g2d = (Graphics2D)g;
@@ -828,28 +831,28 @@ public class World2 extends JPanel {
 			}*/
 			starttime = System.currentTimeMillis();
 			//Draw Hotbar
-			g.drawImage(invslot, f.getSize().width/2-116, 0, 29, 29, null);
-			g.drawImage(invslot, f.getSize().width/2-87, 0, 29, 29, null);
-			g.drawImage(invslot, f.getSize().width/2-58, 0, 29, 29, null);
-			g.drawImage(invslot, f.getSize().width/2-29, 0, 29, 29, null);
-			g.drawImage(invslot, f.getSize().width/2, 0, 29, 29, null);
-			g.drawImage(invslot, f.getSize().width/2+29, 0, 29, 29, null);
-			g.drawImage(invslot, f.getSize().width/2+58, 0, 29, 29, null);
-			g.drawImage(invslot, f.getSize().width/2+87, 0, 29, 29, null);
-			g.drawImage(invslot, f.getSize().width/2+116, 0, 29, 29, null);
-			g.drawImage(Inventory.slots[0], f.getSize().width/2-114, 2, 25, 25, null);
-			g.drawImage(Inventory.slots[1], f.getSize().width/2-85, 2, 25, 25, null);
-			g.drawImage(Inventory.slots[2], f.getSize().width/2-56, 2, 25, 25, null);
-			g.drawImage(Inventory.slots[3], f.getSize().width/2-27, 2, 25, 25, null);
-			g.drawImage(Inventory.slots[4], f.getSize().width/2+2, 2, 25, 25, null);
-			g.drawImage(Inventory.slots[5], f.getSize().width/2+31, 2, 25, 25, null);
-			g.drawImage(Inventory.slots[6], f.getSize().width/2+60, 2, 25, 25, null);
-			g.drawImage(Inventory.slots[7], f.getSize().width/2+89, 2, 25, 25, null);
-			g.drawImage(Inventory.slots[8], f.getSize().width/2+118, 2, 25, 25, null);
+			g2d.drawImage(invslot, f.getSize().width/2-116, 0, 29, 29, null);
+			g2d.drawImage(invslot, f.getSize().width/2-87, 0, 29, 29, null);
+			g2d.drawImage(invslot, f.getSize().width/2-58, 0, 29, 29, null);
+			g2d.drawImage(invslot, f.getSize().width/2-29, 0, 29, 29, null);
+			g2d.drawImage(invslot, f.getSize().width/2, 0, 29, 29, null);
+			g2d.drawImage(invslot, f.getSize().width/2+29, 0, 29, 29, null);
+			g2d.drawImage(invslot, f.getSize().width/2+58, 0, 29, 29, null);
+			g2d.drawImage(invslot, f.getSize().width/2+87, 0, 29, 29, null);
+			g2d.drawImage(invslot, f.getSize().width/2+116, 0, 29, 29, null);
+			g2d.drawImage(Inventory.slots[0], f.getSize().width/2-114, 2, 25, 25, null);
+			g2d.drawImage(Inventory.slots[1], f.getSize().width/2-85, 2, 25, 25, null);
+			g2d.drawImage(Inventory.slots[2], f.getSize().width/2-56, 2, 25, 25, null);
+			g2d.drawImage(Inventory.slots[3], f.getSize().width/2-27, 2, 25, 25, null);
+			g2d.drawImage(Inventory.slots[4], f.getSize().width/2+2, 2, 25, 25, null);
+			g2d.drawImage(Inventory.slots[5], f.getSize().width/2+31, 2, 25, 25, null);
+			g2d.drawImage(Inventory.slots[6], f.getSize().width/2+60, 2, 25, 25, null);
+			g2d.drawImage(Inventory.slots[7], f.getSize().width/2+89, 2, 25, 25, null);
+			g2d.drawImage(Inventory.slots[8], f.getSize().width/2+118, 2, 25, 25, null);
 			short i_hotbar = 0;
 			for (int x = f.getSize().width/2-116; x < f.getSize().width/2+135; x += 29) {
 				if ((i_hotbar/29) == Inventory.selected) {
-					g.drawImage(highlight, x+2,0+2,25,25,null);
+					g2d.drawImage(highlight, x+2,0+2,25,25, null);
 				}
 				if (Mouse.left && Mouse.leftonce == false) {
 					if (MouseInfo.getPointerInfo().getLocation().x > x && MouseInfo.getPointerInfo().getLocation().x < x+29) {
@@ -879,6 +882,7 @@ public class World2 extends JPanel {
 				}
 				i_hotbar += 29;
 			}
+			
 			g.setColor(Color.WHITE);
 			g.drawString("" + Inventory.count[0], f.getSize().width/2-118, 25);
 			g.drawString("" + Inventory.count[1], f.getSize().width/2-88, 25);
@@ -891,12 +895,13 @@ public class World2 extends JPanel {
 			g.drawString("" + Inventory.count[8], f.getSize().width/2+122, 25);
 			g.setColor(Color.BLACK);
 			for (int x = 27; x < 19*10; x+= 19) {
-				g.drawImage(heart, f.getSize().width-x, 0, 19, 17, null);
-				g.drawImage(hunger, f.getSize().width-x, 17, 19, 17, null);
-				g.drawImage(thirst, f.getSize().width-x, 34, 19, 17, null);
+				g2d.drawImage(heart, f.getSize().width-x, 0, 19, 17, null);
+				g2d.drawImage(hunger, f.getSize().width-x, 17, 19, 17, null);
+				g2d.drawImage(thirst, f.getSize().width-x, 34, 19, 17, null);
 			}
 			stoptime = System.currentTimeMillis();
 			milliseconds[3] = milliseconds[3] + (stoptime-starttime);
+			
 			//Draw placeholder block
 			starttime = System.currentTimeMillis();
 			if (Build.selected != 0) {
@@ -904,8 +909,8 @@ public class World2 extends JPanel {
 					Composite translucent = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (0.7f));
 					if (Input.snap) {						
 						if (camera_x/25==Math.floor(camera_x/25) && camera_y/25==Math.floor(camera_y/25)) {
-							g.drawImage(blockholder, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, 25, 25, null);
-							Graphics2D g2d = (Graphics2D) g;
+							g2d.drawImage(blockholder, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, 25, 25, null);
+							//Graphics2D g2d = (Graphics2D) g;
 							g2d.setComposite(translucent);
 					        g2d.drawImage(allblocks[theblock], (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, allblocks[theblock].getWidth(), allblocks[theblock].getHeight(), null);
 					        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
@@ -922,16 +927,16 @@ public class World2 extends JPanel {
 							Mouse.mouseposonscreeny = (int) Math.floor(Mouse.mouseposonscreeny/25)*25-25;
 							Mouse.mouseposinworldx = (int) ((Mouse.mouseposonscreenx)-camera_x);
 							Mouse.mouseposinworldy = Mouse.mouseposonscreeny+Math.round(camera_y);
-							g.drawImage(blockholder, Mouse.mouseposonscreenx, Mouse.mouseposonscreeny, 25,25,null);
-							Graphics2D g2d = (Graphics2D) g;
+							g2d.drawImage(blockholder, Mouse.mouseposonscreenx, Mouse.mouseposonscreeny, 25,25, null);
+							//Graphics2D g2d = (Graphics2D) g;
 							g2d.setComposite(translucent);
 					        g2d.drawImage(allblocks[theblock], Mouse.mouseposonscreenx, Mouse.mouseposonscreeny, allblocks[theblock].getWidth(), allblocks[theblock].getHeight(), null);
 					        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 						}
 					}
 					else {
-						g.drawImage(blockholder, MouseInfo.getPointerInfo().getLocation().x-13-f.getLocationOnScreen().x, MouseInfo.getPointerInfo().getLocation().y-37-f.getLocationOnScreen().y, 25,25,null);
-						Graphics2D g2d = (Graphics2D) g;
+						g2d.drawImage(blockholder, MouseInfo.getPointerInfo().getLocation().x-13-f.getLocationOnScreen().x, MouseInfo.getPointerInfo().getLocation().y-37-f.getLocationOnScreen().y, 25,25, null);
+						//Graphics2D g2d = (Graphics2D) g;
 						g2d.setComposite(translucent);
 				        g2d.drawImage(allblocks[theblock], MouseInfo.getPointerInfo().getLocation().x-13-f.getLocationOnScreen().x, MouseInfo.getPointerInfo().getLocation().y-37-f.getLocationOnScreen().y, allblocks[theblock].getWidth(), allblocks[theblock].getHeight(), null);
 				        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
@@ -944,6 +949,7 @@ public class World2 extends JPanel {
 			stoptime = System.currentTimeMillis();
 			milliseconds[3] = milliseconds[3] + (stoptime-starttime);
 			starttime = System.currentTimeMillis();
+			
 			//Draw pausemenu
 			if (Input.escape) {
 				if (!saveonce) {
@@ -951,7 +957,7 @@ public class World2 extends JPanel {
 					SaveLoad.SaveGame();
 				}
 				PauseMenu.PauseChanged();
-				g.drawImage(PauseMenu.mainmenubutton, PauseMenu.mainmenubuttonrect.x, PauseMenu.mainmenubuttonrect.y, null);
+				g2d.drawImage(PauseMenu.mainmenubutton, PauseMenu.mainmenubuttonrect.x, PauseMenu.mainmenubuttonrect.y, null);
 				if (Mouse.left) {
 					if (Mouse.gamecursorrect.intersects(PauseMenu.mainmenubuttonrect)) {
 						f.removeAll();
@@ -971,10 +977,10 @@ public class World2 extends JPanel {
 				g.setColor(Color.WHITE);
 				for (int y = 0; y < 116; y += 29) {
 					for (int x = 0; x < 261; x += 29) {
-						g.drawImage(invslot,x,y,29,29,null);
-						g.drawImage(Inventory.slots[9+i/29],x+2,y+2,25,25,null);
+						g2d.drawImage(invslot,x,y,29,29, null);
+						g2d.drawImage(Inventory.slots[9+i/29],x+2,y+2,25,25, null);
 						if ((9+i/29) == Inventory.selected) {
-							g.drawImage(highlight, x+2,y+2,25,25,null);
+							g2d.drawImage(highlight, x+2,y+2,25,25, null);
 						}
 						g.drawString("" + Inventory.count[9+i/29], x+2, y+25);
 						if (Mouse.left && Mouse.leftonce == false) {
@@ -1016,24 +1022,24 @@ public class World2 extends JPanel {
 				short i_ = 0;
 				double gridmultiplier = 1.5;
 				//Categories
-				g.drawImage(invslot, 0, 0, (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
-				g.drawImage(Inventory.tools[0], 1, 0, (int) (25*gridmultiplier), (int) (int) (25*gridmultiplier), null);
-				g.drawImage(invslot, (int) (27*gridmultiplier), 0, (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
-				g.drawImage(Inventory.items2[0], (int) (28*gridmultiplier), 0, (int) (25*gridmultiplier), (int) (int) (25*gridmultiplier), null);
+				g2d.drawImage(invslot, 0, 0, (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
+				g2d.drawImage(Inventory.tools[0], 1, 0, (int) (25*gridmultiplier), (int) (int) (25*gridmultiplier), null);
+				g2d.drawImage(invslot, (int) (27*gridmultiplier), 0, (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
+				g2d.drawImage(Inventory.items2[0], (int) (28*gridmultiplier), 0, (int) (25*gridmultiplier), (int) (int) (25*gridmultiplier), null);
 				//Items in category
 				int totalitems = 0;
 				if (Inventory.craftingselected == 0) {
 					totalitems = Inventory.tools.length;
 					for (int i = 0; i < Inventory.tools.length-1; i++) {
-						g.drawImage(invslot, 0, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
-						g.drawImage(Inventory.tools[i], 1, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (25*gridmultiplier), (int) (25*gridmultiplier), null);
+						g2d.drawImage(invslot, 0, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
+						g2d.drawImage(Inventory.tools[i], 1, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (25*gridmultiplier), (int) (25*gridmultiplier), null);
 					}
 				}
 				else if (Inventory.craftingselected == 1) {
 					totalitems = Inventory.items2.length;
 					for (int i = 0; i < Inventory.items2.length-1; i++) {
-						g.drawImage(invslot, 0, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
-						g.drawImage(Inventory.items2[i], 1, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (25*gridmultiplier), (int) (25*gridmultiplier), null);
+						g2d.drawImage(invslot, 0, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (27*gridmultiplier), (int) (27*gridmultiplier), null);
+						g2d.drawImage(Inventory.items2[i], 1, (int) (54*gridmultiplier+(i*(27*gridmultiplier))), (int) (25*gridmultiplier), (int) (25*gridmultiplier), null);
 					}
 				}
 				//System.out.println("uuhhmm:"+totalitems);
@@ -1087,18 +1093,19 @@ public class World2 extends JPanel {
 				g.drawString("Free Memory = " + (freememory/1024) + " KiloBytes | " + (freememory/1024/1024) + " MegaBytes",0,145);
 				g.drawString("Total Free Memory = " + ((freememory + (maxmemory - allocatedmemory))/1024/1024) + " MegaBytes", 0, 160);
 				g.drawString("FPS: " + lastFPS, 0, 175);
-				g.drawImage(collider, (int) Player2.playerrect.x, (int) Player2.playerrect.y, Player2.playerrect.width, Player2.playerrect.height, null);
+				g2d.drawImage(collider, (int) (Player2.playerrect.x - camera_x), (int) (Player2.playerrect.y - camera_y), Player2.playerrect.width, Player2.playerrect.height, null);
 				g.drawString("Graphics Device: " + Video_Settings.gs, 0, 190);
 				g.drawString("Total Graphics Devices: " + (Video_Settings.ge.getScreenDevices().length), 0, 205);
 				g.drawString("Using Graphics Device:" + Video_Settings.gd[0].getIDstring(), 0, 220);
 				g.drawString("IsJumping: " + Player2.isJumping + " , IsFalling: " + Player2.isFalling,0, 235);
 				g.drawString("Total CPU Cores available: " + processors, 0, 250);
+				g.drawString("Screen resolution: " + Video_Settings.window_size_x + "*" + Video_Settings.window_size_y, 0, 265);
 			}
 			//DRAW GRID
 			if (debuggrid == true) {
 				for (int gridx = 0; gridx < world_x; gridx += 25) {
 					for (int gridy = 0; gridy < f.getHeight(); gridy += 25) {
-						g.drawImage(grid, gridx - (int) camera_x, gridy - (int) camera_y, 25, 25, null);
+						g2d.drawImage(grid, gridx - (int) camera_x, gridy - (int) camera_y, 25, 25, null);
 					}
 				}
 			}
@@ -1146,7 +1153,7 @@ public class World2 extends JPanel {
 			}
 			//DRAW CONSOLE
 			if (Input.console) {
-				g.drawImage(console, 0, 0, f.getWidth(), f.getHeight()/3, null);
+				g2d.drawImage(console, 0, 0, f.getWidth(), f.getHeight()/3, null);
 				g.setColor(Color.WHITE);
 				g.drawString(consoleinput, 0, 25);
 				int totalinconsole = 100;
@@ -1163,7 +1170,7 @@ public class World2 extends JPanel {
 			//End Debugging Information
 		}
 		else {
-			g.drawImage(loading, 0,0, f.getSize().width, f.getSize().height, null);
+			g2d.drawImage(loading, 0,0, f.getSize().width, f.getSize().height, null);
 			AffineTransform at = new AffineTransform();
 	        at.translate(getWidth()-loadingicon.getWidth()*2/2, getHeight()-loadingicon.getHeight()*2/2);
 	        at.rotate(rot);
@@ -1171,7 +1178,7 @@ public class World2 extends JPanel {
 	        at.scale(2, 2);
 	        at.translate(-loadingicon.getWidth()/2, -loadingicon.getHeight()/2);
 	        // draw the image
-	        Graphics2D g2d = (Graphics2D) g;
+	        //Graphics2D g2d = (Graphics2D) g;
 	        g2d.drawImage(loadingicon, at, null);
 		}
 		g.dispose();

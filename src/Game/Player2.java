@@ -9,8 +9,10 @@ import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 
+import Main.Collision;
 import Main.Crash;
 import Main.Input;
+import Settings.Video_Settings;
 
 public class Player2 {
 	
@@ -51,6 +53,7 @@ public class Player2 {
 		}
 		jump = new TimerTask () {
 			public void run () {
+				World2.camera_y = player_y - Video_Settings.window_size_y/2;
 				if (isFalling == true && collisiondown == false && World2.buildingworld == false && hasJetpack == false || isJumping == true && hasJetpack == false) {
 					if (i == 0) {
 						isFalling = false;
@@ -61,69 +64,38 @@ public class Player2 {
 						isJumping = true;
 						collisiondown = false;
 						if (isInWater) {
-							if (World2.canplayermovey) {
-								player_y -= 0.1;
-							}
-							else {
-								World2.camera_y -= 0.1;
-							}
+							player_y -= 0.1;
 						}
 						else {
-							if (World2.canplayermovey) {
-								player_y--;
-							}
-							else {
-								World2.camera_y--;
-							}
+							player_y--;
 						}
 						momentum = 0;
 					}
 					else if (i == 101) {
 						if (isInWater == false) {
-							if (World2.canplayermovey) {
-								player_y += momentum;
-							}
-							else {
-								World2.camera_y += momentum;
-							}
+							player_y += momentum;
 							momentum = -1;
 						}
 						else {
-							if (World2.canplayermovey) {
-								player_y -= 0.1;
-							}
-							else {
-								World2.camera_y -= 0.1;
-							}
+							player_y -= 0.1;
 						}
 					}
 					else if (collisiondown == false) {
 						if (isInWater == false) {
 							for (float j = 0; j < 10; j++) {
-								if (World2.canplayermovey) {
-									player_y += momentum/10;
-								}
-								else {
-									World2.camera_y += momentum/10;
-								}
+								player_y += momentum/10;
 							}
 							isFalling = true;
 							isJumping = false;
 							momentum += 0.01;
-							if (player_y > World2.f.getHeight()) {
-								World2.camera_y = 0;
-								player_y = World2.f.getSize().height-(World2.f.getSize().height/4)-67;
+							if (player_y > World2.world_y) { //Player is deaded
+								player_y = -67;
 								player_x = 0;
 								momentum = 0;
 							}
 						}
 						else {
-							if (World2.canplayermovey) {
-								player_y -= 0.1;
-							}
-							else {
-								World2.camera_y -= 0.1;
-							}
+							player_y -= 0.1;
 						}
 					}
 					else {

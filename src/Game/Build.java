@@ -35,9 +35,9 @@ public class Build {
 	public static void build () {
 		if (selected != 0) {
 			Rectangle CurrentMousePos = Mouse.Recalculate_Rect();
-			CurrentMousePos.x += World2.camera_x;
+			//CurrentMousePos.x += World2.camera_x;
 			CurrentMousePos.y += World2.camera_y;
-			for (int i = 0; i < World2.blockcollisions.length; i++) {
+			/*for (int i = 0; i < World2.blockcollisions.length; i++) {
 				if (CurrentMousePos.intersects(World2.blockcollisions[i])) {
 					return;
 				}
@@ -59,7 +59,8 @@ public class Build {
 				pos = "" + (short) (CurrentMousePos.x) + "," + "" + (short) (CurrentMousePos.y);
 			}
 			CurrentMousePos.x -= World2.camera_x;
-			CurrentMousePos.y -= World2.camera_y;
+			CurrentMousePos.y -= World2.camera_y;*/
+			String pos = "" + (short) CurrentMousePos.x + "," + (short) CurrentMousePos.y;
 			CurrentMousePos.width = 0;
 			CurrentMousePos.height = 0;
 			UpdateBlocks(Inventory.items[selected-1], pos, CurrentMousePos, false);
@@ -163,14 +164,14 @@ public class Build {
 		if (MousePos.width == 0 || MousePos.height == 0) {
 			if (selected != 0 && Inventory.slots[selected-1] != null) {
 				//Get index from inventory
-				World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)Math.ceil(World2.camera_x),MousePos.y+(int)Math.ceil(World2.camera_y),Inventory.slots[selected-1].getWidth(),Inventory.slots[selected-1].getHeight());
+				World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x,MousePos.y,Inventory.slots[selected-1].getWidth(),Inventory.slots[selected-1].getHeight());
 			}
 			else {
 				//Get index from world block collection
 				boolean found = false;
 				for (int j = 0; j < World2.allblocks.length; j++) {
 					if (type.equalsIgnoreCase(World2.blockidentifiers[j])) {
-						World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)Math.ceil(World2.camera_x),MousePos.y+(int)Math.ceil(World2.camera_y),World2.allblocks[j].getWidth(),World2.allblocks[j].getHeight());
+						World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x,MousePos.y,World2.allblocks[j].getWidth(),World2.allblocks[j].getHeight());
 						found = true;
 						break;
 					}
@@ -181,7 +182,7 @@ public class Build {
 			}
 		}
 		else {
-			World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x+(int)Math.ceil(World2.camera_x),MousePos.y+(int)Math.ceil(World2.camera_y),MousePos.width,MousePos.height);
+			World2.blockcollisions[World2.blockcollisions.length-1] = new Rectangle(MousePos.x,MousePos.y,MousePos.width,MousePos.height);
 		}
 	}
 }

@@ -35,7 +35,7 @@ public class Recipes {
 	public static boolean LoadRecipeList () {
 		String recipes = ReadFromFile.readstuff("settings\\", "Recipelist.tool", "");
 		if (recipes != null) {
-			String[] split = recipes.split(":");
+			String[] split = recipes.split("\n");
 			for (int i = 0; i < split.length; i++) {
 				String[] args = split[i].split(",");
 				AddRecipe(args[0], args[1], args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]), Boolean.parseBoolean(args[5]));

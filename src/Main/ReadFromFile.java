@@ -17,7 +17,7 @@ public class ReadFromFile {
 			String derp = "";
 			String notderp = "";
 			while ((notderp = reader.readLine()) != null) {
-				derp = derp + split + notderp;
+				derp = derp + split + notderp + "\n";
 			}
 			reader.close();
 			return derp;

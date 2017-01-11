@@ -16,8 +16,6 @@ public class Collision {
 		starttime = System.currentTimeMillis();
 		Rectangle temprect = new Rectangle();
 		temprect = (Rectangle) World2.blockcollisions[i].clone();
-		temprect.x -= (int) World2.camera_x;
-		temprect.y -= (int) World2.camera_y;
 		
 		if (World2.blocks[i].equalsIgnoreCase("Water")) {
 			if (Player2.playerrect.intersects(temprect)) {

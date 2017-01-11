@@ -22,15 +22,15 @@ public class SaveLoad {
 		String inventorycount = "";
 		String inventorytypes = "";
 		for (int i = 0; i < World2.blocks.length; i++) {
-			blocks = blocks + World2.blocks[i] + ",";
-			blockposses = blockposses + World2.blockposses[i] + ":";
-			blockcollisions = blockcollisions + World2.blockcollisions[i].x + "," + World2.blockcollisions[i].y + "," + World2.blockcollisions[i].width + "," + World2.blockcollisions[i].height + ":";
-			blockbackground = blockbackground + World2.blockbackground[i] + ",";
+			blocks = blocks + World2.blocks[i] + "\n";
+			blockposses = blockposses + World2.blockposses[i] + "\n";
+			blockcollisions = blockcollisions + World2.blockcollisions[i].x + "," + World2.blockcollisions[i].y + "," + World2.blockcollisions[i].width + "," + World2.blockcollisions[i].height + "\n";
+			blockbackground = blockbackground + World2.blockbackground[i] + "\n";
 		}
 		for (int i = 0; i < Inventory.items.length; i++) {
-			inventory = inventory + Inventory.items[i] + ",";
-			inventorycount = inventorycount + Inventory.count[i] + ",";
-			inventorytypes = inventorytypes + Inventory.itemtype[i] + ",";
+			inventory = inventory + Inventory.items[i] + "\n";
+			inventorycount = inventorycount + Inventory.count[i] + "\n";
+			inventorytypes = inventorytypes + Inventory.itemtype[i] + "\n";
 		}
 		if (!blocks.startsWith(" ") && !blockposses.startsWith(" ") && !blockcollisions.startsWith(" ") && !blockbackground.startsWith(" ")
 				&& !blocks.isEmpty() && !blockposses.isEmpty() && !blockcollisions.isEmpty() && !blockbackground.isEmpty()) {
@@ -61,13 +61,13 @@ public class SaveLoad {
 		String inventory = ReadFromFile.readstuff("Saves\\" + worldname + "\\", "inventory.tool", "");
 		String inventorycount = ReadFromFile.readstuff("Saves\\" + worldname + "\\", "inventorycount.tool", "");
 		String inventorytypes = ReadFromFile.readstuff("Saves\\" + worldname + "\\", "inventorytypes.tool", "");
-		String[] blocks_split = blocks.split(",");
-		String[] blockposses_split = blockposses.split(":");
-		String[] blockcollisions_split1 = blockcollisions.split(":");
-		String[] blockbackground_split = blockbackground.split(",");
-		String[] inventory_split = inventory.split(",");
-		String[] inventorycount_split = inventorycount.split(",");
-		String[] inventorytypes_split = inventorytypes.split(",");
+		String[] blocks_split = blocks.split("\n");
+		String[] blockposses_split = blockposses.split("\n");
+		String[] blockcollisions_split1 = blockcollisions.split("\n");
+		String[] blockbackground_split = blockbackground.split("\n");
+		String[] inventory_split = inventory.split("\n");
+		String[] inventorycount_split = inventorycount.split("\n");
+		String[] inventorytypes_split = inventorytypes.split("\n");
 		World2.blocks = new String[blocks_split.length];
 		World2.blockposses = new String[blocks_split.length];
 		World2.blockcollisions = new Rectangle[blocks_split.length];

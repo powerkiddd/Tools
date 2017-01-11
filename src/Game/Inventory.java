@@ -76,6 +76,19 @@ public class Inventory {
 						}
 					}
 				}
+				else if (type == 3) {
+					for (int j = 0; j < items2identifier.length; j++) {
+						if (items2identifier[j] != null) {
+							if (items2identifier[j].equalsIgnoreCase(name)) {
+								slots[i] = items2[j];
+								items[i] = name;
+								count[i] = amount;
+								itemtype[i] = 3;
+								return true;
+							}
+						}
+					}
+				}
 			}
 			else {
 				if (type == 1) {
@@ -131,6 +144,13 @@ public class Inventory {
 		else if (type == 2) {
 			for (int i = 0; i < toolidentifier.length-1; i++) {
 				if (toolidentifier[i].equalsIgnoreCase(name)) {
+					return i;
+				}
+			}
+		}
+		else if (type == 3) {
+			for (int i = 0; i < items2identifier.length-1; i++) {
+				if (items2identifier[i].equalsIgnoreCase(name)) {
 					return i;
 				}
 			}
