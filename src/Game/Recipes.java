@@ -34,7 +34,7 @@ public class Recipes {
 	
 	public static boolean LoadRecipeList () {
 		String recipes = ReadFromFile.readstuff("settings\\", "Recipelist.tool", "");
-		if (recipes != null) {
+		if (recipes != null && recipes.length() != 0) {
 			String[] split = recipes.split("\n");
 			for (int i = 0; i < split.length; i++) {
 				String[] args = split[i].split(",");

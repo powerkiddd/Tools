@@ -95,8 +95,8 @@ public class World2 extends JPanel {
 	public static long allocatedmemory = runtime.totalMemory();
 	public static long freememory = runtime.freeMemory();
 	public static byte processors = (byte) runtime.availableProcessors();
-	public static byte final_x;
-	public static byte final_y;
+	public static int final_x;
+	public static int final_y;
 	public static boolean NextFrame_Water = false;
 	public static byte hasitcrashed = 0;
 	public static boolean buildingworld = true;
@@ -519,9 +519,12 @@ public class World2 extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		NextFrame_Water = false;
 		FPS++;
+		
+		//If the world is loaded
 		if (World2.buildingworld == false) {
 			long starttime = System.currentTimeMillis();
 			long stoptime;
+			
 			//Draw Background
 			for (int i=0; i < f.getSize().height; i += backgroundy) {
 				for (int j=0; j < world_x+f.getSize().width; j += backgroundx) {
@@ -542,6 +545,8 @@ public class World2 extends JPanel {
 			}
 			stoptime = System.currentTimeMillis();
 			milliseconds[0] = milliseconds[0] + (stoptime-starttime);
+			
+			//Draw Weather
 			if (Weather.isRaining) {
 				Weather.rainChance();
 				for (int i = 0; i < RainY.size(); i++) {
@@ -574,8 +579,8 @@ public class World2 extends JPanel {
 			else {
 				Weather.rainChance();
 			}
-			starttime = System.currentTimeMillis();
 			
+			starttime = System.currentTimeMillis();
 			//Draw Blocks
 			for (int i=0; i < blocks.length; i++) {
 				String pos = blockposses[i];
@@ -829,6 +834,7 @@ public class World2 extends JPanel {
 				Crash.cause = "Someone forgot to initialize the lighting engine...";
 				Crash.main(null);
 			}*/
+			
 			starttime = System.currentTimeMillis();
 			//Draw Hotbar
 			g2d.drawImage(invslot, f.getSize().width/2-116, 0, 29, 29, null);
@@ -910,33 +916,25 @@ public class World2 extends JPanel {
 					if (Input.snap) {						
 						if (camera_x/25==Math.floor(camera_x/25) && camera_y/25==Math.floor(camera_y/25)) {
 							g2d.drawImage(blockholder, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, 25, 25, null);
-							//Graphics2D g2d = (Graphics2D) g;
 							g2d.setComposite(translucent);
 					        g2d.drawImage(allblocks[theblock], (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, allblocks[theblock].getWidth(), allblocks[theblock].getHeight(), null);
 					        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 						}
 						else {
-							/*byte temp_x = (byte)Math.round((camera_x/25));
-							final_x = (byte)(camera_x-(25*temp_x));
-							byte temp_y = (byte)Math.round((camera_y/25));
-							final_y = (byte)(camera_y-(25*temp_y));
-							final_y = (byte) (final_y + 25);*/
 							Mouse.mouseposonscreenx = MouseInfo.getPointerInfo().getLocation().x;
 							Mouse.mouseposonscreeny = MouseInfo.getPointerInfo().getLocation().y;
-							Mouse.mouseposonscreenx = (int) (Math.floor(Mouse.mouseposonscreenx/25)*25-Math.floor((camera_x-(25*Math.floor(camera_x/25)))));
-							Mouse.mouseposonscreeny = (int) Math.floor(Mouse.mouseposonscreeny/25)*25-25;
-							Mouse.mouseposinworldx = (int) ((Mouse.mouseposonscreenx)-camera_x);
-							Mouse.mouseposinworldy = Mouse.mouseposonscreeny+Math.round(camera_y);
-							g2d.drawImage(blockholder, Mouse.mouseposonscreenx, Mouse.mouseposonscreeny, 25,25, null);
-							//Graphics2D g2d = (Graphics2D) g;
+							/*Mouse.mouseposonscreenx = (int) (Math.floor(Mouse.mouseposonscreenx/25)*25-Math.floor((camera_x-(25*Math.floor(camera_x/25)))));
+							Mouse.mouseposonscreeny = (int) Math.floor(Mouse.mouseposonscreeny/25)*25;*/
+							Mouse.mouseposinworldx = (int) (Math.round((Mouse.mouseposonscreenx+camera_x)/25)*25);
+							Mouse.mouseposinworldy = (int) (Math.round((Mouse.mouseposonscreeny+camera_y)/25)*25);
+							g2d.drawImage(blockholder, (int) (Mouse.mouseposinworldx-camera_x), (int) (Mouse.mouseposinworldy-camera_y-25), 25,25, null);
 							g2d.setComposite(translucent);
-					        g2d.drawImage(allblocks[theblock], Mouse.mouseposonscreenx, Mouse.mouseposonscreeny, allblocks[theblock].getWidth(), allblocks[theblock].getHeight(), null);
+					        g2d.drawImage(allblocks[theblock], (int) (Mouse.mouseposinworldx-camera_x), (int) (Mouse.mouseposinworldy-camera_y-25), allblocks[theblock].getWidth(), allblocks[theblock].getHeight(), null);
 					        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 						}
 					}
 					else {
 						g2d.drawImage(blockholder, MouseInfo.getPointerInfo().getLocation().x-13-f.getLocationOnScreen().x, MouseInfo.getPointerInfo().getLocation().y-37-f.getLocationOnScreen().y, 25,25, null);
-						//Graphics2D g2d = (Graphics2D) g;
 						g2d.setComposite(translucent);
 				        g2d.drawImage(allblocks[theblock], MouseInfo.getPointerInfo().getLocation().x-13-f.getLocationOnScreen().x, MouseInfo.getPointerInfo().getLocation().y-37-f.getLocationOnScreen().y, allblocks[theblock].getWidth(), allblocks[theblock].getHeight(), null);
 				        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));

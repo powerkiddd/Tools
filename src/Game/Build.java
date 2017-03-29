@@ -35,8 +35,7 @@ public class Build {
 	public static void build () {
 		if (selected != 0) {
 			Rectangle CurrentMousePos = Mouse.Recalculate_Rect();
-			//CurrentMousePos.x += World2.camera_x;
-			CurrentMousePos.y += World2.camera_y;
+			
 			/*for (int i = 0; i < World2.blockcollisions.length; i++) {
 				if (CurrentMousePos.intersects(World2.blockcollisions[i])) {
 					return;
@@ -60,6 +59,7 @@ public class Build {
 			}
 			CurrentMousePos.x -= World2.camera_x;
 			CurrentMousePos.y -= World2.camera_y;*/
+			
 			String pos = "" + (short) CurrentMousePos.x + "," + (short) CurrentMousePos.y;
 			CurrentMousePos.width = 0;
 			CurrentMousePos.height = 0;

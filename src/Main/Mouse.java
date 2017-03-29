@@ -89,16 +89,25 @@ public class Mouse {
 	
 	public static Rectangle Recalculate_Rect () {
 		if (Input.snap) {
+			//If perfectly aligned with grid
 			if (World2.camera_x/25==Math.floor(World2.camera_x/25) && World2.camera_y/25==Math.floor(World2.camera_y/25)) {
 				return new Rectangle((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - World2.f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - World2.f.getLocationOnScreen().y, 25,25);
 			}
 			else {
-				byte temp_x = (byte)Math.round((World2.camera_x/25));
+				int temp_x = (int) (MouseInfo.getPointerInfo().getLocation().x + World2.camera_x);
+				World2.final_x = Math.round(temp_x/25)*25;
+				
+				int temp_y = (int) (MouseInfo.getPointerInfo().getLocation().y + World2.camera_y);
+				World2.final_y = Math.round((temp_y-37)/25)*25;
+				
+				return new Rectangle(World2.final_x, World2.final_y, 25, 25);
+				
+				/*byte temp_x = (byte)Math.round((World2.camera_x/25));
 				World2.final_x = (byte)(World2.camera_x-(25*temp_x));
 				byte temp_y = (byte)Math.round((World2.camera_y/25));
 				World2.final_y = (byte)(World2.camera_y-(25*temp_y));
 				World2.final_y = (byte) (World2.final_y + 25);
-				return new Rectangle((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25)-(int) World2.final_x) - World2.f.getLocationOnScreen().x, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25)*25)-(int) World2.final_y) - World2.f.getLocationOnScreen().y, 25,25);
+				return new Rectangle((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25)-(int) World2.final_x) - World2.f.getLocationOnScreen().x, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25)*25)-(int) World2.final_y) - World2.f.getLocationOnScreen().y, 25,25);*/
 			}
 		}
 		else {
