@@ -344,7 +344,8 @@ public class Input {
 		else if (splitinput[0].equalsIgnoreCase("Clear")) {
 			if (splitinput.length > 1) {
 				if (splitinput[1].equalsIgnoreCase("Console")) {
-					result = "NYI, i'm lazy.";
+					World2.consoleoutput = new String[100];
+					result = "";
 				}
 				else if (splitinput[1].equalsIgnoreCase("Inventory")) {
 					for (byte i = 0; i < 45; i++) {
