@@ -114,6 +114,7 @@ public class World2 extends JPanel {
 	public static long[] lastmilliseconds = new long[8]; //Background,Blocks,Player,GUI,Debug Blocks,Collision Calculation,Weather,Occlusion Culling
 	public static int holdingtool = 0;
 	public static int theblock = 0;
+	private static double background_x = 0;
 	
 	public static void main(String[] args) {
 		Player2.playerspeed = 3;
@@ -526,14 +527,21 @@ public class World2 extends JPanel {
 			long stoptime;
 			
 			//Draw Background
+			if (background_x < image.getWidth()) {
+				background_x += 0.5;
+			}
+			else {
+				background_x = 0;
+			}
+			
 			for (int i=0; i < f.getSize().height; i += backgroundy) {
 				for (int j=0; j < world_x+f.getSize().width; j += backgroundx) {
-					if (j > camera_x-backgroundx && j < camera_x+f.getSize().width) {
+					if (j > camera_x-backgroundx && j < camera_x+f.getSize().width+image.getWidth()) {
 						if (camera_y > -1500) {
-							g2d.drawImage(image, (int) ((int)j-camera_x), i, backgroundx, backgroundy, null);
+							g2d.drawImage(image, (int) ((int)j-camera_x-background_x), i, backgroundx, backgroundy, null);
 						}
 						else {
-							g2d.drawImage(space, (int) ((int)j-camera_x), i, backgroundx, backgroundy, null);
+							g2d.drawImage(space, (int) ((int)j-camera_x-background_x), i, backgroundx, backgroundy, null);
 						}
 					}
 				}
@@ -925,8 +933,8 @@ public class World2 extends JPanel {
 							Mouse.mouseposonscreeny = MouseInfo.getPointerInfo().getLocation().y;
 							/*Mouse.mouseposonscreenx = (int) (Math.floor(Mouse.mouseposonscreenx/25)*25-Math.floor((camera_x-(25*Math.floor(camera_x/25)))));
 							Mouse.mouseposonscreeny = (int) Math.floor(Mouse.mouseposonscreeny/25)*25;*/
-							Mouse.mouseposinworldx = (int) (Math.round((Mouse.mouseposonscreenx+camera_x)/25)*25);
-							Mouse.mouseposinworldy = (int) (Math.round((Mouse.mouseposonscreeny+camera_y)/25)*25);
+							Mouse.mouseposinworldx = (int) (Math.floor((Mouse.mouseposonscreenx+camera_x)/25)*25);
+							Mouse.mouseposinworldy = (int) (Math.floor((Mouse.mouseposonscreeny+camera_y)/25)*25);
 							g2d.drawImage(blockholder, (int) (Mouse.mouseposinworldx-camera_x), (int) (Mouse.mouseposinworldy-camera_y-25), 25,25, null);
 							g2d.setComposite(translucent);
 					        g2d.drawImage(allblocks[theblock], (int) (Mouse.mouseposinworldx-camera_x), (int) (Mouse.mouseposinworldy-camera_y-25), allblocks[theblock].getWidth(), allblocks[theblock].getHeight(), null);
@@ -1098,6 +1106,11 @@ public class World2 extends JPanel {
 				g.drawString("IsJumping: " + Player2.isJumping + " , IsFalling: " + Player2.isFalling,0, 235);
 				g.drawString("Total CPU Cores available: " + processors, 0, 250);
 				g.drawString("Screen resolution: " + Video_Settings.window_size_x + "*" + Video_Settings.window_size_y, 0, 265);
+				g.drawString("Mouse_X: " + MouseInfo.getPointerInfo().getLocation().x, 0, 280);
+				g.drawString("Mouse_Y: " + MouseInfo.getPointerInfo().getLocation().y, 0, 295);
+				Mouse.Recalculate_Rect();
+				g.drawString("MouseRect_X: " + final_x, 0, 310);
+				g.drawString("MouseRect_Y: " + final_y, 0, 325);
 			}
 			//DRAW GRID
 			if (debuggrid == true) {

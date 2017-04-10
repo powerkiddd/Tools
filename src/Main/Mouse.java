@@ -98,7 +98,7 @@ public class Mouse {
 				World2.final_x = Math.round(temp_x/25)*25;
 				
 				int temp_y = (int) (MouseInfo.getPointerInfo().getLocation().y + World2.camera_y);
-				World2.final_y = Math.round((temp_y-37)/25)*25;
+				World2.final_y = Math.round((temp_y-50)/25)*25;
 				
 				return new Rectangle(World2.final_x, World2.final_y, 25, 25);
 				
