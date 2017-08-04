@@ -33,10 +33,13 @@ public class Recipes {
 	}
 	
 	public static boolean LoadRecipeList () {
-		String recipes = ReadFromFile.readstuff("settings\\", "Recipelist.tool", "");
+		String recipes = ReadFromFile.readstuff("conf\\", "Recipelist.tool", "");
 		if (recipes != null && recipes.length() != 0) {
 			String[] split = recipes.split("\n");
 			for (int i = 0; i < split.length; i++) {
+				if (split[i].charAt(0) == '#') {
+					continue;
+				}
 				String[] args = split[i].split(",");
 				AddRecipe(args[0], args[1], args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]), Boolean.parseBoolean(args[5]));
 			}
