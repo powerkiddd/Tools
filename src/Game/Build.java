@@ -35,39 +35,27 @@ public class Build {
 	public static void build () {
 		if (selected != 0) {
 			Rectangle CurrentMousePos = Mouse.Recalculate_Rect();
-			
-			/*for (int i = 0; i < World2.blockcollisions.length; i++) {
-				if (CurrentMousePos.intersects(World2.blockcollisions[i])) {
-					return;
+			if (CurrentMousePos != null) {
+				
+				//Make sure we are not building on another block
+				for (int i = 0; i < World2.blockcollisions.length; i++) {
+					if (CurrentMousePos.intersects(World2.blockcollisions[i])) {
+						return;
+					}
 				}
-			}
-			String pos = "";
-			if (Input.snap) {
-				if (World2.camera_x/25==Math.floor(World2.camera_x/25) && World2.camera_y/25==Math.floor(World2.camera_y/25)) {
-					pos = "" + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - World2.f.getLocationOnScreen().x + World2.camera_x)) + "," + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - World2.f.getLocationOnScreen().y + (int) World2.camera_y);
-				}
-				else {
-					byte temp_x = (byte)Math.round((World2.camera_x/25));
-					World2.final_x = (byte)(World2.camera_x-(25*temp_x));
-					byte temp_y = (byte)Math.round((World2.camera_y/25));
-					World2.final_y = (byte)(World2.camera_y-(25*temp_y));
-					pos = "" + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25)-(int) World2.final_x) - World2.f.getLocationOnScreen().x + World2.camera_x) + "," + ((int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25)*25)-(int)World2.final_y)-25 - World2.f.getLocationOnScreen().y + (int) World2.camera_y);
+				
+				String pos = "" + (short) CurrentMousePos.x + "," + (short) CurrentMousePos.y;
+				CurrentMousePos.width = 0;
+				CurrentMousePos.height = 0;
+				UpdateBlocks(Inventory.items[selected-1], pos, CurrentMousePos, false);
+				Inventory.count[selected-1]--;
+				if (Inventory.count[selected-1] == 0) {
+					Inventory.items[selected-1] = "Empty";
+					Inventory.slots[selected-1] = null;
 				}
 			}
 			else {
-				pos = "" + (short) (CurrentMousePos.x) + "," + "" + (short) (CurrentMousePos.y);
-			}
-			CurrentMousePos.x -= World2.camera_x;
-			CurrentMousePos.y -= World2.camera_y;*/
-			
-			String pos = "" + (short) CurrentMousePos.x + "," + (short) CurrentMousePos.y;
-			CurrentMousePos.width = 0;
-			CurrentMousePos.height = 0;
-			UpdateBlocks(Inventory.items[selected-1], pos, CurrentMousePos, false);
-			Inventory.count[selected-1]--;
-			if (Inventory.count[selected-1] == 0) {
-				Inventory.items[selected-1] = "Empty";
-				Inventory.slots[selected-1] = null;
+				System.out.println("CurrentMousePos = null in Build.java");
 			}
 		}
 	}

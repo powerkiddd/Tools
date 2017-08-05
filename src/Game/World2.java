@@ -922,17 +922,10 @@ public class World2 extends JPanel {
 				if (!Inventory.items[Build.selected-1].equals("Empty") && Inventory.itemtype[Build.selected-1] == 1) {
 					Composite translucent = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (0.7f));
 					if (Input.snap) {						
-						if (camera_x/25==Math.floor(camera_x/25) && camera_y/25==Math.floor(camera_y/25)) {
-							g2d.drawImage(blockholder, (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, 25, 25, null);
-							g2d.setComposite(translucent);
-					        g2d.drawImage(allblocks[theblock], (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().x/25)*25) - f.getLocationOnScreen().x), (int) ((Math.floor(MouseInfo.getPointerInfo().getLocation().y/25))*25)-25 - f.getLocationOnScreen().y, allblocks[theblock].getWidth(), allblocks[theblock].getHeight(), null);
-					        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-						}
-						else {
-							Mouse.mouseposonscreenx = MouseInfo.getPointerInfo().getLocation().x;
-							Mouse.mouseposonscreeny = MouseInfo.getPointerInfo().getLocation().y;
-							/*Mouse.mouseposonscreenx = (int) (Math.floor(Mouse.mouseposonscreenx/25)*25-Math.floor((camera_x-(25*Math.floor(camera_x/25)))));
-							Mouse.mouseposonscreeny = (int) Math.floor(Mouse.mouseposonscreeny/25)*25;*/
+						Mouse.mousePos = f.getMousePosition();
+						if (Mouse.mousePos != null) {
+							Mouse.mouseposonscreenx = Mouse.mousePos.x;
+							Mouse.mouseposonscreeny = Mouse.mousePos.y;
 							Mouse.mouseposinworldx = (int) (Math.floor((Mouse.mouseposonscreenx+camera_x)/25)*25);
 							Mouse.mouseposinworldy = (int) (Math.floor((Mouse.mouseposonscreeny+camera_y)/25)*25);
 							g2d.drawImage(blockholder, (int) (Mouse.mouseposinworldx-camera_x), (int) (Mouse.mouseposinworldy-camera_y-25), 25,25, null);
