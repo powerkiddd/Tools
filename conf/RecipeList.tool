@@ -8,7 +8,7 @@
 Rock,Empty,Rock,1,1,true
 Rocks,Empty,Rock,1,1,true
 Tree,Empty,Stick,1,2,true
-Tree,Axe,Wood,1,1,true
+Tree,Axe,Wood|Sappling,1|1,1|2,true
 MahoganyTree,Empty,Stick,1,2,false
 MahoganyTree,Axe,MahoganyWood,1,1,true
 MapleTree,Empty,Stick,1,2,false

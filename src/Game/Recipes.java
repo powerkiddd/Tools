@@ -11,8 +11,8 @@ public class Recipes {
 	public static List<String> Block = new ArrayList<String>(); //The block that has been clicked
 	public static List<String> Item = new ArrayList<String>(); //The item that the block needs to be clicked with
 	public static List<String> ResultItem = new ArrayList<String>(); //The item you'll get
-	public static List<Byte> ResultAmount = new ArrayList<Byte>(); //The amount of the item you'll get
-	public static List<Byte> ResultType = new ArrayList<Byte>(); //The type of the item you'll get
+	public static List<String> ResultAmount = new ArrayList<String>(); //The amount of the item you'll get
+	public static List<String> ResultType = new ArrayList<String>(); //The type of the item you'll get
 	public static List<Boolean> DestroyBlock = new ArrayList<Boolean>(); //Should the block be destroyed after interacting?
 	
 	public static void main(String[] args) {
@@ -41,7 +41,7 @@ public class Recipes {
 					continue;
 				}
 				String[] args = split[i].split(",");
-				AddRecipe(args[0], args[1], args[2], Integer.parseInt(args[3]), Integer.parseInt(args[4]), Boolean.parseBoolean(args[5]));
+				AddRecipe(args[0], args[1], args[2], args[3], args[4], Boolean.parseBoolean(args[5]));
 			}
 			return true;
 		}
@@ -52,7 +52,17 @@ public class Recipes {
 		for (int i = 0; i < Block.size(); i++) {
 			if (Block.get(i).equalsIgnoreCase(block)) {
 				if (Item.get(i).equalsIgnoreCase(item)) {
-					Inventory.AddItem(ResultItem.get(i), ResultAmount.get(i), ResultType.get(i));
+					String resultItem = ResultItem.get(i);
+					if (resultItem.contains("|")) {
+						String[] splitItems = resultItem.split("\\|");
+						String[] splitAmount = ResultAmount.get(i).split("\\|");
+						String[] splitTypes = ResultType.get(i).split("\\|");
+						for (int j = 0; j < splitItems.length; j++) {
+							Inventory.AddItem(splitItems[j], Byte.parseByte(splitAmount[j]), Byte.parseByte(splitTypes[j]));
+						}
+					} else {
+						Inventory.AddItem(resultItem, Byte.parseByte(ResultAmount.get(i)), Byte.parseByte(ResultType.get(i)));
+					}
 					return DestroyBlock.get(i);
 				}
 			}
@@ -60,12 +70,12 @@ public class Recipes {
 		return false; //Your block could not be found.
 	}
 	
-	public static void AddRecipe (String name, String usedItem, String resultItem, int resultAmount, int resultType, boolean destroyBlock) {
+	public static void AddRecipe (String name, String usedItem, String resultItem, String resultAmount, String resultType, boolean destroyBlock) {
 		Block.add(name);
 		Item.add(usedItem);
 		ResultItem.add(resultItem);
-		ResultAmount.add((byte)resultAmount);
-		ResultType.add((byte)resultType);
+		ResultAmount.add(resultAmount);
+		ResultType.add(resultType);
 		DestroyBlock.add(destroyBlock);
 	}
 	

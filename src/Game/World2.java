@@ -1186,6 +1186,7 @@ public class World2 extends JPanel {
 	        g2d.drawImage(loadingicon, at, null);
 		}
 		g.dispose();
+		g2d.dispose();
 		if (Video_Settings.VSync == false) {
 			f.repaint();
 		}

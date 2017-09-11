@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 public class Crash {
 	
-	public static String cause = "Undefined, run the debugger (starter_debugger.bat) to be able to see all the errors!";
+	public static String cause = "Unknown, run the debugger (starter_debugger.bat) to be able to see all the errors!";
 	
 	public static void main(String[] args) {
 		SaveLoad.worldname = "CrashSaveBackup";
