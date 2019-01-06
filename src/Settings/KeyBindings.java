@@ -14,7 +14,7 @@ public class KeyBindings {
 	public static String jump = "Space";
 	public static String crafting = "r";
 	
-	public static void main(String[] args) {
+	public static void initialize() {
 		File file = new File("settings/KeyBindings.ini");
 		if (!file.exists()) {
 			Save();

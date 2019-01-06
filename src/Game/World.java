@@ -36,9 +36,9 @@ public class World extends JPanel implements ActionListener {
 	
 	public static void main(String [] args) {	
 		try {
-			Video_Settings.main(null);
-			PauseMenu.main(null);
-			Mouse.main(null);
+			Video_Settings.initialize();
+			PauseMenu.initialize();
+			Mouse.initialize();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

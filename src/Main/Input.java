@@ -42,7 +42,7 @@ public class Input {
 	public static String keytext = "";
 	public static String keychar = "";
 	
-	public static void main (String[] args) {
+	public static void initialize() {
 		World2.f.addKeyListener(new KeyListener () {
 
 			@Override

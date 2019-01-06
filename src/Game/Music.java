@@ -10,7 +10,7 @@ import javax.sound.sampled.DataLine;
 
 public class Music {
 	
-	public static void main(String[] args) {
+	public static void initialize() {
 		try {
 			if (Settings.Settings.music) {
 				File path = new File("music/");

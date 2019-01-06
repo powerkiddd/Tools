@@ -40,7 +40,7 @@ public class Player2 {
 	public static byte hunger = 100;
 	public static byte thirst = 100;
 	
-	public static void main(String[] args) {
+	public static void initialize() {
 		try {
 			File file = new File("images\\player.png");
 			right = ImageIO.read(file);
@@ -53,7 +53,7 @@ public class Player2 {
 		}
 		jump = new TimerTask () {
 			public void run () {
-				World2.camera_y = player_y - Video_Settings.window_size_y/2;
+				World2.newCamera_y = player_y - Video_Settings.window_size_y/2;
 				if (isFalling == true && collisiondown == false && World2.buildingworld == false && hasJetpack == false || isJumping == true && hasJetpack == false) {
 					if (i == 0) {
 						isFalling = false;
@@ -114,7 +114,7 @@ public class Player2 {
 							}
 						}
 						else {
-							World2.camera_y -= momentum;
+							World2.newCamera_y -= momentum;
 							if (momentum < 3) {
 								momentum += 0.1;
 							}
@@ -126,7 +126,7 @@ public class Player2 {
 							momentum += 0.01;
 						}
 						else {
-							World2.camera_y += momentum/10;
+							World2.newCamera_y += momentum/10;
 							momentum += 0.01;
 						}
 					}

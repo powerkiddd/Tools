@@ -22,7 +22,7 @@ public class Chi {
 	public static BufferedImage right;
 	public static BufferedImage left;
 	
-	public static void main(String[] args) {
+	public static void initialize() {
 		if (Settings.Settings.chi == true) {
 		try {
 			File file = new File("images\\chi.png");

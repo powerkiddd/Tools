@@ -29,7 +29,7 @@ public class Mouse {
 	public static int mouseposinworldy;
 	public static Point mousePos;
 	
-	public static void main(String [] args) {
+	public static void initialize() {
 		World2.f.addMouseListener(new MouseListener() {
 
 			@Override
@@ -52,11 +52,17 @@ public class Mouse {
 				if (e.getButton() == 1) {
 					//left
 					gamecursorrect = Recalculate_Rect();
+					gamecursorrect.x -= World2.camera_x;
+					gamecursorrect.y -= World2.camera_y;
 					left = true;
 				}
 				if (e.getButton() == 3) {
 					//right
 					gamecursorrect = Recalculate_Rect();
+					gamecursorrect.x -= World2.camera_x;
+					gamecursorrect.y -= World2.camera_y;
+					gamecursorrect.x = Math.round(gamecursorrect.x/25)*25;
+					gamecursorrect.y = Math.round(gamecursorrect.y/25)*25;
 					right = true;
 					if (Build.selected-1 >= 0) {
 						if (Inventory.items[Build.selected-1] != "Empty") {

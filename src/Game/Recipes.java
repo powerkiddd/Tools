@@ -15,7 +15,7 @@ public class Recipes {
 	public static List<String> ResultType = new ArrayList<String>(); //The type of the item you'll get
 	public static List<Boolean> DestroyBlock = new ArrayList<Boolean>(); //Should the block be destroyed after interacting?
 	
-	public static void main(String[] args) {
+	public static void initialize() {
 		if (!LoadRecipeList()) {
 			Crash.cause = "Failed to load recipe list, recovery not available.";
 			Crash.main(null);

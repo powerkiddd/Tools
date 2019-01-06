@@ -20,7 +20,7 @@ public class Inventory {
 	public static String[] toolidentifier;
 	public static String[] items2identifier;
 	
-	public static void main(String[] args) {
+	public static void initialize() {
 		slots = new BufferedImage[45];
 		items = new String[45];
 		count = new byte[45];

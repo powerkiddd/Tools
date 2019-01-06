@@ -1,0 +1,13 @@
+{
+  "User": {
+    "Id": 1902934,
+    "Username": "powerkittt",
+    "Name": "Kevin W",
+    "Email": "powerkittt@gmail.com",
+    "AvatarUrl": "https://secure.gravatar.com/avatar/c0ab7d12b8220ca5b844da8366634eac?s=80&d=identicon",
+    "PrivateToken": "a5312cae9ee56baebc7a585db9e208060ed39e2f681131906e7459b5b899998c",
+    "Host": "https://gitlab.com",
+    "TwoFactorEnabled": false,
+    "ApiVersion": 3
+  }
+}

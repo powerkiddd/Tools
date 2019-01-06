@@ -15,7 +15,7 @@ public class SFX {
     private static DataLine.Info info;
     private static Clip clip;
     
-	public static void main(String[] args) {
+	public static void initialize() {
 		//Hey, we have nothing to initialize!
 	}
 	

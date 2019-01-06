@@ -65,8 +65,8 @@ public class MainMenu extends JPanel{
 	public static void main(String [] args) {	
 		f.remove(World.f);
 		try {
-			Video_Settings.main(null);
-			Settings.main(null);
+			Video_Settings.initialize();
+			Settings.initialize();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

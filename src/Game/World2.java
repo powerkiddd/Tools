@@ -75,6 +75,8 @@ public class World2 extends JPanel {
 	public static boolean debugpie = false;
 	public static float camera_x = 0;
 	public static float camera_y = 0;
+	public static float newCamera_x = 0;
+	public static float newCamera_y = 0;
 	public static boolean canplayermovey = true;
 	public static String[] blocks = new String[0];
 	public static String[] blockposses = new String[0];
@@ -122,19 +124,19 @@ public class World2 extends JPanel {
 			SaveLoad.worldname = "EarlySaveGameTest";
 		}
 		try {
-			Video_Settings.main(null);
-			Settings.main(null);
-			Music.main(null);
-			Chi.main(null);
-			Input.main(null);
-			Player2.main(null);
-			Build.Main(null);
-			Inventory.main(null);
-			PauseMenu.main(null);
-			Mouse.main(null);
-			KeyBindings.main(null);
-			SFX.main(null);
-			Recipes.main(null);
+			Video_Settings.initialize();
+			Settings.initialize();
+			Music.initialize();
+			Chi.initialize();
+			Input.initialize();
+			Player2.initialize();
+			Build.initialize();
+			Inventory.initialize();
+			PauseMenu.initialize();
+			Mouse.initialize();
+			KeyBindings.initialize();
+			SFX.initialize();
+			Recipes.initialize();
 			//Lighting.main(null);
 			//Server.main(null);
 			//Client.Connect("127.0.0.1", 8888);
@@ -258,6 +260,14 @@ public class World2 extends JPanel {
 		};
 		TimerTask update = new TimerTask () {
 			public void run () {
+				//Move the background (clouds)
+				if (background_x < image.getWidth()) {
+					background_x += 0.5;
+				}
+				else {
+					background_x = 0;
+				}
+				
 				//Open inventory if I is pressed
 				if (Input.console == false) {
 					if (Input.GetInput("i")) {
@@ -292,16 +302,16 @@ public class World2 extends JPanel {
 						for (byte i = 0; i < 10; i++) {
 							Player2.player_x -= (float)Player2.playerspeed/10;
 						}
-						if (camera_x > 0) {
+						if (newCamera_x > 0) {
 							for (byte i = 0; i < 10; i++) {
-								camera_x = Player2.player_x - Video_Settings.window_size_x/2;
+								newCamera_x = Player2.player_x - Video_Settings.window_size_x/2;
 							}
 							Player2.atborder = true;
-							if (camera_x < 0) {
-								camera_x = 0;
+							if (newCamera_x < 0) {
+								newCamera_x = 0;
 							}
-							else if (camera_x > world_x) {
-								camera_x = world_x;
+							else if (newCamera_x > world_x) {
+								newCamera_x = world_x;
 							}
 						}
 					}
@@ -317,16 +327,16 @@ public class World2 extends JPanel {
 						for (byte i = 0; i < 10; i++) {
 							Player2.player_x += (float)Player2.playerspeed/10;
 						}
-						if (camera_x < world_x) {
+						if (newCamera_x < world_x) {
 							for (byte i = 0; i < 10; i++) {
-								camera_x = Player2.player_x - Video_Settings.window_size_x/2;
+								newCamera_x = Player2.player_x - Video_Settings.window_size_x/2;
 							}
 							Player2.atborder = true;
-							if (camera_x > world_x) {
-								camera_x = world_x;
+							if (newCamera_x > world_x) {
+								newCamera_x = world_x;
 							}
-							else if (camera_x < 0) {
-								camera_x = 0;
+							else if (newCamera_x < 0) {
+								newCamera_x = 0;
 							}
 						}
 					}
@@ -527,15 +537,8 @@ public class World2 extends JPanel {
 			long stoptime;
 			
 			//Draw Background
-			if (background_x < image.getWidth()) {
-				background_x += 0.5;
-			}
-			else {
-				background_x = 0;
-			}
-			
 			for (int i=0; i < f.getSize().height; i += backgroundy) {
-				for (int j=0; j < world_x+f.getSize().width; j += backgroundx) {
+				for (int j=0; j < world_x+f.getSize().width+backgroundx; j += backgroundx) {
 					if (j > camera_x-backgroundx && j < camera_x+f.getSize().width+image.getWidth()) {
 						if (camera_y > -1500) {
 							g2d.drawImage(image, (int) ((int)j-camera_x-background_x), i, backgroundx, backgroundy, null);
@@ -791,17 +794,17 @@ public class World2 extends JPanel {
 			starttime = System.currentTimeMillis();
 			//Draw Player
 			if (Player2.lookingatside) {
-				g2d.drawImage(playerimage, (int) (Player2.player_x - camera_x), (int) (Player2.player_y - camera_y), playerimage.getWidth(), playerimage.getHeight(), null);
-				g2d.drawImage(Inventory.tools[holdingtool], (int) (Player2.player_x+9 - camera_x), (int) (Player2.player_y+25 - camera_y),25,25, null);
+				g2d.drawImage(playerimage, (int) (Player2.player_x - newCamera_x), (int) (Player2.player_y - newCamera_y), playerimage.getWidth(), playerimage.getHeight(), null);
+				g2d.drawImage(Inventory.tools[holdingtool], (int) (Player2.player_x+9 - newCamera_x), (int) (Player2.player_y+25 - newCamera_y),25,25, null);
 				if (Player2.hasJetpack) {
-					g2d.drawImage(Player2.jetpack, (int) (Player2.player_x - camera_x), (int) (Player2.player_y - camera_y),19,67, null);
+					g2d.drawImage(Player2.jetpack, (int) (Player2.player_x - newCamera_x), (int) (Player2.player_y - newCamera_y),19,67, null);
 				}
 			}
 			else {
-				g2d.drawImage(playerimage, (int) (Player2.player_x - camera_x)+playerimage.getWidth(), (int) (Player2.player_y - camera_y), -playerimage.getWidth(), playerimage.getHeight(), null);
-				g2d.drawImage(Inventory.tools[holdingtool], (int) (Player2.player_x+9 - camera_x), (int) (Player2.player_y+25 - camera_y),-25,25, null);
+				g2d.drawImage(playerimage, (int) (Player2.player_x - newCamera_x)+playerimage.getWidth(), (int) (Player2.player_y - newCamera_y), -playerimage.getWidth(), playerimage.getHeight(), null);
+				g2d.drawImage(Inventory.tools[holdingtool], (int) (Player2.player_x+9 - newCamera_x), (int) (Player2.player_y+25 - newCamera_y),-25,25, null);
 				if (Player2.hasJetpack) {
-					g2d.drawImage(Player2.jetpack, (int) (Player2.player_x+19 - camera_x), (int) (Player2.player_y - camera_y),-19,67, null);
+					g2d.drawImage(Player2.jetpack, (int) (Player2.player_x+19 - newCamera_x), (int) (Player2.player_y - newCamera_y),-19,67, null);
 				}
 			}
 			for (int i = 1; i < Players.playersinserver; i++) {
@@ -1092,7 +1095,7 @@ public class World2 extends JPanel {
 				g.drawString("Free Memory = " + (freememory/1024) + " KiloBytes | " + (freememory/1024/1024) + " MegaBytes",0,145);
 				g.drawString("Total Free Memory = " + ((freememory + (maxmemory - allocatedmemory))/1024/1024) + " MegaBytes", 0, 160);
 				g.drawString("FPS: " + lastFPS, 0, 175);
-				g2d.drawImage(collider, (int) (Player2.playerrect.x - camera_x), (int) (Player2.playerrect.y - camera_y), Player2.playerrect.width, Player2.playerrect.height, null);
+				g2d.drawImage(collider, (int) (Player2.playerrect.x - newCamera_x), (int) (Player2.playerrect.y - newCamera_y), Player2.playerrect.width, Player2.playerrect.height, null);
 				g.drawString("Graphics Device: " + Video_Settings.gs, 0, 190);
 				g.drawString("Total Graphics Devices: " + (Video_Settings.ge.getScreenDevices().length), 0, 205);
 				g.drawString("Using Graphics Device:" + Video_Settings.gd[0].getIDstring(), 0, 220);
@@ -1190,5 +1193,7 @@ public class World2 extends JPanel {
 		if (Video_Settings.VSync == false) {
 			f.repaint();
 		}
+		camera_x = newCamera_x;
+		camera_y = newCamera_y;
 	}
 }

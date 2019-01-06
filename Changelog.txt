@@ -2,11 +2,15 @@ Alpha 0.0.1.3:
 	-Added more trees: Mahogany, Maple, Walnut
 	-Added a WIP lake generator
 	-Added a recipe system, this system saves all crafting data and mining data. This is fully mod supported.
+	-Added clear command for console
+	-Clouds now move
 	-The crash reporter now reports when making a backup save failed.
 	-Disabled a huge portion of the water physics until rewritten.
 	-Weather now has a random chance of raining when weather is clear.
+	-Rewrote parts of the building system
 	-Rewrote physics code
 	-Rewrote camera code
+	-Fixed screen tearing
 	-Fixed a physics breaking bug
 	-Fixed a bug where you could still open your inventory when typing in the console.
 	-Fixed a bug where save games could be saved with no information.

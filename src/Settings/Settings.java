@@ -11,7 +11,7 @@ public class Settings {
 	public static boolean music = true;
 	public static boolean sfx = true;
 	
-	public static void main(String[] args) {
+	public static void initialize() {
 		File file = new File("settings/Settings.ini");
 		if (!file.exists()) {
 			Save();

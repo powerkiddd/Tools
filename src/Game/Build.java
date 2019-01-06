@@ -17,7 +17,7 @@ public class Build {
 	public static boolean once = false;
 	public static byte selected = 0;
 	
-	public static void Main(String[] args) {
+	public static void initialize() {
 		
 	}
 	

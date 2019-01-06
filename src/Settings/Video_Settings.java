@@ -18,7 +18,7 @@ public class Video_Settings {
 	public static boolean VSync = false;
 	public static int framelimit = 120;
 
-	public static void main(String [] args) throws IOException {	
+	public static void initialize() throws IOException {	
 		ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		gs = ge.getDefaultScreenDevice();
 		gd = ge.getScreenDevices();
