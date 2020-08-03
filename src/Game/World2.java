@@ -88,9 +88,13 @@ public class World2 extends JPanel {
 	public static Timer frametimer = new Timer();
 	public static Timer updatetimer = new Timer();
 	public static Timer vsynctimer = new Timer();
+	public static Timer frametimetimer = new Timer();
 	public static int FPS = 0;
 	public static int lastFPS = 0;
 	public static String special = "";
+	public static int curframetime = 0;
+	public static int[] frametimes = new int[1000];
+	public static int[] lastframetimes = new int[1000];
 	public static boolean once = false;
 	public static Runtime runtime = Runtime.getRuntime();
 	public static long maxmemory = runtime.maxMemory();
@@ -370,11 +374,23 @@ public class World2 extends JPanel {
 			}
 			
 		};
+		TimerTask updateFrameTime = new TimerTask() {
+			public void run () {
+				frametimes[curframetime] = FPS;
+				curframetime++;
+				if (curframetime == 1000) {
+					curframetime = 0;
+					lastframetimes = frametimes;
+					frametimes = new int[1000];
+				}
+			}
+		};
 		frametimer.scheduleAtFixedRate(updateFPS, 1000, 1000);
 		updatetimer.scheduleAtFixedRate(update, 10, 10);
 		if (Video_Settings.VSync) {
 			vsynctimer.scheduleAtFixedRate(vsyncnxtframe, (long) (1000/Video_Settings.framelimit), (long) (1000/Video_Settings.framelimit));
 		}
+		frametimetimer.scheduleAtFixedRate(updateFrameTime, 1, 1);
 		if (!SaveLoad.DoesSaveExist()) {
 			for (int i = 75; i < world_x+Video_Settings.window_size_x-25; i++) {
 				Random rnd = new Random();
@@ -1122,7 +1138,7 @@ public class World2 extends JPanel {
 				for (byte i = 0; i < lastmilliseconds.length; i++) {
 					totalmilliseconds = totalmilliseconds + lastmilliseconds[i];
 				}
-				g.fillRect(f.getWidth()-250, 215, 200, 115);
+				g.fillRect(f.getWidth()-250, 215, 200, 120);
 				g.setColor(Color.GREEN);
 				float derp = (float) ((float) (lastmilliseconds[0])/totalmilliseconds);
 				g.fillArc(f.getWidth()-250, 0, 200, 200, 0, (int) Math.ceil(360*derp));
@@ -1157,6 +1173,36 @@ public class World2 extends JPanel {
 				g.drawString("Occlusion Culling: " + lastmilliseconds[7] + "MS", f.getWidth()-250, 330);
 				g.setColor(Color.BLACK);
 				g.drawString(String.valueOf(totalmilliseconds), f.getWidth()-160, 100);
+			}
+			//DRAW FRAMETIME
+			if (debug || debugpie) {
+				int highest = 0;
+				int prevdiff = 0;
+				g.fillRect(0, f.getSize().height-29-lastFPS-20, 1000, lastFPS+20);
+				g.setColor(Color.WHITE);
+				g.drawString("Frametime", 0, f.getSize().height-29-lastFPS-5);
+				for (int i = 0; i < 1000; i++) {
+					if (i == 0) {
+						highest = 0;
+					}
+					int diff = 0;
+					if (lastframetimes[i] > highest) {
+						diff = (lastframetimes[i] - highest)*40;
+						highest = lastframetimes[i];
+					}
+					g.setColor(Color.RED);
+					g.drawLine(i, f.getSize().height-30-lastframetimes[i], i, f.getSize().height-30-lastframetimes[i]);
+					g.setColor(Color.GREEN);
+					g.drawLine(i, f.getSize().height-60-prevdiff, i, f.getSize().height-60-diff);
+					g.setColor(Color.BLACK);
+					prevdiff = diff;
+					if (i == 999) {
+						System.out.println("Reset: " + highest + " | " + diff + " | " + prevdiff);
+						highest = 0;
+						diff = 0;
+						prevdiff = 0;
+					}
+				}
 			}
 			//DRAW CONSOLE
 			if (Input.console) {
@@ -1195,5 +1241,6 @@ public class World2 extends JPanel {
 		}
 		camera_x = newCamera_x;
 		camera_y = newCamera_y;
+		lastframetimes = frametimes;
 	}
 }
